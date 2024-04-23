@@ -1,2 +1,2 @@
 # iMechanic-project-frontend
-Development of the back end of a web application for the provision of services by the mechanics, called iMechanic
+Development of the front end of a web application for the provision of services by the mechanics, called iMechanic
