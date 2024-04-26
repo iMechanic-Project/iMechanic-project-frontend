@@ -1,0 +1,90 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="flex justify-center items-center h-auto bg-white" style="height: 52pc">
+
+  <div class="flex flex-col  items-center p-10 shadow-lg lg:mt-0 mt-56 lg:mb-0 mb-28" style="background: #D9D9D9 ">
+
+
+    <img src="./assets/img/LogoG_trans.png" alt="Logo iMechanics " class=" -mt-36" style="width: 200px; position: absolute;">
+
+    @if (showDescripcion){
+      <img src="./assets/img/registrarT.png" alt="Logo" class="h-12 mb-6 mt-12">
+    }
+    @if (!showDescripcion){
+      <img src="./assets/img/registrarC.png" alt="Logo" class="h-12 mb-6 mt-12">
+    }
+
+    <form class=" w-full max-w-mg lg:grid grid-cols-2 gap-4" (ngSubmit)="onSubmit()">
+
+
+      <div class="w-">
+        <h2 class="text-lg font-semibold mb-2">Información de la cuenta</h2>
+
+        <div class="mb-4">
+          <input type="email" placeholder="Correo Electrónico" autocomplete="email" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="correoElectronico" [(ngModel)]="signUpDTORequest.correoElectronico">
+        </div>
+
+        <div class="mb-4 relative">
+          <input type="{{ showPassword ? 'text': 'password'}}" placeholder="Contraseña" autocomplete="password" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400">
+          <span class="absolute top-0 right-0 mr-3 mt-2 cursor-pointer" (click)="togglePassword()">
+          @if (showPassword){
+            <i class="fa fa-eye"></i>
+          }
+          @else {
+            <i class="fa fa-eye-slash"></i>
+          }
+        </span>
+        </div>
+
+        <div class="mb-4 relative">
+          <input type="{{ showPasswordConfirmation ? 'text': 'password'}}" placeholder="Confirmar Contraseña" autocomplete="new-password" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="contrasenia" [(ngModel)]="signUpDTORequest.contrasenia">
+          <span class="absolute top-0 right-0 mr-3 mt-2 cursor-pointer" (click)="togglePasswordConfirmation()">
+          @if (showPasswordConfirmation){
+            <i class="fa fa-eye"></i>
+          } @else {
+            <i class="fa fa-eye-slash"></i>
+          }
+        </span>
+        </div>
+      </div>
+
+
+      <div class=" w-full mx-auto ">
+
+        @if (showDescripcion){
+          <h2 class="text-lg font-semibold mb-2">Información de Taller Mecánico</h2>
+        } @else {
+          <h2 class="text-lg font-semibold mb-2">Información del Cliente</h2>
+        }
+
+
+        <div class="mb-4">
+          <input type="text" placeholder="Nombre" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="nombre" [(ngModel)]="signUpDTORequest.nombre">
+        </div>
+        <div class="mb-4">
+          <input type="text" placeholder="Dirección" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="direccion" [(ngModel)]="signUpDTORequest.direccion">
+        </div>
+        <div class="mb-4">
+          <input type="text" placeholder="Número de contacto" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="telefono" [(ngModel)]="signUpDTORequest.telefono">
+        </div>
+      </div>
+
+      <div class="col-span-2 flex justify-center">
+
+        @if (!showDescripcion){
+          <p class="text-x text-black mb-2 font-semibold">¿Quieres trabajar con nosotros? <span class="text-orange-500 hover:underline" (click)="toogleRol()" style="cursor: pointer;">Click aquí</span></p>
+        }
+        @if (showDescripcion){
+          <p class="text-x text-black mb-2 font-semibold">¿Quieres monitorear tu vehículo? <span class="text-orange-500 hover:underline" (click)="toogleRol()" style="cursor: pointer;">Click aquí</span></p>
+        }
+      </div>
+
+      <div class="col-span-2 flex justify-center">
+        <button type="submit" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block" style="background: #F7941F">Crear cuenta</button>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+
