@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="flex justify-center items-center h-auto bg-white" style="height: 52pc">
+
+  <div class="flex flex-col items-center p-10  shadow-lg" style="background: #D9D9D9">
+
+    <img src="./assets/img/LogoG_trans.png" alt="Logo iMechanics" class="-mt-40" style="width: 200px; position: absolute;">
+    <img src="./assets/img/LogoLP.png" alt="Logo" class=" h-10 lg:h-12 mb-4 mt-5">
+
+    <p class="text-m text-black mb-6 font-semibold">Convirtiendo talleres mecánicos en espacios inteligentes</p>
+
+    <form class="w-full max-w-md mb-3" (ngSubmit)="onSubmit()">
+
+      <div class="mb-4 w-full mx-auto">
+        <input type="email" placeholder="Correo Electrónico" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="correoElectronico" [(ngModel)]="loginDTORequest.correoElectronico">
+      </div>
+
+      <div class="mb-7 w-full relative">
+        <input type="{{ showPassword ? 'text': 'password'}}" placeholder="Contraseña" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="contrasenia" [(ngModel)]="loginDTORequest.contrasenia">
+        <span class="absolute top-0 right-0 mr-3 mt-2 cursor-pointer" (click)="togglePassword()">
+          @if (showPassword){
+            <i class="fa fa-eye"></i>
+          } @else {
+            <i class="fa fa-eye-slash"></i>
+          }
+        </span>
+      </div>
+
+
+      <div class="flex justify-center">
+        <button type="submit" class=" text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block" style="background: #F7941F">Ingresar</button>
+      </div>
+
+    </form>
+  </div>
+</div>

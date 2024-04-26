@@ -16,6 +16,11 @@ export const routes: Routes = [
         loadComponent: () => import('./layout-pages/pages/register-users/register-users.component')
       },
       {
+        path: 'login-users',
+        title: 'Login Users',
+        loadComponent: () => import('./layout-pages/pages/login-users/login-users.component')
+      },
+      {
         path: '',
         redirectTo: '/inicio/home-page',
         pathMatch: 'full'
