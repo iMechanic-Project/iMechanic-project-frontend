@@ -45,8 +45,13 @@ export const routes: Routes = [
         loadComponent: () => import('./mechanic-view/pages/workshop-services/workshop-services.component')
       },
       {
+        path: 'workshop-mechanics',
+        title: 'Workshop Services',
+        loadComponent: () => import('./mechanic-view/pages/workshop-mechanics/workshop-mechanics.component')
+      },
+      {
         path: '',
-        redirectTo: '/inicio/workshop-info',
+        redirectTo: '/mechanic/workshop-info',
         pathMatch: 'full'
       }
 
