@@ -1,0 +1,156 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--- Lista de vehiculos --->
+<div class="flex flex-col justify-center items-center mt-14 mb-10 lg:mb-32">
+
+  <!-- Opcion de registro lg-->
+  <div class="mt-0 lg:mt-24 w-4/5 bg-gray-200 p-4">
+    <div class="flex items-center justify-between mr-5 ml-5 lg:mr-24 lg:ml-24">
+      <h2 class="lg:text-2xl text-lg mt-3 mb-3">Mecánicos a asignar trabajo:</h2>
+      <button type="button" class="lg:text-xl text-lg text-black rounded-xl px-5 lg:px-10 py-3 font-semibold inline-block" (click)="openModal()" style="background: #F7941F">Registrar</button>
+    </div>
+  </div>
+
+
+  <!-- TABLA lg-->
+  <div class="lg:block hidden mt-8  w-4/5 bg-white border-2 border-gray-400 text-center" style="height: 32pc">
+    <table class="w-full">
+      <thead>
+      <tr>
+        <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">NOMBRE</th>
+        <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">CORREO</th>
+        <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">CONTRASEÑA</th>
+        <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">SERVICIOS</th>
+        <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">ACCION</th>
+      </tr>
+      </thead>
+      <tbody class="w-full">
+
+      <tr *ngFor="let mechanic of mechanics  | paginate: { itemsPerPage: 6, currentPage: p }">
+        <td class="font-semibold border-gray-400 py-4" style="width: 20%;">{{ mechanic.nombre }}</td>
+        <td class="border-gray-400 py-4" style="width: 20%;">{{ mechanic.email }}</td>
+        <td class="border-gray-400 py-4" style="width: 20%;">{{ mechanic.contrasena }}</td>
+        <td class="border-gray-400 py-4" style="width: 20%;">{{ mechanic.servicios }}</td>
+        <td class="border-gray-400 py-4" style="width: 20%;">
+          <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F">☰</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- TABLA xs-->
+  <div class="lg:hidden mt-8  w-4/5 bg-white border-2 border-gray-400 text-center" style="height: 32pc">
+    <table class="w-full">
+      <thead>
+      <tr>
+        <th class="text-xs font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">NOMBRE</th>
+        <th class="text-xs font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">CORREO</th>
+        <th class="text-xs font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">ACCION</th>
+      </tr>
+      </thead>
+      <tbody class="w-full">
+      <tr *ngFor="let mechanic of mechanics  | paginate: { itemsPerPage: 7, currentPage: p }">
+        <td class="text-xs font-semibold border-gray-400 py-4" style="width: 20%;">{{ mechanic.nombre }}</td>
+        <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ mechanic.email }}</td>
+        <td class="text-xs border-gray-400 py-4" style="width: 20%;">
+          <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F">☰</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- paginacion lg-->
+  <div class="flex justify-center -mt-14 mb-16 lg:mb-36">
+    <pagination-controls
+      (pageChange)="p = $event"
+      previousLabel=""
+      nextLabel=""
+    ></pagination-controls>
+  </div>
+
+</div>
+
+
+@if (showModal){
+
+  <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">
+
+    <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">
+      <h3 class="text-2xl mb-4 font-semibold text-center " style="color: #d82733">Crear nuevo mecánico</h3>
+
+      <!-- Campos de registro -->
+
+      <div class="mb-4">
+        <input type="text" placeholder="Nombre" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-4 mt-4">
+        <input type="email" placeholder="Correo Electrónico" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-4">
+        <div class=" relative">
+          <input type="{{ showPassword ? 'text': 'password'}}" placeholder="Contraseña" autocomplete="password" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400">
+          <span class="absolute top-0 right-0 mr-3 mt-2 cursor-pointer" (click)="togglePassword()">
+          @if (showPassword){
+            <i class="fa fa-eye"></i>
+          }
+          @else {
+            <i class="fa fa-eye-slash"></i>
+          }
+        </span>
+        </div>
+
+      </div>
+
+      <p class="text-xl mb-6 font-semibold ">Servicios del Mecánico:</p>
+
+      <div class="bg-white p-6 rounded-lg text-black overflow-y-auto" style="height: 250px;">
+
+        <!-- Lista de acciones de Mantenimiento -->
+        <div class="mb-4">
+          <h3 class="flex text-lg mb-2 font-semibold">Mantenimiento</h3>
+          <div class="flex flex-col">
+            <label *ngFor="let accion of accionesMantenimiento" class="flex items-center text-sm">
+              <input type="checkbox" class="mr-2">
+              {{ accion }}
+            </label>
+          </div>
+        </div>
+
+        <!-- Lista de acciones de Reparacion -->
+        <div class="mb-4">
+          <h3 class="flex text-lg mb-2 font-semibold">Reparación</h3>
+          <div class="flex flex-col">
+            <label *ngFor="let accion of accionesReparacion" class="flex items-center text-sm">
+              <input type="checkbox" class="mr-2">
+              {{ accion }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Botón de guardar -->
+      <div class="flex items-center justify-center mr-24 ml-24">
+        <button type="button" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block mt-4" style="background: #F7941F" (click)="saveVehicle()">Guardar</button>
+      </div>
+    </div>
+  </div>
+}
+
+@if (showModal2){
+
+  <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">
+
+    <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">
+      <h3 class="text-2xl mb-4 font-semibold text-center text-black">El mecanico fue registrado correctamente!</h3>
+      <img src="./assets/img/LogoG_trans.png" alt="Logo" class="ml-2">
+
+      <!-- Botón de guardar -->
+      <div class="flex items-center justify-center mr-24 ml-24">
+        <button type="button" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block mt-4" style="background: #F7941F"  (click)="closeModal2()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+}
+
+
