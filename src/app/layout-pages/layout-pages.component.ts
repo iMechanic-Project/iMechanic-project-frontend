@@ -16,6 +16,6 @@ import {HeaderLayoutComponent} from "./header-layout/header-layout.component";
   templateUrl: './layout-pages.component.html',
   styles: ``
 })
-export default class LayoutPagesComponet {
+export default class LayoutPagesComponent {
 
 }

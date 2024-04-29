@@ -29,6 +29,31 @@ export const routes: Routes = [
 
     ]
   },
+
+  {
+    path: 'mechanic',
+    loadComponent: () => import('./mechanic-view/mechanic-view.component'),
+    children: [
+      {
+        path: 'workshop-info',
+        title: 'Workshop Info',
+        loadComponent: () => import('./mechanic-view/pages/workshop-info/workshop-info.component')
+      },
+      {
+        path: 'workshop-services',
+        title: 'Workshop Services',
+        loadComponent: () => import('./mechanic-view/pages/workshop-services/workshop-services.component')
+      },
+      {
+        path: '',
+        redirectTo: '/inicio/workshop-info',
+        pathMatch: 'full'
+      }
+
+
+    ]
+  },
+
   {
     path: 'verificar/:token',
     loadComponent: () => import('./layout-pages/pages/verify-account/verify-account.component'),
