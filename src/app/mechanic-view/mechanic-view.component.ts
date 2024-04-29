@@ -20,13 +20,4 @@ import {MenuMechanicComponent} from "./menu-mechanic/menu-mechanic.component";
 })
 export default class MechanicViewComponent {
 
-  isDropdownOpenxs: boolean = false;
-
-
-  toggleDropdownxs(): void {
-    this.isDropdownOpenxs = !this.isDropdownOpenxs;
-  }
-
-
-
 }

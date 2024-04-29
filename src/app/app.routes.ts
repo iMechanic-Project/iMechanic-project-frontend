@@ -54,8 +54,29 @@ export const routes: Routes = [
         redirectTo: '/mechanic/workshop-info',
         pathMatch: 'full'
       }
+    ]
+  },
 
+  {
+    path: 'client',
+    loadComponent: () => import('./client-view/client-view.component'),
+    children: [
+      {
+        path: 'edit-info',
+        title: 'Edit Info',
+        loadComponent: () => import('./client-view/pages/edit-info/edit-info.component')
+      },
+      {
+        path: 'register-vehicles',
+        title: 'Register Vehicles',
+        loadComponent: () => import('./client-view/pages/register-vehicles/register-vehicles.component')
+      },
 
+      {
+        path: '',
+        redirectTo: '/client/edit-info',
+        pathMatch: 'full'
+      }
     ]
   },
 
