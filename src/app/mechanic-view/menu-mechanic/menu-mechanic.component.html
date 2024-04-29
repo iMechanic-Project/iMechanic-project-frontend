@@ -1,0 +1,18 @@
+<!-- MENU PARA XS -->
+<nav class="flex flex-col px-6 py-6 lg:hidden" style="background: #FED338">
+
+  <div class="flex flex-row justify-between">
+    <button class="bg-white font-bold px-3 py-1 rounded-lg" (click)="toggleDropdownxs()">☰</button>
+
+    <img src="./assets/img/LogoLA.png" alt="Logo" class="h-7 ml-4" [routerLink]="['/mechanic']" style="cursor: pointer;">
+  </div>
+
+  @if(isDropdownOpenxs){
+    <div class="flex flex-col">
+      <button class="border-2 font-bold px-8 py-2 rounded-lg mt-3 hover:bg-red-500 hover:text-white" [routerLink]="['/mechanic/workshop-info']" >INFORMACIÓN</button>
+      <button class="border-2 font-bold px-8 py-2 rounded-lg mt-3 hover:bg-red-500 hover:text-white" [routerLink]="['/mechanic/workshop-services']">SERVICIOS</button>
+
+    </div>
+  }
+
+</nav>
