@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { AuthenticationLoginDTORequest } from '../../../interfaces/AuthenticationLoginDTORequest ';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,8 +17,9 @@ import { AuthenticationLoginDTORequest } from '../../../interfaces/Authenticatio
 export default class LoginUsersComponent {
   showPassword: boolean = false;
   loginDTORequest: AuthenticationLoginDTORequest = { correoElectronico: '', contrasenia: '' };
+  roleUser: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
@@ -25,7 +27,15 @@ export default class LoginUsersComponent {
 
   onSubmit() {
     this.authService.login(this.loginDTORequest).subscribe(response => {
+      localStorage.setItem('token', response.token);
       console.log('Login successfully', response);
+      if (response.role == 'ROLE_TALLER') {
+        this.router.navigate(['/mechanic/workshop-services']);
+      } else if (response.role == 'ROLE_CLIENTE') {
+        this.router.navigate(['/client/register-vehicles']);
+      } else if (response.role == 'ROLE_MECANICO') {
+        console.log('ñero');
+      }
     }, error => {
       console.log('Error during login: ', error)
     });

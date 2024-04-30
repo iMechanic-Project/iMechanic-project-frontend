@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import {CommonModule} from "@angular/common";
-import {Router, RouterLink} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { Router, RouterLink } from '@angular/router';
+import { TallerServiceService } from '../../../services/taller-service.service';
+import { ServicioDTO } from '../../../interfaces/ServicioDTO';
 
 
 @Component({
@@ -13,44 +15,41 @@ import {Router, RouterLink} from '@angular/router';
   templateUrl: './workshop-services.component.html',
   styles: ''
 })
-export default class WorkshopServicesComponent {
+export default class WorkshopServicesComponent implements OnInit {
 
-  accionesMantenimiento: string[] = [
-    'Cambio de aceite y filtro',
-    'Inspección y reemplazo de frenos',
-    'Alineación y balanceo de ruedas',
-    'Cambio de neumáticos',
-    'Inspección y reemplazo de batería',
-    'Cambio de bujías y cables de encendido',
-    'Revisión y reemplazo de correas',
-    'Servicio de transmisión',
-    'Revisión y reemplazo de líquidos',
-    'Cambio de aceite y filtro',
-    'Inspección y reemplazo de frenos',
-    'Alineación y balanceo de ruedas',
-    'Cambio de neumáticos'
-  ];
-
-  accionesReparacion: string[] = [
-    'Rep-1',
-    'Rep-2',
-    'Rep-3',
-    'Rep-1',
-    'Rep-2',
-    'Rep-3',
-    'Rep-1',
-    'Rep-2',
-    'Rep-3',
-    'Rep-1',
-    'Rep-2',
-    'Rep-3',
-  ];
-
+  accionesMantenimiento: ServicioDTO[] = [];
+  accionesReparacion: ServicioDTO[] = [];
+  selectedServices: number[] = [];
   showModal = false;
 
+  constructor(private tallerService: TallerServiceService) { }
+
+  ngOnInit(): void {
+    this.tallerService.getAllServiceToMaintenance().subscribe(servicios => {
+      this.accionesMantenimiento = servicios;
+    });
+
+    this.tallerService.getAllServiceToRepair().subscribe(servicios => {
+      this.accionesReparacion = servicios;
+    });
+  }
+
+  toggleService(servicioId: number): void {
+    if (this.selectedServices.includes(servicioId)) {
+      this.selectedServices = this.selectedServices.filter(id => id !== servicioId);
+    } else {
+      this.selectedServices.push(servicioId);
+    }
+  }
 
   openModal(): void {
     this.showModal = true;
+    this.tallerService.addServicioToTaller(this.selectedServices).subscribe(() => {
+      this.showModal = false;
+      console.log(this.selectedServices);
+    }, error => {
+      console.log('Error saving services: ', error);
+    });
   }
 
   closeModal(): void {
