@@ -31,7 +31,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'mechanic',
+    path: 'workshop',
     loadComponent: () => import('./mechanic-view/mechanic-view.component'),
     children: [
       {
@@ -50,8 +50,13 @@ export const routes: Routes = [
         loadComponent: () => import('./mechanic-view/pages/workshop-mechanics/workshop-mechanics.component')
       },
       {
+        path: 'create-order',
+        title: 'Create Order',
+        loadComponent: () => import('./mechanic-view/pages/create-order/create-order.component')
+      },
+      {
         path: '',
-        redirectTo: '/mechanic/workshop-info',
+        redirectTo: '/workshop/workshop-info',
         pathMatch: 'full'
       }
     ]

@@ -1,0 +1,113 @@
+<!--- Lista de vehiculos --->
+<div class="flex flex-col justify-center items-center mt-10">
+
+  <img src="./assets/img/LogoEmpresaR.png" alt="Logo" class="h-32" [routerLink]="['/workshop/workshop-info']" style="cursor: pointer;">
+
+
+  <!-- Opcion de registro lg-->
+  <div class="mt-5 w-4/5 bg-gray-200 p-4 mb-8">
+
+    <div class="flex items-center mr-5 ml-5 lg:mr-24 lg:ml-24 justify-center">
+      <h2 class="text-2xl mt-3 mb-3 ">Detalle de Nueva orden</h2>
+    </div>
+
+    <div class="flex lg:flex-col flex-col  justify-between mr-5 ml-5 lg:mr-24 lg:ml-24">
+
+      <div class="flex lg:flex-row flex-col lg:w-96 lg:mx-auto">
+        <input #placaInput type="text" placeholder="Placa" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4  mb-2 lg:mb-0" (input)="onInputChange($event)">
+        <button type="button" class="text-xl text-black rounded-xl px-10 py-2 font-semibold inline-block mb-1 lg:mb-0 mt-3 lg:mt-0" style="background: #F7941F">Buscar</button>
+      </div>
+
+      <div class="flex ">
+        <h2 class="text-2xl mb-3 ">Información del cliente</h2>
+      </div>
+
+      <!-- Opcion de registro del clientiño-->
+      <div class="flex lg:flex-row flex-col">
+
+        <input type="text" placeholder="Nombre" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0">
+        <input type="text" placeholder="Direccion" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0">
+        <input type="text" placeholder="Número de contacto" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mb-2 lg:mb-0">
+      </div>
+
+      <div class="flex">
+        <h2 class="text-2xl mt-3 mb-3 ">Información del vehículo</h2>
+      </div>
+
+      <!-- Opcion de registro del vehiCULO-->
+      <div class="flex lg:flex-row flex-col">
+        <input type="text" placeholder="Placa" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0">
+        <input type="text" placeholder="Modelo" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0">
+        <input type="text" placeholder="Marca" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0">
+        <input type="text" placeholder="Categoría" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mb-2 lg:mb-0">
+      </div>
+
+      <div class="flex">
+        <h2 class="text-2xl mt-3 mb-3 ">Información del servicio</h2>
+      </div>
+
+      <!-- Opcion de registro del servicio-->
+
+
+      <div class="bg-white p-6 rounded-lg text-black overflow-y-auto mb-5" style="height: 250px;">
+        <div class="flex lg:flex-row flex-col mb-3" *ngFor="let item of items; let i = index" [id]="'item-' + i">
+          <select class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0">
+            <option disabled selected>Tipo de servicio</option>
+            <option *ngFor="let tservicio of tipoServicio">{{ tservicio }}</option>
+          </select>
+
+          <select class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0">
+            <option disabled selected>Servicio</option>
+            <option *ngFor="let servicio of Servicio">{{ servicio }}</option>
+          </select>
+
+          <select class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0">
+            <option disabled selected>Macanico</option>
+            <option *ngFor="let mc of listaMecanico">{{ mc }}</option>
+          </select>
+
+          <div class="text-xl w-full">
+            <button type="button" class="text-xl w-full text-black rounded-xl px-3 py-2 font-semibold inline-block" style="background: #F7941F; white-space: nowrap;" (click)="agregarItem()" *ngIf="i === items.length - 1">Agregar Servicio</button>
+            <button type="button" class="text-xl w-full text-black rounded-xl px-3 py-2 font-semibold inline-block" style="background: #F7941F; white-space: nowrap;" (click)="eliminarItem(i)" *ngIf="i !== items.length - 1">Quitar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mx-auto mb-2">
+        <button type="button" class="text-xl text-black rounded-xl px-8 py-3 font-semibold inline-block mb-1 lg:mb-0 mt-3 lg:mt-0" (click)="openModal()" style="background: #F7941F">Registrar</button>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+@if (showModal){
+
+  <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">
+
+    <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">
+      <h3 class="text-2xl mb-4 font-semibold text-center text-black">La orden fue registrada correctamente!</h3>
+      <img src="./assets/img/LogoG_trans.png" alt="Logo" class="ml-2">
+
+      <!-- Botón de guardar -->
+      <div class="flex items-center justify-center mr-24 ml-24">
+        <button type="button" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block mt-4" style="background: #F7941F"  (click)="closeModal()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+}
+
+
+
+
+
+
+
+
+
+
+

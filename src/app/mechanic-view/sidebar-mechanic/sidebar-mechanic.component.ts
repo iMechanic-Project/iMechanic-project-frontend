@@ -18,15 +18,14 @@ export class SidebarMechanicComponent {
   p: number = 1;
 
   showDropdown: boolean = false;
-  isDropdownOpen: boolean = false;
+  showDropdown2: boolean = false;
 
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
   }
 
-
-  toggleDropdown3() {
-    this.isDropdownOpen = !this.isDropdownOpen;
+  toggleDropdown2(): void {
+    this.showDropdown2 = !this.showDropdown2;
   }
 
 }

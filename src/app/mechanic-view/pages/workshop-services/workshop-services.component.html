@@ -1,8 +1,12 @@
-<div class="flex justify-center items-center h-screen -mt-8 -mb-10 mr-5 ml-5">
-  <div class="p-10 text-black lg:h-4/6 w-full lg:w-4/12" style="background: #D9D9D9">
+
+
+<div class="flex justify-center items-center mt-12 lg:mt-32 mb-10 lg:mb-28 mr-5 ml-5">
+
+  <div class="p-10 text-black  w-full lg:w-4/12" style="background: #D9D9D9">
+
     <h2 class="text-2xl mb-6">Servicios prestados del taller:</h2>
 
-
+    <!-- Lista de acciones-->
     <div class="bg-white p-6 rounded-lg text-black overflow-y-auto" style="height: 470px;">
 
       <!-- Lista de acciones de Mantenimiento -->
@@ -32,16 +36,15 @@
       </div>
     </div>
 
-
     <!-- Botón de guardar -->
     <div class=" text-center mt-1">
       <button type="button" class="text-xl mt-5 bg-blue-500 font-semibold text-black px-10 py-3 rounded-lg" style="background: #F7941F" (click)="openModal()">Guardar</button>
-
-
     </div>
 
   </div>
 </div>
+
+
 
 
 @if (showModal){
