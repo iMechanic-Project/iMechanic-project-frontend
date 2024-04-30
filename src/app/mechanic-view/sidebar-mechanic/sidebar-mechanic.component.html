@@ -1,13 +1,14 @@
 
 <!-- MENU PARA LG -->
-<img src="./assets/img/LogoLtrans.png" alt="Logo" class="h-7 mt-10" [routerLink]="['/mechanic']" style="cursor: pointer">
+<img src="./assets/img/LogoLtrans.png" alt="Logo" class="h-7 mt-10" [routerLink]="['/workshop']" style="cursor: pointer">
+
 
 <!-- Primer conjunto de botones -->
 <div class="top-full left-0 bg-red z-10 w-72 mt-12 mb-5 rounded-3xl justify-between">
   @if (showDropdown) {
     <button class="justify-between text-xl flex w-full bg-white hover:bg-gray-200 text-black font-semibold py-2 px-12 rounded-t-3xl"
             (click)="toggleDropdown()">
-      Mi Taller
+      Orden de trabajo
       @if (showDropdown) {
         <span >&#9650;</span>
       } @else {
@@ -18,7 +19,7 @@
   @if (!showDropdown) {
     <button class="justify-between text-xl flex w-full bg-white hover:bg-gray-200 text-black font-semibold py-2 px-12 rounded-3xl"
             (click)="toggleDropdown()">
-      Mi Taller
+      Orden de trabajo
       @if (showDropdown) {
         <span>&#9650;</span>
       } @else {
@@ -31,13 +32,52 @@
   @if (showDropdown) {
     <div class="top-full left-0 bg-white z-10 w-72 border-t-2 rounded-b-3xl">
       <!-- Botones del desplegable -->
-      <button class="text-xl flex w-full bg-white hover:bg-gray-200 text-black font-bold py-2 px-12" [routerLink]="['/mechanic/workshop-info']">
+      <button class="text-xl flex w-full bg-white hover:bg-gray-200 text-black font-bold py-2 px-12" [routerLink]="['/workshop/create-order']">
+        Nueva Orden
+      </button>
+      <button class="text-xl flex w-full bg-white hover:bg-gray-200 text-black font-bold py-2 px-12 rounded-b-3xl" [routerLink]="['/workshop/workshop-info']">
+        Lista de ordenes
+      </button>
+    </div>
+  }
+</div>
+
+<!-- Segundo conjunto de botones -->
+<div class="top-full left-0 bg-red z-10 w-72 mb-5 rounded-3xl justify-between">
+  @if (showDropdown2) {
+    <button class="justify-between text-xl flex w-full bg-white hover:bg-gray-200 text-black font-semibold py-2 px-12 rounded-t-3xl"
+            (click)="toggleDropdown2()">
+      Mi Taller
+      @if (showDropdown2) {
+        <span >&#9650;</span>
+      } @else {
+        <span>&#9660;</span>
+      }
+    </button>
+  }
+  @if (!showDropdown2) {
+    <button class="justify-between text-xl flex w-full bg-white hover:bg-gray-200 text-black font-semibold py-2 px-12 rounded-3xl"
+            (click)="toggleDropdown2()">
+      Mi Taller
+      @if (showDropdown2) {
+        <span>&#9650;</span>
+      } @else {
+        <span>&#9660;</span>
+      }
+    </button>
+  }
+
+
+  @if (showDropdown2) {
+    <div class="top-full left-0 bg-white z-10 w-72 border-t-2 rounded-b-3xl">
+      <!-- Botones del desplegable -->
+      <button class="text-xl flex w-full bg-white hover:bg-gray-200 text-black font-bold py-2 px-12" [routerLink]="['/workshop/workshop-info']">
         Información
       </button>
-      <button class="text-xl flex w-full bg-white hover:bg-gray-200 text-black font-bold py-2 px-12" [routerLink]="['/mechanic/workshop-services']">
+      <button class="text-xl flex w-full bg-white hover:bg-gray-200 text-black font-bold py-2 px-12" [routerLink]="['/workshop/workshop-services']">
         Servicios
       </button>
-      <button class="text-xl flex w-full bg-white hover:bg-gray-200 text-black font-bold py-2 px-12 rounded-b-3xl" [routerLink]="['/mechanic/workshop-mechanics']">
+      <button class="text-xl flex w-full bg-white hover:bg-gray-200 text-black font-bold py-2 px-12 rounded-b-3xl" [routerLink]="['/workshop/workshop-mechanics']">
         Mechanicos
       </button>
     </div>
