@@ -55,6 +55,11 @@ export const routes: Routes = [
         loadComponent: () => import('./mechanic-view/pages/create-order/create-order.component')
       },
       {
+        path: 'order-list',
+        title: 'Order List',
+        loadComponent: () => import('./mechanic-view/pages/order-list/order-list.component')
+      },
+      {
         path: '',
         redirectTo: '/workshop/workshop-info',
         pathMatch: 'full'

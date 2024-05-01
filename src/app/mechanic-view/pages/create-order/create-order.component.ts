@@ -1,6 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import { CommonModule } from '@angular/common'; // Importa CommonModule
+import { CommonModule } from '@angular/common';
 import {FormsModule} from "@angular/forms";
 import {VehiculoDTORequest} from "../../../interfaces/VehiculoDTORequest";
 import {Categoria} from "../../../interfaces/Categoria";
@@ -23,6 +23,7 @@ export default class CreateOrderComponent {
   listaMecanico: string[] = ["Mecanico1", "Mecanico2", "Mecanico3"]; // Ejemplo de datos para los select
   items: any[] = [{}]; // Inicialmente un array con un objeto vacío
   showModal: boolean = false;
+
 
   agregarItem() {
     this.items.push({}); // Agrega un nuevo objeto vacío al final del array de items
