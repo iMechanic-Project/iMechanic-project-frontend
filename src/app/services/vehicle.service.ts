@@ -6,6 +6,8 @@ import { VehiculoDTOResponse } from '../interfaces/VehiculoDTOResponse';
 import { MarcaDTO } from '../interfaces/MarcaDTO';
 import { ModeloDTO } from '../interfaces/ModeloDTO';
 import { VehiculoDTORequest } from '../interfaces/VehiculoDTORequest';
+import { VehiculoSearchDTORequest } from '../interfaces/VehiculoSearchDTORequest';
+import { VehiculoSearchDTOResponse } from '../interfaces/VehiculoSearchDTOResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +32,10 @@ export class VehicleService {
 
   createVehicle(vehiculoDTORequest: VehiculoDTORequest): Observable<VehiculoDTOResponse> {
     return this.http.post<VehiculoDTOResponse>(`${this.baseUrl}/vehiculo/crear`, vehiculoDTORequest);
+  }
+
+  getDataByPlaca(vehiculoSearchDTORequest: VehiculoSearchDTORequest): Observable<VehiculoSearchDTOResponse> {
+    return this.http.post<VehiculoSearchDTOResponse>(`${this.baseUrl}/vehiculo/placa`, vehiculoSearchDTORequest);
   }
 
 }

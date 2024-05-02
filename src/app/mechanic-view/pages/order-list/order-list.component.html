@@ -10,16 +10,20 @@
     <div class="flex lg:flex-row flex-col items-center justify-between mr-5 ml-5 lg:mr-24 lg:ml-24">
 
       <div class="flex lg:flex-row flex-col">
-        <input #placaInput type="text" placeholder="Placa" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4  mb-2 lg:mb-0" (input)="onInputChange($event)">
+        <input #placaInput type="text" placeholder="Placa"
+          class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4  mb-2 lg:mb-0"
+          (input)="onInputChange($event)">
 
-        <select class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0">
+        <select
+          class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0">
           <option value="" disabled selected>Fecha de registro</option>
           <option value="marca1">Fecha 1</option>
           <option value="marca2">Fecha 2</option>
           <option value="marca3">Fecha 3</option>
         </select>
 
-        <select class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4  mb-2 lg:mb-0">
+        <select
+          class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4  mb-2 lg:mb-0">
           <option value="" disabled selected>Todos los estados</option>
           <option value="marca1">En Espera</option>
           <option value="marca2">En Progreso</option>
@@ -27,7 +31,9 @@
         </select>
       </div>
 
-      <button type="button" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block mb-1 lg:mb-0 mt-3 lg:mt-0" style="background: #F7941F">Buscar</button>
+      <button type="button"
+        class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block mb-1 lg:mb-0 mt-3 lg:mt-0"
+        style="background: #F7941F">Buscar</button>
 
     </div>
   </div>
@@ -36,25 +42,26 @@
   <div class="lg:block hidden mt-8 w-4/5 bg-white border-2 border-gray-400 text-center" style="height: 32pc">
     <table class="w-full">
       <thead>
-      <tr>
-        <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">PLACA</th>
-        <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">FECHA DE REGISTRO</th>
-        <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">HORA DE REGISTRO</th>
-        <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">ESTADO</th>
-        <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">ACCION</th>
-      </tr>
+        <tr>
+          <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">PLACA</th>
+          <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">FECHA DE REGISTRO</th>
+          <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">HORA DE REGISTRO</th>
+          <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">ESTADO</th>
+          <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">ACCION</th>
+        </tr>
       </thead>
 
       <tbody class="w-full">
-      <tr *ngFor="let vehicle of vehicles | paginate: { itemsPerPage: 6, currentPage: p }">
-        <td class="border-gray-400 py-4" style="width: 14.28%;">{{ vehicle.placa }}</td>
-        <td class="border-gray-400 py-4" style="width: 14.28%;">{{ vehicle.fecha_r }}</td>
-        <td class="border-gray-400 py-4" style="width: 14.28%;">{{ vehicle.hora_r}}</td>
-        <td class="border-gray-400 font-semibold py-4 {{ getColorClass(vehicle.estado) }}" style="width: 14.28%;">{{ vehicle.estado }}</td>
-        <td class="border-gray-400 py-4" style="width: 14.28%;">
-          <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F">☰</button>
-        </td>
-      </tr>
+        <tr *ngFor="let vehicle of vehicles | paginate: { itemsPerPage: 6, currentPage: p }">
+          <td class="border-gray-400 py-4" style="width: 14.28%;">{{ vehicle.placa }}</td>
+          <td class="border-gray-400 py-4" style="width: 14.28%;">{{ vehicle.fechaRegistro }}</td>
+          <td class="border-gray-400 py-4" style="width: 14.28%;">{{ vehicle.horaRegistro }}</td>
+          <td class="border-gray-400 font-semibold py-4 {{ getColorClass(vehicle.estado) }}" style="width: 14.28%;">{{
+            vehicle.estado }}</td>
+          <td class="border-gray-400 py-4" style="width: 14.28%;">
+            <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F">☰</button>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -63,41 +70,33 @@
   <div class="lg:hidden mt-8 w-4/5 bg-white border-2 border-gray-400 text-center" style="height: 33pc">
     <table class="w-full">
       <thead>
-      <tr>
-        <th class="text-xs font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">PLACA</th>
-        <th class="text-xs font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">FECHA DE REGISTRO</th>
-        <th class="text-xs font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">HORA DE REGISTRO</th>
-        <th class="text-xs font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">ESTADO</th>
-        <th class="text-xs font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">ACCION</th>
-      </tr>
+        <tr>
+          <th class="text-xs font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">PLACA</th>
+          <th class="text-xs font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">FECHA DE REGISTRO</th>
+          <th class="text-xs font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">HORA DE REGISTRO</th>
+          <th class="text-xs font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">ESTADO</th>
+          <th class="text-xs font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">ACCION</th>
+        </tr>
       </thead>
 
       <tbody class="w-full">
-      <tr *ngFor="let vehicle of vehicles | paginate: { itemsPerPage:7, currentPage: p }">
-        <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ vehicle.placa }}</td>
-        <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ vehicle.fecha_r }}</td>
-        <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ vehicle.hora_r}}</td>
-        <td class="text-xs border-gray-400 font-semibold py-4 {{ getColorClass(vehicle.estado) }}" style="width: 20%;">{{ vehicle.estado }}</td>
-        <td class="text-xs border-gray-400 py-4" style="width: 20%;">
-          <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F">☰</button>
-        </td>
-      </tr>
+        <tr *ngFor="let vehicle of vehicles | paginate: { itemsPerPage:7, currentPage: p }">
+          <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ vehicle.placa }}</td>
+          <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ vehicle.fechaRegistro }}</td>
+          <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ vehicle.horaRegistro }}</td>
+          <td class="text-xs border-gray-400 font-semibold py-4 {{ getColorClass(vehicle.estado) }}"
+            style="width: 20%;">{{ vehicle.estado }}</td>
+          <td class="text-xs border-gray-400 py-4" style="width: 20%;">
+            <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F">☰</button>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 
   <!-- paginacion lg-->
   <div class="flex justify-center -mt-14 mb-14 lg:mb-32">
-    <pagination-controls
-      (pageChange)="p = $event"
-      previousLabel=""
-      nextLabel=""
-    ></pagination-controls>
+    <pagination-controls (pageChange)="p = $event" previousLabel="" nextLabel=""></pagination-controls>
   </div>
 
 </div>
-
-
-
-
-

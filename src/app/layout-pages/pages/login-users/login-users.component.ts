@@ -30,7 +30,7 @@ export default class LoginUsersComponent {
       localStorage.setItem('token', response.token);
       console.log('Login successfully', response);
       if (response.role == 'ROLE_TALLER') {
-        this.router.navigate(['/mechanic/workshop-services']);
+        this.router.navigate(['/workshop/workshop-services']);
       } else if (response.role == 'ROLE_CLIENTE') {
         this.router.navigate(['/client/register-vehicles']);
       } else if (response.role == 'ROLE_MECANICO') {

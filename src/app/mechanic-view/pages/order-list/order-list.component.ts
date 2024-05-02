@@ -1,7 +1,9 @@
-import {Component, ElementRef} from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
-import {NgxPaginationModule} from "ngx-pagination";
-import {NgForOf} from "@angular/common";
+import { NgxPaginationModule } from "ngx-pagination";
+import { NgForOf } from "@angular/common";
+import { OrderService } from '../../../services/order.service';
+import { OrdenTrabajoDTOList } from '../../../interfaces/OrdenTrabajoDTOList';
 
 
 @Component({
@@ -14,37 +16,34 @@ import {NgForOf} from "@angular/common";
   templateUrl: './order-list.component.html',
   styles: ''
 })
-export default class OrderListComponent {
+export default class OrderListComponent implements OnInit {
 
   p: number = 1;
 
-  vehicles: any[] = [
-    { placa: 'GHI-789',  fecha_r: '09/04/2024', hora_r: '10:31:03', estado: 'En Proceso' },
-    { placa: 'GHI-789', fecha_r: '09/04/2024', hora_r: '10:31:03', estado: 'En Proceso' },
-    { placa: 'GHI-789', fecha_r: '09/04/2024', hora_r: '10:31:03', estado: 'En Espera' },
-    { placa: 'GHI-789', fecha_r: '09/04/2024', hora_r: '10:31:03', estado: 'En Espera' },
-    { placa: 'GHI-789', fecha_r: '09/04/2024', hora_r: '10:31:03', estado: 'En Espera' },
-    { placa: 'GHI-789', fecha_r: '09/04/2024', hora_r: '10:31:03', estado: 'Finalizado' },
-    { placa: 'GHI-789', fecha_r: '09/04/2024', hora_r: '10:31:03', estado: 'Finalizado' },
-    { placa: 'GHI-789', fecha_r: '09/04/2024', hora_r: '10:31:03', estado: 'Finalizado' },
-  ];
+  vehicles: OrdenTrabajoDTOList[] = [];
 
   getColorClass(estado: string): string {
     switch (estado) {
-      case 'En Proceso':
+      case 'EN_PROCESO':
         return 'text-green-600'; // Verde
-      case 'En Espera':
+      case 'EN_ESPERA':
         return 'text-red-600'; // Rojo
-      case 'Finalizado':
+      case 'FINALIZADO':
         return 'text-black'; // Negro
       default:
-        return ''; // Si el estado no coincide, no se aplica ningún color específico
+        return estado; // Devuelve el estado tal cual si no coincide con ninguno de los casos anteriores
     }
   }
 
   @ViewChild('placaInput') placaInput!: ElementRef;
 
-  constructor() { }
+  constructor(private orderService: OrderService) { }
+
+  ngOnInit(): void {
+    this.orderService.getAllOrdersByTaller().subscribe(ordenes => {
+      this.vehicles = ordenes;
+    });
+  }
 
   onInputChange(event: any): void {
     let value = event.target.value.toUpperCase();
@@ -53,6 +52,7 @@ export default class OrderListComponent {
     }
     this.placaInput.nativeElement.value = value.substring(0, 7); // Limita la longitud a 7 caracteres
   }
+
 
 
 }

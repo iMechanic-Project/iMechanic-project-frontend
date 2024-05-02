@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { MechanicDTO } from '../interfaces/MechanicDTO';
 import { MechanicDTORequest } from '../interfaces/MechanicDTORequest';
 import { MechanicDTOResponse } from '../interfaces/MechanicDTOResponse';
+import { MecanicoDTOList } from '../interfaces/MecanicoDTOList';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class MechanicService {
 
   createMechanic(mecanico: MechanicDTORequest): Observable<MechanicDTOResponse> {
     return this.http.post<MechanicDTOResponse>(`${this.baseUrl}/mecanico/crear`, mecanico);
+  }
+
+  getMechanicsByService(serviceId: number): Observable<MecanicoDTOList[]> {
+    return this.http.get<MecanicoDTOList[]>(`${this.baseUrl}/mecanico/service/${serviceId}`);
   }
 
 }
