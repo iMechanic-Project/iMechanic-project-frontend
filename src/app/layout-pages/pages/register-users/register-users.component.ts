@@ -3,17 +3,29 @@ import { NgClass } from "@angular/common";
 import { FormsModule } from '@angular/forms';
 import { AuthenticationSignUpDTORequest } from '../../../interfaces/AuthenticationSignUpDTORequest';
 import { AuthService } from '../../../services/auth.service';
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-register-users',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './register-users.component.html',
   styles: ''
 })
 export default class RegisterUsersComponent {
+
+  showModal = false;
+
+  openModal(): void {
+    this.showModal = true;
+  }
+
+  closeModal(): void {
+    this.showModal = false;
+  }
 
   signUpDTORequest: AuthenticationSignUpDTORequest = {
     correoElectronico: '',

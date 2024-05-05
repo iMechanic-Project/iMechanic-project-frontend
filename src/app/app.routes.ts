@@ -25,8 +25,6 @@ export const routes: Routes = [
         redirectTo: '/inicio/home-page',
         pathMatch: 'full'
       }
-
-
     ]
   },
 
@@ -85,6 +83,47 @@ export const routes: Routes = [
       {
         path: '',
         redirectTo: '/client/edit-info',
+        pathMatch: 'full'
+      }
+    ]
+  },
+
+  {
+    path: 'employee',
+    loadComponent: () => import('./employee-view/employee-view.component'),
+    children: [
+      {
+        path: 'order-list-employee',
+        title: 'Order List Employee',
+        loadComponent: () => import('./employee-view/pages/order-list-employee/order-list-employee.component')
+      },
+      {
+        path: 'view-info',
+        title: 'View Info',
+        loadComponent: () => import('./employee-view/pages/view-info/view-info.component')
+      },
+
+      {
+        path: '',
+        redirectTo: '/employee/view-info',
+        pathMatch: 'full'
+      }
+    ]
+  },
+
+  {
+    path: 'progress',
+    loadComponent: () => import('./order-progress/order-progress.component'),
+    children: [
+      {
+        path: 'employee-progress',
+        title: 'Employee Progress',
+        loadComponent: () => import('./order-progress/pages/employee-progress/employee-progress.component')
+      },
+
+      {
+        path: '',
+        redirectTo: '/progress/employee-progress',
         pathMatch: 'full'
       }
     ]

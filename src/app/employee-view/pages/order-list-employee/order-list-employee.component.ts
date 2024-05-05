@@ -1,24 +1,23 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
-import { ViewChild } from '@angular/core';
-import { NgxPaginationModule } from "ngx-pagination";
-import { NgForOf } from "@angular/common";
-import { OrderService } from '../../../services/order.service';
-import { OrdenTrabajoDTOList } from '../../../interfaces/OrdenTrabajoDTOList';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {NgForOf, NgIf} from "@angular/common";
+import {NgxPaginationModule} from "ngx-pagination";
+import {OrdenTrabajoDTOList} from "../../../interfaces/OrdenTrabajoDTOList";
+import {OrderService} from "../../../services/order.service";
 import {RouterLink} from "@angular/router";
 
-
 @Component({
-  selector: 'app-order-list',
+  selector: 'app-order-list-employee',
   standalone: true,
   imports: [
-    NgxPaginationModule,
     NgForOf,
-    RouterLink
+    NgxPaginationModule,
+    RouterLink,
+    NgIf
   ],
-  templateUrl: './order-list.component.html',
-  styles: ''
+  templateUrl: './order-list-employee.component.html',
+  styleUrl: './order-list-employee.component.css'
 })
-export default class OrderListComponent implements OnInit {
+export default class OrderListEmployeeComponent implements OnInit{
 
   p: number = 1;
 

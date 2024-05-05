@@ -52,7 +52,7 @@
       <div class=" w-full mx-auto ">
 
         @if (showDescripcion){
-          <h2 class="text-lg font-semibold mb-2">Información de Taller Mecánico</h2>
+          <h2 class="text-lg font-semibold mb-2">Información del Taller</h2>
         } @else {
           <h2 class="text-lg font-semibold mb-2">Información del Cliente</h2>
         }
@@ -80,11 +80,27 @@
       </div>
 
       <div class="col-span-2 flex justify-center">
-        <button type="submit" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block" style="background: #F7941F">Crear cuenta</button>
+        <button type="submit" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block" (click)="openModal()" style="background: #F7941F">Crear cuenta</button>
       </div>
 
     </form>
   </div>
 
 </div>
+
+
+@if (showModal){
+
+  <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">
+
+    <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">
+      <h2 class="text-2xl mb-2 font-semibold text-center text-black">Su cuenta fue registrada correctamente!</h2>
+      <h2 class="text-lg mb-4 font-semibold text-center text-black">Por favor revise su correo electronico</h2>
+      <!-- Botón de guardar -->
+      <div class="flex items-center justify-center mr-24 ml-24">
+        <button type="button" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block mt-4" style="background: #F7941F"  (click)="closeModal()" [routerLink]="['/inicio/login-users']">Aceptar</button>
+      </div>
+    </div>
+  </div>
+}
 

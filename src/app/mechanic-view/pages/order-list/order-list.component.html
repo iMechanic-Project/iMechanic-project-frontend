@@ -1,10 +1,13 @@
-<!--- Lista de vehiculos --->
-<div class="flex flex-col justify-center items-center mt-16">
+<!--- Lista de ordenes --->
+<div class="flex flex-col justify-center items-center mt-5 mb-1">
 
-  <!-- Opcion de registro lg-->
-  <div class="mt-0 lg:mt-14 w-4/5 bg-gray-200 p-4">
+  <img src="../../../../assets/img/LogoEmpresaR.png" alt="Logo" class="h-32" [routerLink]="['/workshop/workshop-info']"
+       style="cursor: pointer;">
+
+  <!-- Opcion de busqueda lg-->
+  <div class="mt-3 lg:mt-5 w-4/5 bg-gray-200 p-4">
     <div class="flex items-center mr-5 ml-5 lg:mr-24 lg:ml-24">
-      <h2 class="text-2xl mt-3 mb-3 ">Buscar por:</h2>
+      <h2 class="text-2xl mt-2 mb-3 ">Buscar por:</h2>
     </div>
 
     <div class="flex lg:flex-row flex-col items-center justify-between mr-5 ml-5 lg:mr-24 lg:ml-24">
@@ -95,7 +98,7 @@
   </div>
 
   <!-- paginacion lg-->
-  <div class="flex justify-center -mt-14 mb-14 lg:mb-32">
+  <div class="flex justify-center -mt-14 mb-14 lg:mb-20">
     <pagination-controls (pageChange)="p = $event" previousLabel="" nextLabel=""></pagination-controls>
   </div>
 
