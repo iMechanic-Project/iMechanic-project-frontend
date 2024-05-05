@@ -35,6 +35,8 @@ export class ProgressBarComponent {
     { name: 'Fin', completed: false }
   ];
 
+
+
   openModal(): void {
     this.showModal = true;
   }
@@ -44,7 +46,6 @@ export class ProgressBarComponent {
   }
 
   nextService() {
-
     if (this.currentServiceIndex < this.services.length) {
       this.services[this.currentServiceIndex].completed = true;
       this.currentServiceIndex++;
