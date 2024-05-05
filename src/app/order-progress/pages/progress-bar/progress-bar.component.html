@@ -1,6 +1,6 @@
 
 @if(services.length>=8){
-  <div class="main p-4 overflow-x-auto lg:ml-0 lg:mr-0 ml-5 mr-5 ">
+  <div class="main p-4 overflow-x-auto lg:ml-0 lg:mr-0 ml-5 mr-5">
     <ul>
       <li *ngFor="let service of services; let i = index" [class.active]="i <= currentServiceIndex">
 
@@ -35,7 +35,7 @@
           @if(i < services.length){
             <div class="mt-2">
               @if (i === 0 ){
-                <p class="text-black mr-5">{{service.name}}</p>
+                <p class="text-black ml-1.5">{{service.name}}</p>
               }
               @if (i === services.length-1){
                 <p class="text-black ml-9">{{service.name}}</p>
@@ -84,7 +84,7 @@
           @if(i < services.length){
             <div class="mt-2">
               @if (i === 0 ){
-                <p class="text-black mr-5">{{service.name}}</p>
+                <p class="text-black mr-2">{{service.name}}</p>
               }
               @if (i === services.length-1){
                 <p class="text-black ml-9">{{service.name}}</p>
@@ -100,7 +100,7 @@
 
 <div class="main items-center">
   <div class="flex lg:flex-row flex-col mt-10">
-    <!---
+
     @if(showButtons && currentServiceIndex < services.length - 1){
       <div class="boton flex justify-center mt-5">
         <button type="submit" class="text-black font-semibold inline-block" (click)="nextService()">Siguiente Paso</button>
@@ -111,8 +111,6 @@
         <button type="submit" class="text-black font-semibold inline-block" (click)="openModal()" >Finalizar Orden</button>
       </div>
     }
-    --->
-
     @if(!showButtons){
       <div class="boton flex justify-center mt-5">
         <button type="submit" class="text-black font-semibold inline-block" (click)="startOrder()">Empezar Orden</button>

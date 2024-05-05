@@ -38,8 +38,8 @@ export default class EmployeeProgressComponent {
     direccion: 'Las Camelias 450 - Santa Inés',
     telefono: '976345822',
     codigo: '0010AAAB',
-    servicio: 'Cambio de sexo',
-    mecanico: 'Daigo feo',
+    servicio: 'Cambio de aceite',
+    mecanico: 'Daigo Campos',
     estado: 'En progreso',
   };
 
