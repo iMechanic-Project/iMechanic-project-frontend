@@ -1,0 +1,239 @@
+
+.main{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 800px; /* Por ejemplo, establece el tamaño máximo de ancho a 800px */
+}
+
+
+
+.diagonal-text {
+  transform: rotate(-55deg);
+  position: relative; /* Establece la posición relativa */
+  font-size: 14px; /* Tamaño de fuente */
+
+}
+
+.bloque1 {
+  height: 60px;
+  display: flex; /* Establece el contenedor como un flexbox */
+  flex-direction: column; /* Establece la dirección del flujo como columna */
+  justify-content: flex-end; /* Alinea los elementos al final verticalmente */
+}
+
+.bloque2 {
+  height: 120px;
+  margin-top: -20px;
+
+}
+
+.service-name {
+  position: relative; /* Establece la posición relativa */
+  width: 120px; /* Establece un ancho máximo para los nombres de los servicios */
+  overflow-wrap: break-word; /* Divide el texto en palabras y ajusta según el ancho máximo */
+
+}
+
+
+
+
+.todo{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.boton{
+  padding: 10px;
+  background: #F7941F;
+  border-radius: 10px;
+  margin-left: 85px;
+  margin-right: 85px;
+  font-size: 16px; /* Tamaño de texto */
+
+}
+
+.main-container {
+  border: 1px solid #ddd; /* Borde de 1px sólido de color gris */
+  overflow-x: auto; /* Agrega desplazamiento horizontal si el contenido es demasiado ancho */
+}
+
+.botonfn{
+  padding: 10px;
+  background: #c3bfbb;
+  border-radius: 10px;
+  margin-left: 85px;
+  margin-right: 85px;
+  font-size: 16px; /* Tamaño de texto */
+
+}
+
+.head{
+  text-align: center;
+}
+.head_1{
+  font-size: 30px;
+  font-weight: 600;
+  color: #333;
+}
+.head_1 span{
+  color: #ff4732;
+}
+.head_2{
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-top: 3px;
+}
+ul{
+  display: flex;
+  margin-top: 80px;
+}
+ul li{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+ul li .icon{
+  font-size: 1px;
+  color: #ffffff;
+  margin: 0 35px;
+}
+
+
+/* Progress Div Css  */
+
+ul li .progress{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  margin-top: 37.5px;
+  margin-bottom: 2px;
+  margin-left: 20px;
+  margin-right: 20px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  position: relative;
+  cursor: pointer;
+}
+
+ul li .progress-ball{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  margin-top: 27.5px;
+  margin-bottom: 2px;
+  margin-left: 20px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  position: relative;
+  cursor: pointer;
+}
+
+ul li .progress-ball2{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #D9D9D9;
+  margin-top: 27.5px;
+  margin-bottom: 2px;
+  margin-right: 20px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  position: relative;
+  cursor: pointer;
+}
+
+
+.progress::after {
+  content: " ";
+  position: absolute;
+  min-width: 100px;
+  max-width: 120px;
+  height: 7px;
+  background-color: #D9D9D9;
+  left: 28px;
+  top: 50%; /* Ajustar la posición vertical */
+  transform: translateY(-50%); /* Centrar verticalmente */
+}
+
+.progress::before {
+  content: " ";
+  position: absolute;
+  width: 100px;
+  height: 7px;
+  background-color: rgba(217, 217, 217, 0);
+  right: 28px;
+  top: 50%; /* Ajustar la posición vertical */
+  transform: translateY(-50%); /* Centrar verticalmente */
+}
+
+.progress-ball::before {
+  content: " ";
+  position: absolute;
+  width: 100px;
+  height: 7px;
+  background-color: rgba(217, 217, 217, 0);
+  right: 48px;
+  top: 50%; /* Ajustar la posición vertical */
+  transform: translateY(-50%); /* Centrar verticalmente */
+}
+
+.progress-ball2::after {
+  content: " ";
+  position: absolute;
+  width: 100px;
+  height: 7px;
+  background-color: #D9D9D9;
+  left: 48px;
+  top: 50%; /* Ajustar la posición vertical */
+  transform: translateY(-50%); /* Centrar verticalmente */
+}
+
+
+.one::after{
+  width: 0;
+  height: 0;
+}
+ul li .progress .uil{
+  display: none;
+}
+ul li .progress p{
+  font-size: 13px;
+}
+
+/* Active Css  */
+
+ul li .active{
+  background-color: #F7941F;
+  display: grid;
+  place-items: center;
+}
+
+
+/* Degradado para el último elemento activo */
+li .active::after {
+  background: linear-gradient(to right, #F7941F, #D9D9D9); /* Degradado de naranja a plomo */
+}
+
+li .active::before{
+  background-color: #f68c0e;
+}
+
+ul li .active p{
+  display: none;
+}
+ul li .active .uil{
+  font-size: 20px;
+  display: flex;
+}

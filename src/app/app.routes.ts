@@ -79,7 +79,11 @@ export const routes: Routes = [
         title: 'Register Vehicles',
         loadComponent: () => import('./client-view/pages/register-vehicles/register-vehicles.component')
       },
-
+      {
+        path: 'order-list-client',
+        title: 'Order List Client',
+        loadComponent: () => import('./client-view/pages/order-list-client/order-list-client.component')
+      },
       {
         path: '',
         redirectTo: '/client/edit-info',
@@ -120,7 +124,11 @@ export const routes: Routes = [
         title: 'Employee Progress',
         loadComponent: () => import('./order-progress/pages/employee-progress/employee-progress.component')
       },
-
+      {
+        path: 'client-progress',
+        title: 'Client Progress',
+        loadComponent: () => import('./order-progress/pages/client-progress/client-progress.component')
+      },
       {
         path: '',
         redirectTo: '/progress/employee-progress',
