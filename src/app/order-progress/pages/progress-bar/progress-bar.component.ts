@@ -23,15 +23,15 @@ export class ProgressBarComponent {
   services = [
     { name: 'Inicio', completed: false },
     { name: 'Inspeccion visual', completed: false },
-    { name: 'Medición y verificación', completed: false },
-    { name: 'Reemplazo de pastillas y discos', completed: false },
-    { name: 'Medición y verificación', completed: false },
-    { name: 'Reemplazo de pastillas y discos', completed: false },
-    { name: 'Reemplazo de pastillas y discos', completed: false },
-    { name: 'Medición y verificación', completed: false },
-    { name: 'Reemplazo de pastillas y discos', completed: false },
-    { name: 'Medición y verificación', completed: false },
-    { name: 'Reemplazo de pastillas y discos', completed: false },
+    { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
+    { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
+    { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
+    { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
+    { name: 'Inspeccion visual', completed: false },
+
+
+
+
     { name: 'Fin', completed: false }
   ];
 

@@ -9,27 +9,30 @@
 
 
 .diagonal-text {
-  transform: rotate(-50deg);
+  transform: rotate(-55deg);
   position: relative; /* Establece la posición relativa */
-
   font-size: 14px; /* Tamaño de fuente */
 
 }
 
 .bloque1 {
   height: 60px;
+  display: flex; /* Establece el contenedor como un flexbox */
+  flex-direction: column; /* Establece la dirección del flujo como columna */
+  justify-content: flex-end; /* Alinea los elementos al final verticalmente */
 }
 
 .bloque2 {
   height: 120px;
+  margin-top: -20px;
 
 }
 
-
 .service-name {
   position: relative; /* Establece la posición relativa */
-  width: 100px; /* Establece un ancho máximo para los nombres de los servicios */
+  width: 120px; /* Establece un ancho máximo para los nombres de los servicios */
   overflow-wrap: break-word; /* Divide el texto en palabras y ajusta según el ancho máximo */
+
 }
 
 
@@ -155,7 +158,8 @@ ul li .progress-ball2{
 .progress::after {
   content: " ";
   position: absolute;
-  width: 82px;
+  min-width: 100px;
+  max-width: 120px;
   height: 7px;
   background-color: #D9D9D9;
   left: 28px;
@@ -166,7 +170,7 @@ ul li .progress-ball2{
 .progress::before {
   content: " ";
   position: absolute;
-  width: 82px;
+  width: 100px;
   height: 7px;
   background-color: rgba(217, 217, 217, 0);
   right: 28px;
@@ -177,7 +181,7 @@ ul li .progress-ball2{
 .progress-ball::before {
   content: " ";
   position: absolute;
-  width: 82px;
+  width: 100px;
   height: 7px;
   background-color: rgba(217, 217, 217, 0);
   right: 48px;
@@ -188,7 +192,7 @@ ul li .progress-ball2{
 .progress-ball2::after {
   content: " ";
   position: absolute;
-  width: 82px;
+  width: 100px;
   height: 7px;
   background-color: #D9D9D9;
   left: 48px;
