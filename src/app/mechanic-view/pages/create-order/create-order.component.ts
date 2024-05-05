@@ -43,7 +43,7 @@ export default class CreateOrderComponent {
   items: any[] = [{}]; // Inicialmente un array con un objeto vacío
   showModal: boolean = false;
   @ViewChild('placaInput') placaInput!: ElementRef;
-  placa: string = ''; 
+  placa: string = '';
 
   // Propiedades para almacenar los datos del cliente y del vehículo
   cliente: any = {};
@@ -78,7 +78,7 @@ export default class CreateOrderComponent {
     console.log('Servicios mecánicos seleccionados:', serviciosMecanicos);
 
     console.log(createOrdenDTORequest);
-  
+
     // Llamar al servicio para crear la orden
     this.orderService.createOrder(createOrdenDTORequest).subscribe(response => {
       console.log('Orden creada correctamente:', response);

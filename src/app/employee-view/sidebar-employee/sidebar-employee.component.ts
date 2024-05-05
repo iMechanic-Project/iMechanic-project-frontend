@@ -1,18 +1,16 @@
 import { Component } from '@angular/core';
-import {NgClass} from "@angular/common";
 import {RouterLink} from "@angular/router";
 
 @Component({
-  selector: 'app-sidebar-client',
+  selector: 'app-sidebar-employee',
   standalone: true,
   imports: [
-    NgClass,
     RouterLink
   ],
-  templateUrl: './sidebar-client.component.html',
+  templateUrl: './sidebar-employee.component.html',
   styles: ''
 })
-export class SidebarClientComponent {
+export class SidebarEmployeeComponent {
 
   p: number = 1;
 
@@ -21,6 +19,5 @@ export class SidebarClientComponent {
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
   }
-
 
 }
