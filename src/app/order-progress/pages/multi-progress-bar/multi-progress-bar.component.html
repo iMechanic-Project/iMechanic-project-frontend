@@ -2,13 +2,11 @@
 
 <!--- informacion --->
 <div class="items-center text-center">
-  <h2 class="font-bold text-2xl lg:mr-10 mb-5 -mt-16">Monitoreo </h2>
+  <h2 class="font-bold text-2xl lg:mr-10 lg:mb-5 -mb-5  ">Monitoreo </h2>
 </div>
 
-<!--- detalles --->
-
-
-
+<!--- detalles para pantalla lg--->
+<div class="bg-white p-6 rounded-lg text-black overflow-y-auto lg:block hidden" style="height: 600px;">
   <div *ngFor="let order of orderServices" >
     <div class="flex flex-col w-full mt-2 p-5">
       <div class="items-start">
@@ -129,6 +127,136 @@
 
     }
   </div>
+
+</div>
+
+<!--- detalles para pantalla xs--->
+<div class="bg-white p-6 rounded-lg text-black lg:overflow-y-auto lg:hidden">
+  <div *ngFor="let order of orderServices" >
+    <div class="flex flex-col w-full mt-2 p-5">
+      <div class="items-start">
+        <p class="text-lg "><strong>Servicio: </strong>{{ order.servicio }}</p>
+        <p class="text-lg "><strong>Mecánico: </strong>{{ order.mecanico }}</p>
+        <div class="flex">
+          <p class="text-lg"><strong>Estado:</strong>&nbsp;</p>
+          <p class="text-lg {{ getColorClass(order.estado) }}">{{ order.estado }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!--- Barra de progreso --->
+
+    @if(order.serviciospaso.length >=8){
+
+      <!--- mayores que 8 van pegados a la derecha--->
+
+      <div class="main p-4 lg:ml-0 lg:mr-0 ml-5 mr-5 overflow-x-auto">
+        <div class="order-progress">
+          <ul>
+            <li *ngFor="let service of order.serviciospaso; let i = index" [class.active]="service.completed">
+              <div class="bloque1">
+                <div *ngIf="i < order.serviciospaso.length" class="diagonal-text mb-10">
+                  @if (i === 0 || i === order.serviciospaso.length-1){
+                    <p class="service-name text-white">.</p>
+                  }
+                  @if (i < order.serviciospaso.length-1 && i > 0){
+                    <p class="service-name text-black">{{service.name}}</p>
+                  }
+                </div>
+              </div>
+
+              <div class="bloque2">
+                @if (i === 0){
+                  <div class="progress-ball2" [class.active]="service.completed">
+                    <i class="uil uil-check" *ngIf="service.completed"></i>
+                  </div>
+                }
+                @if(i > 0 && i < order.serviciospaso.length - 1){
+                  <div class="progress" [class.active]="service.completed">
+                    <i class="uil uil-check" *ngIf="service.completed"></i>
+                  </div>
+                }
+                @if(i === order.serviciospaso.length - 1){
+                  <div  class="progress-ball" [class.active]="service.completed">
+                    <i class="uil uil-check" *ngIf="service.completed"></i>
+                  </div>
+                }
+                @if(i < order.serviciospaso.length){
+                  <div class="mt-2">
+                    @if (i === 0 ){
+                      <p class="text-black ml-1.5">{{service.name}}</p>
+                    }
+                    @if (i === order.serviciospaso.length-1){
+                      <p class="text-black ml-9">{{service.name}}</p>
+                    }
+                  </div>
+                }
+              </div>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    } @else {
+
+      <!--- menores van centrados--->
+
+      <div class="main p-4 lg:ml-0 lg:mr-0 ml-5 mr-5 overflow-x-auto">
+        <div class="order-progress">
+          <ul>
+            <li *ngFor="let service of order.serviciospaso; let i = index" [class.active]="service.completed">
+              <div class="bloque1">
+                <div *ngIf="i < order.serviciospaso.length" class="diagonal-text mb-10">
+                  @if (i === 0 || i === order.serviciospaso.length-1){
+                    <p class="service-name text-white">.</p>
+                  }
+                  @if (i < order.serviciospaso.length-1 && i > 0){
+                    <p class="service-name text-black">{{service.name}}</p>
+                  }
+                </div>
+              </div>
+
+              <div class="bloque2">
+                @if (i === 0){
+                  <div class="progress-ball2" [class.active]="service.completed">
+                    <i class="uil uil-check" *ngIf="service.completed"></i>
+                  </div>
+                }
+                @if(i > 0 && i < order.serviciospaso.length - 1){
+                  <div class="progress" [class.active]="service.completed">
+                    <i class="uil uil-check" *ngIf="service.completed"></i>
+                  </div>
+                }
+                @if(i === order.serviciospaso.length - 1){
+                  <div  class="progress-ball" [class.active]="service.completed">
+                    <i class="uil uil-check" *ngIf="service.completed"></i>
+                  </div>
+                }
+                @if(i < order.serviciospaso.length){
+                  <div class="mt-2">
+                    @if (i === 0 ){
+                      <p class="text-black ml-1.5">{{service.name}}</p>
+                    }
+                    @if (i === order.serviciospaso.length-1){
+                      <p class="text-black ml-9">{{service.name}}</p>
+                    }
+                  </div>
+                }
+              </div>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    }
+  </div>
+
+</div>
+
+
+
 
 
 

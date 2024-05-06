@@ -39,6 +39,8 @@ export default class RegisterVehiclesComponent implements OnInit {
   selectedCategoria: Categoria | null = null;
   p: number = 1;
   showModal = false;
+  showModal2 = false;
+
 
   constructor(private vehicleService: VehicleService) { }
 
@@ -53,6 +55,18 @@ export default class RegisterVehiclesComponent implements OnInit {
     this.vehicleService.getAllMarcas().subscribe(marcas => {
       this.marcas = marcas;
     });
+  }
+
+  openModal2(): void {
+    this.showModal2 = true;
+  }
+
+  closeModal(): void {
+    this.showModal = false;
+  }
+
+  closeModal2(): void {
+    this.showModal2 = false;
   }
 
   onMarcaSelect(marcaId: number): void {
@@ -77,9 +91,9 @@ export default class RegisterVehiclesComponent implements OnInit {
   }
 
   onInputChange(event: any): void {
-    let value = event.target.value.toUpperCase();
-    if (value.length === 3) {
-      value += '-';
+    let value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); // Elimina caracteres no deseados
+    if (value.length > 3) {
+      value = value.substring(0, 3) + '-' + value.substring(3); // Agrega el guion después de los primeros 3 caracteres
     }
     this.placaInput.nativeElement.value = value.substring(0, 7); // Limita la longitud a 7 caracteres
     this.newVehicle.placa = this.placaInput.nativeElement.value;
@@ -101,5 +115,7 @@ export default class RegisterVehiclesComponent implements OnInit {
         // Aquí puedes manejar el error, por ejemplo, mostrar un mensaje de error al usuario
       }
     );
+    this.closeModal();
+    this.openModal2();
   }
 }

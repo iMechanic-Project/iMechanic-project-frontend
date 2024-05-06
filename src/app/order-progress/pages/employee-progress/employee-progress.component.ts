@@ -34,10 +34,9 @@ export default class EmployeeProgressComponent {
   }
 
   datosOrden = {
-    nombre: 'El Taller de David',
-    direccion: 'Las Camelias 450 - Santa Inés',
+    nombre: 'ralu carro malogrado',
+    gmail: 'diegoguapo@gmail.com',
     telefono: '976345822',
-    codigo: '0010AAAB',
     servicio: 'Cambio de aceite',
     mecanico: 'Daigo Campos',
     estado: 'En progreso',

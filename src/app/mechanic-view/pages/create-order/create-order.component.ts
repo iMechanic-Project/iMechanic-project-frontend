@@ -41,6 +41,10 @@ export default class CreateOrderComponent {
     mecanicoId: 0
   };
   items: any[] = [{}]; // Inicialmente un array con un objeto vacío
+  selectedServices: { tipo_servicio: string, servicio: number, mecanico: number }[] = [{ tipo_servicio: '', servicio: 0, mecanico: 0 }];
+
+
+
   showModal: boolean = false;
   @ViewChild('placaInput') placaInput!: ElementRef;
   placa: string = '';
@@ -51,16 +55,12 @@ export default class CreateOrderComponent {
 
   constructor(private vehicleService: VehicleService, private orderService: OrderService, private tallerService: TallerServiceService, private mechanicService: MechanicService) { }
 
-  agregarItem() {
-    this.items.push({}); // Agrega un nuevo objeto vacío al final del array de items
-  }
-
-  eliminarItem(index: number) {
-    this.items.splice(index, 1); // Elimina el objeto en la posición index
-  }
-
   openModal(): void {
     // Crear el objeto CreateOrdenDTORequest con los datos del cliente, vehículo y servicios mecánicos seleccionados
+    console.log("resultado mmwbeo");
+
+    console.log(this.selectedServices);
+
     const serviciosMecanicos = this.items.map(item => item.servicioMecanico);
     const createOrdenDTORequest: CreateOrdenDTORequest = {
       nombreCliente: this.cliente.nombreCliente,
@@ -137,9 +137,11 @@ export default class CreateOrderComponent {
 
   onTypeOfService(tipoServicio: TipoServicio) {
     if (tipoServicio === TipoServicio.MANTENIMIENTO) {
-      this.getServiceMaintenance()
+      this.getServiceMaintenance();
+      console.log(tipoServicio);
     } else if (tipoServicio === TipoServicio.REPARACION) {
       this.getServiceRepair();
+      console.log(tipoServicio);
     }
   }
 
@@ -157,5 +159,18 @@ export default class CreateOrderComponent {
     this.items[index].servicioMecanico = this.servicioMecanico; // Agrega el servicio mecánico al ítem
     console.log('Servicio mecánico seleccionado:', this.servicioMecanico);
   }
+
+  addRow() {
+    this.selectedServices.push({ tipo_servicio: '', servicio: 0, mecanico: 0 });
+  }
+
+  removeRow(index: number) {
+    this.selectedServices.splice(index, 1);
+  }
+
+  registrar() {
+    console.log(this.selectedServices);
+  }
+
 
 }

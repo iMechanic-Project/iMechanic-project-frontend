@@ -25,8 +25,7 @@ export class ProgressBarComponent {
     { name: 'Inspeccion visual', completed: false },
     { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
     { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
-    { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
-    { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
+
     { name: 'Inspeccion visual', completed: false },
 
 

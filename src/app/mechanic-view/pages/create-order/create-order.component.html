@@ -69,42 +69,54 @@
 
 
       <div class="bg-white p-6 rounded-lg text-black overflow-y-auto mb-5" style="height: 250px;">
-        <div class="flex lg:flex-row flex-col mb-3" *ngFor="let item of items; let i = index" [id]="'item-' + i">
+
+        <div class="flex lg:flex-row flex-col mb-3" *ngFor="let item of selectedServices; let i = index">
+
           <select
+
             class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0"
-            [(ngModel)]="selectedTipoServicio" (ngModelChange)="onTypeOfService($event)">
-            <option disabled [ngValue]="null" disabled selected>Tipo de servicio</option>
+            [(ngModel)]="item.tipo_servicio" (ngModelChange)="onTypeOfService($event)">
+
+            <option value="" disabled selected>Tipo de servicio</option>
+
             <option *ngFor="let tservicio of tipoServicio" [ngValue]="tservicio"
-              [selected]="tservicio === selectedTipoServicio">{{ tservicio }}</option>
+              [selected]="tservicio === item.tipo_servicio">{{ tservicio }}</option>
+
           </select>
 
           <select
             class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0"
-            [(ngModel)]="selectedServiceId" (ngModelChange)="getMechanicsByService(selectedServiceId)">
-            <option disabled [ngValue]="0" disabled selected>Servicio</option>
+            [(ngModel)]="item.servicio" (ngModelChange)="getMechanicsByService(item.servicio)">
+
+            <option value="0" disabled selected>Servicio</option>
+
             @if (selectedTipoServicio === 'MANTENIMIENTO') {
+
             <option *ngFor="let servicio of serviciosMantenimiento" [ngValue]="servicio.id">{{ servicio.nombre }}
             </option>
             }
-            @else if (selectedTipoServicio == 'REPARACION') {
+            @else if (selectedTipoServicio === 'REPARACION') {
             <option *ngFor="let servicio of serviciosReparacion" [ngValue]="servicio.id">{{ servicio.nombre }}</option>
             }
           </select>
 
           <select
-            class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0" [(ngModel)]="selectedMecanicId" (click)="selectMechanic(selectedMecanicId)">
-            <option disabled [ngValue]="0" disabled selected>Mecanico</option>
+            class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0"
+            [(ngModel)]="item.mecanico" (click)="selectMechanic(item.mecanico)">
+
+            <option value="0" disabled selected>Mecanico</option>
+
             <option *ngFor="let mc of mecanicos" [ngValue]="mc.id">{{ mc.nombre }}</option>
+
           </select>
 
-          <div class="text-xl w-full">
-            <button type="button" class="text-xl w-full text-black rounded-xl px-3 py-2 font-semibold inline-block"
-              style="background: #F7941F; white-space: nowrap;" (click)="agregarItem()"
-              *ngIf="i === items.length - 1">Agregar Servicio</button>
-            <button type="button" class="text-xl w-full text-black rounded-xl px-3 py-2 font-semibold inline-block"
-              style="background: #F7941F; white-space: nowrap;" (click)="eliminarItem(i)"
-              *ngIf="i !== items.length - 1">Quitar</button>
+          <div class="text-xl w-full flex justify-between">
+            <button *ngIf="i === selectedServices.length - 1" (click)="addRow()" class="text-xl text-black rounded-full px-2 py-2 font-semibold inline-block" style="background: #F7941F;">+</button>
+
+            <button *ngIf="selectedServices.length > 1" (click)="removeRow(i)" class="text-xl text-black rounded-full px-2 py-2 font-semibold inline-block" style="background: #F7941F;">-</button>
           </div>
+
+
         </div>
       </div>
 
@@ -113,8 +125,6 @@
           class="text-xl text-black rounded-xl px-8 py-3 font-semibold inline-block mb-1 lg:mb-0 mt-3 lg:mt-0"
           (click)="openModal()" style="background: #F7941F">Registrar</button>
       </div>
-
-
     </div>
   </div>
 </div>
