@@ -15,6 +15,7 @@ import { MechanicDTO } from '../../../interfaces/MechanicDTO';
 import { MecanicoDTOList } from '../../../interfaces/MecanicoDTOList';
 import { MechanicService } from '../../../services/mechanic.service';
 import { ServicioMecanicoDTO } from '../../../interfaces/ServicioMecanicoDTO';
+import OrderListComponent from "../order-list/order-list.component";
 
 @Component({
   selector: 'app-create-order',
@@ -22,7 +23,8 @@ import { ServicioMecanicoDTO } from '../../../interfaces/ServicioMecanicoDTO';
   imports: [
     RouterLink,
     FormsModule,
-    CommonModule
+    CommonModule,
+    OrderListComponent,
   ],
   templateUrl: './create-order.component.html',
   styles: ''
@@ -91,11 +93,11 @@ export default class CreateOrderComponent {
   }
 
   onInputChange(event: any): void {
-    let value = event.target.value.toUpperCase();
-    if (value.length === 3) {
-      value += '-';
+    let value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); // Elimina caracteres no deseados
+    if (value.length > 3) {
+      value = value.substring(0, 3) + '-' + value.substring(3); // Agrega el guion después de los primeros 3 caracteres
     }
-    this.placaInput.nativeElement.value = value.substring(0, 7);
+    this.placaInput.nativeElement.value = value.substring(0, 7); // Limita la longitud a 7 caracteres
     this.placa = this.placaInput.nativeElement.value;
   }
 
@@ -172,7 +174,7 @@ selectMechanic(mecanicId: number) {
     });
     this.selectRow(this.selectedServices.length - 1); // Selecciona el nuevo servicio
   }
-  
+
   removeRow(index: number) {
     this.selectedServices.splice(index, 1);
     if (index === this.selectedRowIndex) {

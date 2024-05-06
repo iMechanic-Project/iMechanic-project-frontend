@@ -47,10 +47,11 @@ export default class OrderListComponent implements OnInit {
     });
   }
 
+
   onInputChange(event: any): void {
-    let value = event.target.value.toUpperCase();
-    if (value.length === 3) {
-      value += '-';
+    let value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); // Elimina caracteres no deseados
+    if (value.length > 3) {
+      value = value.substring(0, 3) + '-' + value.substring(3); // Agrega el guion después de los primeros 3 caracteres
     }
     this.placaInput.nativeElement.value = value.substring(0, 7); // Limita la longitud a 7 caracteres
   }

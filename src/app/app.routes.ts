@@ -58,6 +58,11 @@ export const routes: Routes = [
         loadComponent: () => import('./mechanic-view/pages/order-list/order-list.component')
       },
       {
+        path: 'services-list',
+        title: 'Services List',
+        loadComponent: () => import('./mechanic-view/pages/services-list/services-list.component')
+      },
+      {
         path: '',
         redirectTo: '/workshop/workshop-info',
         pathMatch: 'full'
@@ -131,7 +136,7 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/progress/employee-progress',
+        redirectTo: '/progress/employee-progress/:id',
         pathMatch: 'full'
       }
     ]

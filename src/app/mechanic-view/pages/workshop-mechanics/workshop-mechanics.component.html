@@ -11,7 +11,6 @@
     </div>
   </div>
 
-
   <!-- TABLA lg-->
   <div class="lg:block hidden mt-8  w-4/5 bg-white border-2 border-gray-400 text-center" style="height: 32pc">
     <table class="w-full">
@@ -30,13 +29,22 @@
         <td class="border-gray-400 py-4" style="width: 20%;">{{ mechanic.correoElectronico }}</td>
         <td class="border-gray-400 py-4" style="width: 20%;">
           <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F" (click)="toggleServicios()">mostrar</button>
-          <ul>
             @if (showServices) {
-              @for (servicio of mechanic.servicios; track $index) {
-                <li>{{ servicio.nombre }}</li>
-              }
+
+              <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">
+
+                <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">
+                  <h3 class="text-2xl mb-4 font-semibold text-center text-black">Lista de servicios del mecanico seleccionado</h3>
+                    @for (servicio of mechanic.servicios; track $index) {
+                      <li>{{ servicio.nombre }}</li>
+                    }
+                  <!-- Botón de guardar -->
+                  <div class="flex items-center justify-center mr-24 ml-24">
+                    <button type="button" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block mt-4" style="background: #F7941F"  (click)="toggleServicios()">Aceptar</button>
+                  </div>
+                </div>
+              </div>
             }
-          </ul>
         </td>
         <td class="border-gray-400 py-4" style="width: 20%;">
           <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F">☰</button>
@@ -171,5 +179,7 @@
     </div>
   </div>
 }
+
+
 
 
