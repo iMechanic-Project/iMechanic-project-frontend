@@ -1,6 +1,4 @@
-
-
-<div class="flex lg:flex-row flex-col lg:mt-20 lg:mb-20 mb-14" *ngFor="let order of orders">
+<div class="flex lg:flex-row flex-col lg:mt-20 lg:mb-20 mb-14">
 
   <!--- Primera columna --->
   <div class="flex flex-col w-full lg:items-center lg:w-1/2 lg:ml-14 lg:-mr-32 mt-8">
@@ -8,17 +6,17 @@
     <div class="flex flex-col border border-gray-300 mt-5 p-8 mb-4 justify-center mr-7 ml-7 lg:w-1/2" style="background: #D9D9D9">
       <h2 class="font-bold text-2xl mb-2">Detalle de la Orden de Trabajo</h2>
       <p class="font-bold text-xl mb-2">Información del taller</p>
-      <p class="text-lg mt-2">Nombre: {{ order.nombre }}</p>
-      <p class="text-lg mt-2">Dirección: {{ order.direccion }}</p>
-      <p class="text-lg mt-2">Teléfono/Celular: {{ order.telefono }}</p>
+      <p class="text-lg mt-2">Nombre: {{ orders.nombreTaller }}</p>
+      <p class="text-lg mt-2">Dirección: {{ orders.direccionTaller }}</p>
+      <p class="text-lg mt-2">Teléfono/Celular: {{ orders.telefonoTaller }}</p>
     </div>
 
     <div class="flex flex-col lg:mt-10 mr-7 ml-7 lg:w-1/2" >
       <div class="bg-yellow-300 p-4" style="background: #FED338">
         <h2 class="font-bold text-lg">Bandeja de Chat</h2>
       </div>
-      <div class="p-4 flex items-center justify-between" style="background: #D9D9D9;" *ngFor="let servicio of order.servicios">
-        <p>{{ servicio.servicio }}</p>
+      <div class="p-4 flex items-center justify-between" style="background: #D9D9D9;" *ngFor="let servicio of orders.servicios">
+        <p>{{ servicio.nombreServicio }}</p>
         <button (click)="openChat()">
           <img src="./assets/img/iconoChat.png" alt="Logo" class="h-6 mr-1" style="cursor: pointer;">
 
@@ -29,10 +27,11 @@
   </div>
 
   <div class="flex flex-col w-full lg:w-1/2 lg:mr-48 lg:mt-0 mt-10">
-    <app-multi-progress-bar />
+    <app-multi-progress-bar [orderServices]="orders.servicios" />
 
   </div>
 
+</div>
 
 
 
@@ -56,5 +55,3 @@
   </div>
 
 }
-
-

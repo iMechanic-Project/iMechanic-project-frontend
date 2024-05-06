@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import {NgForOf, NgIf} from "@angular/common";
-import {RouterLink} from "@angular/router";
+import { Component, Input } from '@angular/core';
+import { NgForOf, NgIf } from "@angular/common";
+import { RouterLink } from "@angular/router";
+import { PasoDTO } from '../../../interfaces/PasoDTO';
 
 @Component({
   selector: 'app-progress-bar',
@@ -15,24 +16,26 @@ import {RouterLink} from "@angular/router";
 })
 export class ProgressBarComponent {
 
+  @Input() services: PasoDTO[] = [];
+
   currentServiceIndex = 0;
   showButtons = false;
   showModal = false;
 
 
-  services = [
-    { name: 'Inicio', completed: false },
-    { name: 'Inspeccion visual', completed: false },
-    { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
-    { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
+  // services = [
+  //   { name: 'Inicio', completed: false },
+  //   { name: 'Inspeccion visual', completed: false },
+  //   { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
+  //   { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
 
-    { name: 'Inspeccion visual', completed: false },
-
-
+  //   { name: 'Inspeccion visual', completed: false },
 
 
-    { name: 'Fin', completed: false }
-  ];
+
+
+  //   { name: 'Fin', completed: false }
+  // ];
 
 
 
@@ -46,7 +49,7 @@ export class ProgressBarComponent {
 
   nextService() {
     if (this.currentServiceIndex < this.services.length) {
-      this.services[this.currentServiceIndex].completed = true;
+      this.services[this.currentServiceIndex].completado = true;
       this.currentServiceIndex++;
       //Se muestra en que servicio se encuentra
       console.log(this.currentServiceIndex);
@@ -55,7 +58,7 @@ export class ProgressBarComponent {
 
   startOrder() {
     if (this.currentServiceIndex < this.services.length) {
-      this.services[this.currentServiceIndex].completed = true;
+      this.services[this.currentServiceIndex].completado = true;
       this.currentServiceIndex++;
       //Se muestra en que servicio se encuentra
       console.log(this.currentServiceIndex);
@@ -66,8 +69,8 @@ export class ProgressBarComponent {
 
   finishOrder() {
     if (this.currentServiceIndex < this.services.length) {
-      this.services[this.currentServiceIndex].completed = true;
-      this.currentServiceIndex=this.services.length;
+      this.services[this.currentServiceIndex].completado = true;
+      this.currentServiceIndex = this.services.length;
       //Se muestra en que servicio se encuentra
       console.log(this.currentServiceIndex);
     }

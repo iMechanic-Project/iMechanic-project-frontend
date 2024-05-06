@@ -120,12 +120,12 @@ export const routes: Routes = [
     loadComponent: () => import('./order-progress/order-progress.component'),
     children: [
       {
-        path: 'employee-progress',
+        path: 'employee-progress/:id',
         title: 'Employee Progress',
         loadComponent: () => import('./order-progress/pages/employee-progress/employee-progress.component')
       },
       {
-        path: 'client-progress',
+        path: 'client-progress/:id',
         title: 'Client Progress',
         loadComponent: () => import('./order-progress/pages/client-progress/client-progress.component')
       },

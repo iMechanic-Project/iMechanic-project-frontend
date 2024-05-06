@@ -1,9 +1,11 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {NgForOf, NgIf} from "@angular/common";
-import {NgxPaginationModule} from "ngx-pagination";
-import {OrdenTrabajoDTOList} from "../../../interfaces/OrdenTrabajoDTOList";
-import {OrderService} from "../../../services/order.service";
-import {RouterLink} from "@angular/router";
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgForOf, NgIf } from "@angular/common";
+import { NgxPaginationModule } from "ngx-pagination";
+import { OrdenTrabajoDTOList } from "../../../interfaces/OrdenTrabajoDTOList";
+import { OrderService } from "../../../services/order.service";
+import { Router, RouterLink } from "@angular/router";
+import { MechanicService } from '../../../services/mechanic.service';
+import { OrdenTrabajoMecanicoDTOList } from '../../../interfaces/OrdenTrabajoMecanicoDTOList';
 
 @Component({
   selector: 'app-order-list-employee',
@@ -17,11 +19,11 @@ import {RouterLink} from "@angular/router";
   templateUrl: './order-list-employee.component.html',
   styleUrl: './order-list-employee.component.css'
 })
-export default class OrderListEmployeeComponent implements OnInit{
+export default class OrderListEmployeeComponent implements OnInit {
 
   p: number = 1;
 
-  vehicles: OrdenTrabajoDTOList[] = [];
+  orderList: OrdenTrabajoMecanicoDTOList[] = [];
 
   getColorClass(estado: string): string {
     switch (estado) {
@@ -38,12 +40,12 @@ export default class OrderListEmployeeComponent implements OnInit{
 
   @ViewChild('placaInput') placaInput!: ElementRef;
 
-  constructor(private orderService: OrderService) { }
+  constructor(private mecanicService: MechanicService, private router: Router) { }
 
   ngOnInit(): void {
-    this.orderService.getAllOrdersByTaller().subscribe(ordenes => {
-      this.vehicles = ordenes;
-    });
+    this.mecanicService.getAllOrdersByMecanic().subscribe(ordenes => {
+      this.orderList = ordenes;
+    })
   }
 
   onInputChange(event: any): void {
@@ -55,5 +57,8 @@ export default class OrderListEmployeeComponent implements OnInit{
   }
 
 
+  detailOrder(orderId: number) {
+    this.router.navigate(['/progress/employee-progress/', orderId]);
+  }
 
 }

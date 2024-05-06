@@ -6,8 +6,8 @@
     <div class="flex flex-col border border-gray-300 mt-5 p-8 mb-4 justify-center mr-7 ml-7 lg:w-1/2" style="background: #D9D9D9">
       <h2 class="font-bold text-2xl mb-2">Detalle de la Orden de Trabajo</h2>
       <p class="font-bold text-xl mb-2">Información del cliente</p>
-      <p class="text-lg mt-2">Nombre:{{ datosOrden.nombre }}</p>
-      <p class="text-lg mt-2">correo: {{ datosOrden.gmail}}</p>
+      <p class="text-lg mt-2">Nombre: {{ datosOrden.nombre }}</p>
+      <p class="text-lg mt-2">Direccion: {{ datosOrden.direccion}}</p>
       <p class="text-lg mt-2">Teléfono/Celular: {{ datosOrden.telefono }}</p>
     </div>
 
@@ -33,14 +33,14 @@
     </div>
     <div class="items-start lg:ml-0 ml-5">
       <p class="text-lg "><strong>Servicio: </strong>{{ datosOrden.servicio }}</p>
-      <p class="text-lg "><strong>Mecánico: </strong>{{ datosOrden.mecanico }}</p>
+      <p class="text-lg "><strong>Mecánico: </strong>{{ datosOrden.nombreMecanico }}</p>
       <div class="flex">
         <p class="text-lg"><strong>Estado:</strong>&nbsp;</p>
-        <p class="text-lg {{ getColorClass(datosOrden.estado) }}">{{ datosOrden.estado }}</p>
+        <p class="text-lg {{ getColorClass(datosOrden.estadoServicio) }}">{{ datosOrden.estadoServicio }}</p>
       </div>
     </div>
 
-    <app-progress-bar />
+    <app-progress-bar [services]="datosOrden.pasos" />
 
   </div>
 

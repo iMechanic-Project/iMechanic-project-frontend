@@ -36,32 +36,31 @@ export default class CreateOrderComponent {
   selectedServiceId: number = 0;
   mecanicos: MecanicoDTOList[] = [];
   selectedMecanicId: number = 0;
-  servicioMecanico: ServicioMecanicoDTO = {
-    servicioId: 0,
-    mecanicoId: 0
-  };
-  items: any[] = [{}]; // Inicialmente un array con un objeto vacío
-  selectedServices: { tipo_servicio: string, servicio: number, mecanico: number }[] = [{ tipo_servicio: '', servicio: 0, mecanico: 0 }];
-
-
+  selectedServices: { tipo_servicio: string, servicio: number, mecanico: number, servicioMecanico: ServicioMecanicoDTO }[] = [{
+    tipo_servicio: '', servicio: 0, mecanico: 0, servicioMecanico: {
+      servicioId: 0,
+      mecanicoId: 0
+    }
+  }];
 
   showModal: boolean = false;
   @ViewChild('placaInput') placaInput!: ElementRef;
   placa: string = '';
 
-  // Propiedades para almacenar los datos del cliente y del vehículo
   cliente: any = {};
   vehiculo: any = {};
+
+
+  selectedRowIndex: number = 0;
 
   constructor(private vehicleService: VehicleService, private orderService: OrderService, private tallerService: TallerServiceService, private mechanicService: MechanicService) { }
 
   openModal(): void {
-    // Crear el objeto CreateOrdenDTORequest con los datos del cliente, vehículo y servicios mecánicos seleccionados
     console.log("resultado mmwbeo");
 
     console.log(this.selectedServices);
 
-    const serviciosMecanicos = this.items.map(item => item.servicioMecanico);
+    const serviciosMecanicos = this.selectedServices.map(item => item.servicioMecanico);
     const createOrdenDTORequest: CreateOrdenDTORequest = {
       nombreCliente: this.cliente.nombreCliente,
       direccion: this.cliente.direccion,
@@ -73,8 +72,6 @@ export default class CreateOrderComponent {
       serviciosMecanicos: serviciosMecanicos
     };
 
-    console.log('Datos del cliente:', this.cliente);
-    console.log('Datos del vehículo:', this.vehiculo);
     console.log('Servicios mecánicos seleccionados:', serviciosMecanicos);
 
     console.log(createOrdenDTORequest);
@@ -98,13 +95,12 @@ export default class CreateOrderComponent {
     if (value.length === 3) {
       value += '-';
     }
-    this.placaInput.nativeElement.value = value.substring(0, 7); // Limita la longitud a 7 caracteres
+    this.placaInput.nativeElement.value = value.substring(0, 7);
     this.placa = this.placaInput.nativeElement.value;
   }
 
   buscarPorPlaca(): void {
     this.vehicleService.getDataByPlaca({ placa: this.placa }).subscribe((response: VehiculoSearchDTOResponse) => {
-      // Asigna los datos del cliente y del vehículo a las propiedades correspondientes
       this.cliente = {
         nombreCliente: response.nombreCliente,
         direccion: response.direccion,
@@ -118,7 +114,6 @@ export default class CreateOrderComponent {
       };
 
     }, error => {
-      // Aquí puedes manejar el error si la solicitud de datos del vehículo falla
       console.error(error);
     });
   }
@@ -152,20 +147,37 @@ export default class CreateOrderComponent {
     });
   }
 
-  selectMechanic(mecanicId: number) {
-    this.servicioMecanico.servicioId = this.selectedServiceId;
-    this.servicioMecanico.mecanicoId = mecanicId;
-    const index = this.items.length - 1; // Último ítem agregado
-    this.items[index].servicioMecanico = this.servicioMecanico; // Agrega el servicio mecánico al ítem
-    console.log('Servicio mecánico seleccionado:', this.servicioMecanico);
-  }
+  // selectMechanic(mecanicId: number) {
+  //   this.selectedServices[this.selectedServices.length - 1].servicioMecanico.servicioId = this.selectedServices[this.selectedServices.length - 1].servicio;
+  //   this.selectedServices[this.selectedServices.length - 1].servicioMecanico.mecanicoId = this.selectedServices[this.selectedServices.length - 1].mecanico;
+  //   console.log('Servicio mecánico seleccionado:', this.selectedServices[this.selectedServices.length - 1].servicioMecanico);
+  // }
+
+  selectRow(index: number) {
+  this.selectedRowIndex = index;
+}
+
+selectMechanic(mecanicId: number) {
+  this.selectedServices[this.selectedRowIndex].servicioMecanico.servicioId = this.selectedServices[this.selectedRowIndex].servicio;
+  this.selectedServices[this.selectedRowIndex].servicioMecanico.mecanicoId = this.selectedServices[this.selectedRowIndex].mecanico;
+  console.log('Servicio mecánico seleccionado:', this.selectedServices[this.selectedRowIndex].servicioMecanico);
+}
 
   addRow() {
-    this.selectedServices.push({ tipo_servicio: '', servicio: 0, mecanico: 0 });
+    this.selectedServices.push({
+      tipo_servicio: '', servicio: 0, mecanico: 0, servicioMecanico: {
+        servicioId: 0,
+        mecanicoId: 0
+      }
+    });
+    this.selectRow(this.selectedServices.length - 1); // Selecciona el nuevo servicio
   }
-
+  
   removeRow(index: number) {
     this.selectedServices.splice(index, 1);
+    if (index === this.selectedRowIndex) {
+      this.selectRow(Math.max(0, index - 1)); // Selecciona el servicio anterior si se eliminó el seleccionado
+    }
   }
 
   registrar() {

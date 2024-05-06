@@ -10,7 +10,7 @@
               <p class="service-name text-white">.</p>
             }
             @if (i < services.length-1 && i > 0){
-              <p class="service-name text-black">{{service.name}}</p>
+              <p class="service-name text-black">{{service.nombre}}</p>
             }
           </div>
         </div>
@@ -19,26 +19,26 @@
         <div class="bloque2">
           @if (i === 0){
             <div class="progress-ball2" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completed"></i>
+              <i class="uil uil-check" *ngIf="service.completado"></i>
             </div>
           }
           @if(i > 0 && i < services.length - 1){
             <div class="progress" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completed"></i>
+              <i class="uil uil-check" *ngIf="service.completado"></i>
             </div>
           }
           @if(i === services.length - 1){
             <div  class="progress-ball" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completed"></i>
+              <i class="uil uil-check" *ngIf="service.completado"></i>
             </div>
           }
           @if(i < services.length){
             <div class="mt-2">
               @if (i === 0 ){
-                <p class="text-black ml-1.5">{{service.name}}</p>
+                <p class="text-black ml-1.5">{{service.nombre}}</p>
               }
               @if (i === services.length-1){
-                <p class="text-black ml-9">{{service.name}}</p>
+                <p class="text-black ml-9">{{service.nombre}}</p>
               }
             </div>
           }
@@ -59,7 +59,7 @@
               <p class="service-name text-white">.</p>
             }
             @if (i < services.length-1 && i > 0){
-              <p class="service-name text-black">{{service.name}}</p>
+              <p class="service-name text-black">{{service.nombre}}</p>
             }
           </div>
         </div>
@@ -68,26 +68,26 @@
         <div class="bloque2">
           @if (i === 0){
             <div class="progress-ball2" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completed"></i>
+              <i class="uil uil-check" *ngIf="service.completado"></i>
             </div>
           }
           @if(i > 0 && i < services.length - 1){
             <div class="progress" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completed"></i>
+              <i class="uil uil-check" *ngIf="service.completado"></i>
             </div>
           }
           @if(i === services.length - 1){
             <div  class="progress-ball" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completed"></i>
+              <i class="uil uil-check" *ngIf="service.completado"></i>
             </div>
           }
           @if(i < services.length){
             <div class="mt-2">
               @if (i === 0 ){
-                <p class="text-black mr-2">{{service.name}}</p>
+                <p class="text-black mr-2">{{service.nombre}}</p>
               }
               @if (i === services.length-1){
-                <p class="text-black ml-9">{{service.name}}</p>
+                <p class="text-black ml-9">{{service.nombre}}</p>
               }
             </div>
           }

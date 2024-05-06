@@ -55,13 +55,13 @@
       <tbody class="w-full">
       <tr *ngFor="let vehicle of vehicles | paginate: { itemsPerPage: 6, currentPage: p }">
         <td class="border-gray-400 py-4" style="width: 16.66%;">{{ vehicle.placa }}</td>
-        <td class="border-gray-400 py-4" style="width: 16.66%;">{{ vehicle.taller_m }}</td>
+        <td class="border-gray-400 py-4" style="width: 16.66%;">{{ vehicle.nombreTaller }}</td>
         <td class="border-gray-400 py-4" style="width: 16.66%;">{{ vehicle.fechaRegistro }}</td>
         <td class="border-gray-400 py-4" style="width: 16.66%;">{{ vehicle.horaRegistro }}</td>
         <td class="border-gray-400 font-semibold py-4 {{ getColorClass(vehicle.estado) }}" style="width: 16.66%;">{{
             vehicle.estado }}</td>
         <td class="border-gray-400 py-4" style="width: 14.28%;">
-          <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F">☰</button>
+          <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F" (click)="detailOrder(vehicle.id)">☰</button>
         </td>
       </tr>
       </tbody>
@@ -89,7 +89,7 @@
         <td class="text-xs border-gray-400 font-semibold py-4 {{ getColorClass(vehicle.estado) }}"
             style="width: 20%;">{{ vehicle.estado }}</td>
         <td class="text-xs border-gray-400 py-4" style="width: 20%;">
-          <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F">☰</button>
+          <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F" (click)="detailOrder(vehicle.id)">☰</button>
         </td>
       </tr>
       </tbody>

@@ -6,6 +6,8 @@ import { MechanicDTO } from '../interfaces/MechanicDTO';
 import { MechanicDTORequest } from '../interfaces/MechanicDTORequest';
 import { MechanicDTOResponse } from '../interfaces/MechanicDTOResponse';
 import { MecanicoDTOList } from '../interfaces/MecanicoDTOList';
+import { OrdenTrabajoMecanicoDTOList } from '../interfaces/OrdenTrabajoMecanicoDTOList';
+import { OrderDetailMecanicoDTO } from '../interfaces/OrderDetailMecanicoDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +28,14 @@ export class MechanicService {
 
   getMechanicsByService(serviceId: number): Observable<MecanicoDTOList[]> {
     return this.http.get<MecanicoDTOList[]>(`${this.baseUrl}/mecanico/service/${serviceId}`);
+  }
+
+  getAllOrdersByMecanic(): Observable<OrdenTrabajoMecanicoDTOList[]> {
+    return this.http.get<OrdenTrabajoMecanicoDTOList[]>(`${this.baseUrl}/mecanico/ordenes`);
+  }
+
+  orderDetailByMecanic(orderId: number):Observable<OrderDetailMecanicoDTO> {
+    return this.http.get<OrderDetailMecanicoDTO>(`${this.baseUrl}/mecanico/order-detail/${orderId}`);
   }
 
 }

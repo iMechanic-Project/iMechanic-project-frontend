@@ -1,72 +1,51 @@
-import { Component } from '@angular/core';
-import {NgForOf, NgIf} from "@angular/common";
+import { Component, Input } from '@angular/core';
+import { NgForOf, NgIf } from "@angular/common";
+import { ServicioDetalleDTO } from '../../../interfaces/ServicioDetalleDTO';
 
 @Component({
   selector: 'app-multi-progress-bar',
   standalone: true,
-    imports: [
-        NgForOf,
-        NgIf
-    ],
+  imports: [
+    NgForOf,
+    NgIf
+  ],
   templateUrl: './multi-progress-bar.component.html',
   styleUrl: './multi-progress-bar.component.css'
 })
 export class MultiProgressBarComponent {
 
+  @Input() orderServices: ServicioDetalleDTO[] = [];
+
   showModal = false;
 
-  orderServices = [
-    {
-      servicio: 'Cambio de aceite',
-      mecanico: 'Daigo Campos111',
-      estado: 'En espera',
-      serviciospaso: [
-        { name: 'Inicio', completed: true },
-        { name: 'Inspeccion visual11111', completed: true },
-        { name: 'Revision y recarga del sistema del aire acondicionado', completed: true },
-        { name: 'Revision y recarga del sistema del aire acondicionado', completed: true },
-        { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
-        { name: 'Fin', completed: false }
-      ],
-    },
-    {
-      servicio: 'Revisión de frenos',
-      mecanico: 'Juan Pérez1111',
-      estado: 'En progreso',
-      serviciospaso: [
-        { name: 'Inicio', completed: true },
-        { name: 'Inspeccion visual2222', completed: false },
-        { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
-
-        { name: 'Fin', completed: false }
-      ],
-    },
-    {
-      servicio: 'Limpieza total',
-      mecanico: 'Gaillermo',
-      estado: 'finalizado',
-      serviciospaso: [
-        { name: 'Inicio', completed: true },
-        { name: 'Inspeccion visual2222', completed: true },
-        { name: 'Revision y recarga del sistema del aire acondicionado', completed: true },
-        { name: 'Revision y recarga del sistema del aire acondicionado', completed: true },
-        { name: 'Revision y recarga del sistema del aire acondicionado', completed: true },
-        { name: 'Fin', completed: false }
-      ],
-    },
-  ];
+  constructor() {
+    this.addStartEndSteps();
+  }
 
   getColorClass(estado: string): string {
     switch (estado) {
-      case 'En progreso':
+      case 'EN_PROCESO':
         return 'text-green-600'; // Verde
-      case 'En espera':
+      case 'EN_ESPERA':
         return 'text-red-600'; // Rojo
-      case 'finalizado':
+      case 'FINALIZADO':
         return 'text-black'; // Negro
       default:
         return estado; // Devuelve el estado tal cual si no coincide con ninguno de los casos anteriores
     }
+  }
+
+  addStartEndSteps(): void {
+    this.orderServices.forEach(order => {
+      // Agregar el paso de inicio si no está presente
+      if (!order.pasos.find(step => step.nombre === 'Inicio')) {
+        order.pasos.unshift({ nombre: 'Inicio', completado: true });
+      }
+      // Agregar el paso de fin si no está presente
+      if (!order.pasos.find(step => step.nombre === 'Fin')) {
+        order.pasos.push({ nombre: 'Fin', completado: false });
+      }
+    });
   }
 
 }

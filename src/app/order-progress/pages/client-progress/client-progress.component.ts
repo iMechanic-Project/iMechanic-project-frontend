@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
-import {ProgressBarComponent} from "../progress-bar/progress-bar.component";
-import {NgForOf, NgIf} from "@angular/common";
-import {MultiProgressBarComponent} from "../multi-progress-bar/multi-progress-bar.component";
+import { Component, OnInit } from '@angular/core';
+import { ProgressBarComponent } from "../progress-bar/progress-bar.component";
+import { NgForOf, NgIf } from "@angular/common";
+import { MultiProgressBarComponent } from "../multi-progress-bar/multi-progress-bar.component";
+import { OrderDetailDTO } from '../../../interfaces/OrderDetailDTO';
+import { ActivatedRoute } from '@angular/router';
+import { ClientService } from '../../../services/client.service';
 
 @Component({
   selector: 'app-client-progress',
@@ -15,28 +18,35 @@ import {MultiProgressBarComponent} from "../multi-progress-bar/multi-progress-ba
   templateUrl: './client-progress.component.html',
   styles: ''
 })
-export default class ClientProgressComponent {
+export default class ClientProgressComponent implements OnInit {
 
   showChat = false;
 
+  orders: OrderDetailDTO = {
+    nombreTaller: '',
+    direccionTaller: '',
+    telefonoTaller: '',
+    servicios: []
+  };
 
+  constructor(private route: ActivatedRoute, private clientService: ClientService) {}
 
-  orders = [
-    {
-      nombre: 'El Taller de David',
-      direccion: 'Las Camelias 450 - Santa Inés',
-      telefono: '976345822',
-      codigo: '0010AAAB',
-      servicios: [
-        { servicio: 'Cambio de aceite', mecanico: 'Daigo Campos', estado: 'En progreso' },
-        { servicio: 'Revisión de frenos', mecanico: 'Juan Pérez', estado: 'EN_ESPERA' },
-        { servicio: 'Limpieza total', mecanico: 'Gaillermo', estado: 'EN_ESPERA' }
-
-      ]
-    },
-  ];
-
-
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      const orderId = +params['id'];
+      if (!isNaN(orderId)) {
+        this.clientService.orderDetailByClient(orderId).subscribe(
+          (orderDetail) => {
+            this.orders = orderDetail;
+            console.log(orderDetail);
+          },
+          (error) => {
+            console.error('Error al obtener el detalle de la orden:', error);
+          }
+        );
+      }
+    });
+  }
 
 
   openChat(): void {
