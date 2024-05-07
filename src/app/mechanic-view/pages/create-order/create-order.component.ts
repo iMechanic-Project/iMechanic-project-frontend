@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from "@angular/forms";
@@ -29,7 +29,7 @@ import OrderListComponent from "../order-list/order-list.component";
   templateUrl: './create-order.component.html',
   styles: ''
 })
-export default class CreateOrderComponent {
+export default class CreateOrderComponent implements OnInit {
 
   tipoServicio: TipoServicio[] = [TipoServicio.MANTENIMIENTO, TipoServicio.REPARACION];
   selectedTipoServicio: TipoServicio | null = null;
@@ -38,12 +38,12 @@ export default class CreateOrderComponent {
   selectedServiceId: number = 0;
   mecanicos: MecanicoDTOList[] = [];
   selectedMecanicId: number = 0;
-  selectedServices: { tipo_servicio: string, servicio: number, mecanico: number, servicioMecanico: ServicioMecanicoDTO }[] = [{
-    tipo_servicio: '', servicio: 0, mecanico: 0, servicioMecanico: {
-      servicioId: 0,
-      mecanicoId: 0
-    }
-  }];
+  relacionMecanicoServicio: ServicioMecanicoDTO[] = [];
+  
+  selectedServices: { tipo_servicio: string, servicioMecanico: ServicioMecanicoDTO }[] = [{ tipo_servicio: '', servicioMecanico: {
+    servicioId: 0,
+    mecanicoId: 0
+  } }];
 
   showModal: boolean = false;
   @ViewChild('placaInput') placaInput!: ElementRef;
@@ -52,10 +52,30 @@ export default class CreateOrderComponent {
   cliente: any = {};
   vehiculo: any = {};
 
-
-  selectedRowIndex: number = 0;
-
   constructor(private vehicleService: VehicleService, private orderService: OrderService, private tallerService: TallerServiceService, private mechanicService: MechanicService) { }
+
+  ngOnInit(): void {
+    this.tallerService.getAllServiceToMaintenance().subscribe(servicios => {
+      this.serviciosMantenimiento = servicios;
+
+      console.log(this.serviciosMantenimiento);
+    });
+    
+    this.tallerService.getAllServiceToRepair().subscribe(servicios => {
+      this.serviciosReparacion = servicios;
+      console.log(this.serviciosReparacion);
+    });
+
+    this.mechanicService.getAllMechanicsForOrder().subscribe(mecanicos => {
+      this.mecanicos = mecanicos;
+      console.log(this.mecanicos);
+    });
+
+    this.orderService.getAllServicesMecanicsByTaller().subscribe(serviciosMecanicos => {
+      this.relacionMecanicoServicio = serviciosMecanicos;
+      console.log(this.relacionMecanicoServicio);
+    });
+  }
 
   openModal(): void {
     console.log("resultado mmwbeo");
@@ -120,71 +140,35 @@ export default class CreateOrderComponent {
     });
   }
 
-  getServiceMaintenance() {
-    this.tallerService.getAllServiceToMaintenance().subscribe(servicios => {
-      this.serviciosMantenimiento = servicios;
-    });
-  }
-
-  getServiceRepair() {
-    this.tallerService.getAllServiceToRepair().subscribe(servicios => {
-      this.serviciosReparacion = servicios;
-    });
-  }
-
-  onTypeOfService(tipoServicio: TipoServicio) {
-    if (tipoServicio === TipoServicio.MANTENIMIENTO) {
-      this.getServiceMaintenance();
-      console.log(tipoServicio);
-    } else if (tipoServicio === TipoServicio.REPARACION) {
-      this.getServiceRepair();
-      console.log(tipoServicio);
-    }
-  }
-
-  getMechanicsByService(serviceId: number) {
-    console.log('ID del servicio seleccionado:', serviceId);
-    this.mechanicService.getMechanicsByService(serviceId).subscribe(mecanicos => {
-      this.mecanicos = mecanicos;
-    });
-  }
-
-  // selectMechanic(mecanicId: number) {
-  //   this.selectedServices[this.selectedServices.length - 1].servicioMecanico.servicioId = this.selectedServices[this.selectedServices.length - 1].servicio;
-  //   this.selectedServices[this.selectedServices.length - 1].servicioMecanico.mecanicoId = this.selectedServices[this.selectedServices.length - 1].mecanico;
-  //   console.log('Servicio mecánico seleccionado:', this.selectedServices[this.selectedServices.length - 1].servicioMecanico);
-  // }
-
-  selectRow(index: number) {
-  this.selectedRowIndex = index;
-}
-
-selectMechanic(mecanicId: number) {
-  this.selectedServices[this.selectedRowIndex].servicioMecanico.servicioId = this.selectedServices[this.selectedRowIndex].servicio;
-  this.selectedServices[this.selectedRowIndex].servicioMecanico.mecanicoId = this.selectedServices[this.selectedRowIndex].mecanico;
-  console.log('Servicio mecánico seleccionado:', this.selectedServices[this.selectedRowIndex].servicioMecanico);
-}
-
   addRow() {
-    this.selectedServices.push({
-      tipo_servicio: '', servicio: 0, mecanico: 0, servicioMecanico: {
-        servicioId: 0,
-        mecanicoId: 0
-      }
-    });
-    this.selectRow(this.selectedServices.length - 1); // Selecciona el nuevo servicio
+    this.selectedServices.push({ tipo_servicio: '', servicioMecanico: {
+      servicioId: 0,
+      mecanicoId: 0
+    } });
   }
 
   removeRow(index: number) {
     this.selectedServices.splice(index, 1);
-    if (index === this.selectedRowIndex) {
-      this.selectRow(Math.max(0, index - 1)); // Selecciona el servicio anterior si se eliminó el seleccionado
-    }
   }
 
   registrar() {
     console.log(this.selectedServices);
   }
 
+  obtenerMecanicosPorServicio(servicioId: number): MecanicoDTOList[] {
+
+
+    const servicioIdNumber = +servicioId;
+
+    const mecanicosAsociadosSinMapeo = this.relacionMecanicoServicio
+      .filter(relacion => relacion.servicioId === servicioIdNumber);
+
+    const mecanicosMapeados = mecanicosAsociadosSinMapeo
+      .map(relacion => this.mecanicos.find(mecanico => mecanico.id === relacion.mecanicoId));
+
+    const mecanicosFiltrados = mecanicosMapeados.filter(mecanico => mecanico !== undefined) as MecanicoDTOList[];
+    
+    return mecanicosFiltrados;
+  }
 
 }

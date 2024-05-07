@@ -34,8 +34,12 @@ export class MechanicService {
     return this.http.get<OrdenTrabajoMecanicoDTOList[]>(`${this.baseUrl}/mecanico/ordenes`);
   }
 
-  orderDetailByMecanic(orderId: number):Observable<OrderDetailMecanicoDTO> {
+  orderDetailByMecanic(orderId: number): Observable<OrderDetailMecanicoDTO> {
     return this.http.get<OrderDetailMecanicoDTO>(`${this.baseUrl}/mecanico/order-detail/${orderId}`);
+  }
+
+  getAllMechanicsForOrder(): Observable<MecanicoDTOList[]> {
+    return this.http.get<MecanicoDTOList[]>(`${this.baseUrl}/mecanico/all/order`);
   }
 
 }

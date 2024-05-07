@@ -5,6 +5,7 @@ import { CreateOrdenDTORequest } from '../interfaces/CreateOrdenDTORequest';
 import { Observable } from 'rxjs';
 import { VehiculoSearchDTOResponse } from '../interfaces/VehiculoSearchDTOResponse';
 import { OrdenTrabajoDTOList } from '../interfaces/OrdenTrabajoDTOList';
+import { ServicioMecanicoDTO } from '../interfaces/ServicioMecanicoDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class OrderService {
 
   getAllOrdersByTaller(): Observable<OrdenTrabajoDTOList[]> {
     return this.http.get<OrdenTrabajoDTOList[]>(`${this.baseUrl}/orden/todas`);
+  }
+
+  getAllServicesMecanicsByTaller(): Observable<ServicioMecanicoDTO[]> {
+    return this.http.get<ServicioMecanicoDTO[]>(`${this.baseUrl}/orden/todas/servicios-mecanico`)
   }
 
 }
