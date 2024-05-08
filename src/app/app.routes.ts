@@ -145,5 +145,9 @@ export const routes: Routes = [
     path: '',
     redirectTo: '/inicio/home-page',
     pathMatch: 'full'
+  },
+  {
+    path: '**',
+    loadComponent: () => import('./layout-pages/pages/page-not-found/page-not-found.component')
   }
 ];
