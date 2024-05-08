@@ -143,8 +143,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/inicio',
+    redirectTo: '/inicio/home-page',
     pathMatch: 'full'
   }
-
 ];
