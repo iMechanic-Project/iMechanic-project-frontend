@@ -45,7 +45,7 @@ export default class LoginUsersComponent {
       } else if (response.role == 'ROLE_CLIENTE') {
         this.router.navigate(['/client/register-vehicles']);
       } else if (response.role == 'ROLE_MECANICO') {
-        this.router.navigate(['/employee/view-info']);
+        this.router.navigate(['/employee/order-list-employee']);
       }
     }, error => {
       console.log('Error during login: ', error)

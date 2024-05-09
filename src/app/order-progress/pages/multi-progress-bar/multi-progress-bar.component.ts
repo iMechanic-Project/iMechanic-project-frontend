@@ -21,16 +21,17 @@ export class MultiProgressBarComponent {
   constructor() {
   }
 
+
   getColorClass(estado: string): string {
     switch (estado) {
-      case 'EN_PROCESO':
-        return 'text-green-600'; // Verde
-      case 'EN_ESPERA':
-        return 'text-red-600'; // Rojo
-      case 'FINALIZADO':
-        return 'text-black'; // Negro
+      case 'En Proceso':
+        return 'text-green-600';
+      case 'En Espera':
+        return 'text-red-600';
+      case 'Finalizado':
+        return 'text-black';
       default:
-        return estado; // Devuelve el estado tal cual si no coincide con ninguno de los casos anteriores
+        return '';
     }
   }
 
@@ -43,8 +44,8 @@ export class MultiProgressBarComponent {
       case 'FINALIZADO':
         return 'Finalizado';
       default:
-        return estado; // Devuelve el estado tal cual si no coincide con ninguno de los casos anteriores
+        return estado;
     }
   }
 
-  }
+}

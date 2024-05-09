@@ -9,6 +9,7 @@ import { MecanicoDTOList } from '../interfaces/MecanicoDTOList';
 import { OrdenTrabajoMecanicoDTOList } from '../interfaces/OrdenTrabajoMecanicoDTOList';
 import { OrderDetailMecanicoDTO } from '../interfaces/OrderDetailMecanicoDTO';
 import {tap} from "rxjs/operators";
+import { MecanicoPasoDTO } from '../interfaces/MecanicoPasoDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,18 @@ export class MechanicService {
 
   getAllMechanicsForOrder(): Observable<MecanicoDTOList[]> {
     return this.http.get<MecanicoDTOList[]>(`${this.baseUrl}/mecanico/all/order`);
+  }
+
+  initService(orderId: number): Observable<string> {
+    return this.http.put<string>(`${this.baseUrl}/mecanico/iniciar-servicio/${orderId}`, {});
+  }
+
+  completeStep(ordenId: number, servicioId: number, pasoId: number): Observable<MecanicoPasoDTO> {
+    return this.http.put<MecanicoPasoDTO>(`${this.baseUrl}/mecanico/orden/${ordenId}/service/${servicioId}/paso/${pasoId}/complete`, {});
+  }
+
+  getStepComplete(ordenId: number, servicioId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/mecanico/orden/${ordenId}/service/${servicioId}/complete-list`, {});
   }
 
 }
