@@ -1,8 +1,10 @@
+import { MecanicoDTOList } from "./MecanicoDTOList";
 import { PasoDTO } from "./PasoDTO";
+import { ServicioDTO } from "./ServicioDTO";
 
 export interface ServicioDetalleDTO {
-    nombreServicio: string;
-    nombreMecanico: string;
+    servicio: ServicioDTO;
+    mecanico: MecanicoDTOList;
     estadoServicio: string;
     pasos: PasoDTO[];
 }

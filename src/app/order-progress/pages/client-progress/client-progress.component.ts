@@ -3,7 +3,7 @@ import { ProgressBarComponent } from "../progress-bar/progress-bar.component";
 import { NgForOf, NgIf } from "@angular/common";
 import { MultiProgressBarComponent } from "../multi-progress-bar/multi-progress-bar.component";
 import { OrderDetailDTO } from '../../../interfaces/OrderDetailDTO';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import { ClientService } from '../../../services/client.service';
 
 @Component({
@@ -13,7 +13,8 @@ import { ClientService } from '../../../services/client.service';
     ProgressBarComponent,
     NgForOf,
     NgIf,
-    MultiProgressBarComponent
+    MultiProgressBarComponent,
+    RouterLink
   ],
   templateUrl: './client-progress.component.html',
   styles: ''

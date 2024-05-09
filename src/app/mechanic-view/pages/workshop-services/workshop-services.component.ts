@@ -45,7 +45,6 @@ export default class WorkshopServicesComponent implements OnInit {
   openModal(): void {
     this.showModal = true;
     this.tallerService.addServicioToTaller(this.selectedServices).subscribe(() => {
-      this.showModal = false;
       console.log(this.selectedServices);
     }, error => {
       console.log('Error saving services: ', error);

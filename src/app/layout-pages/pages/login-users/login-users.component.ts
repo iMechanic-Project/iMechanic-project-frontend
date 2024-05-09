@@ -15,6 +15,9 @@ import { Router } from '@angular/router';
   styles: ''
 })
 export default class LoginUsersComponent {
+
+  showMSGdi:boolean = false;
+  showMSGne:boolean = false;
   showPassword: boolean = false;
   loginDTORequest: AuthenticationLoginDTORequest = { correoElectronico: '', contrasenia: '' };
   roleUser: string = '';
@@ -26,6 +29,14 @@ export default class LoginUsersComponent {
   }
 
   onSubmit() {
+
+    if (this.checkIncompleteData()) {
+      this.showMSGdi = true;
+      this.showMSGne = false;
+
+      return; // Detener la función si hay algún dato incompleto
+    }
+    this.showMSGdi = false;
     this.authService.login(this.loginDTORequest).subscribe(response => {
       localStorage.setItem('token', response.token);
       console.log('Login successfully', response);
@@ -34,10 +45,22 @@ export default class LoginUsersComponent {
       } else if (response.role == 'ROLE_CLIENTE') {
         this.router.navigate(['/client/register-vehicles']);
       } else if (response.role == 'ROLE_MECANICO') {
-        this.router.navigate(['/employee/view-info']);
+        this.router.navigate(['/employee/order-list-employee']);
       }
     }, error => {
       console.log('Error during login: ', error)
+      this.showMSGne = true;
+      this.showMSGdi = false;
     });
   }
+
+  checkIncompleteData(): boolean {
+    if(!this.loginDTORequest.correoElectronico ||
+      !this.loginDTORequest.contrasenia) {
+      return true; // Hay datos incompletos
+    }
+    return false; // No hay datos incompletos
+  }
+
+
 }

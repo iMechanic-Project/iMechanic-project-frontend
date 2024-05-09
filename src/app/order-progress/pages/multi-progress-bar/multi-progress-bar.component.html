@@ -10,8 +10,8 @@
   <div *ngFor="let order of orderServices" >
     <div class="flex flex-col w-full mt-2 p-5">
       <div class="items-start">
-        <p class="text-lg "><strong>Servicio: </strong>{{ order.nombreServicio }}</p>
-        <p class="text-lg "><strong>Mecánico: </strong>{{ order.nombreMecanico }}</p>
+        <p class="text-lg "><strong>Servicio: </strong>{{ order.servicio.nombre }}</p>
+        <p class="text-lg "><strong>Mecánico: </strong>{{ order.mecanico.nombre }}</p>
         <div class="flex">
           <p class="text-lg"><strong>Estado:</strong>&nbsp;</p>
           <p class="text-lg {{ getColorClass(order.estadoServicio) }}">{{ order.estadoServicio }}</p>
@@ -135,11 +135,11 @@
   <div *ngFor="let order of orderServices" >
     <div class="flex flex-col w-full mt-2 p-5">
       <div class="items-start">
-        <p class="text-lg "><strong>Servicio: </strong>{{ order.nombreServicio }}</p>
-        <p class="text-lg "><strong>Mecánico: </strong>{{ order.nombreMecanico }}</p>
+        <p class="text-lg "><strong>Servicio: </strong>{{ order.servicio.nombre }}</p>
+        <p class="text-lg "><strong>Mecánico: </strong>{{ order.mecanico.nombre }}</p>
         <div class="flex">
           <p class="text-lg"><strong>Estado:</strong>&nbsp;</p>
-          <p class="text-lg {{ getColorClass(order.estadoServicio) }}">{{ order.estadoServicio }}</p>
+          <p class="text-lg {{ getColorClass(order.estadoServicio) }}">{{ mapEstado(order.estadoServicio) }}</p>
         </div>
       </div>
     </div>
@@ -254,13 +254,3 @@
   </div>
 
 </div>
-
-
-
-
-
-
-
-
-
-

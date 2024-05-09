@@ -28,24 +28,28 @@
         <td class="font-semibold border-gray-400 py-4" style="width: 20%;">{{ mechanic.nombre }}</td>
         <td class="border-gray-400 py-4" style="width: 20%;">{{ mechanic.correoElectronico }}</td>
         <td class="border-gray-400 py-4" style="width: 20%;">
-          <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F" (click)="toggleServicios()">mostrar</button>
-            @if (showServices) {
+          <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F" (click)="toggleServicios2(mechanic)">mostrar</button>
+          <!-- Aquí se muestra la lista de servicios del mecánico actual -->
 
-              <!-- <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center"> -->
+          @if(showServices && selectedMechanic === mechanic){
+            <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">
 
-                <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">
-                  <h3 class="text-2xl mb-4 font-semibold text-center text-black">Lista de servicios del mecanico seleccionado</h3>
-                    @for (servicio of mechanic.servicios; track $index) {
-                      <li>{{ servicio.nombre }}</li>
-                    }
-                  <!-- Botón de guardar -->
-                  <div class="flex items-center justify-center mr-24 ml-24">
-                    <button type="button" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block mt-4" style="background: #F7941F"  (click)="toggleServicios()">Aceptar</button>
-                  </div>
-                </div>
-              <!-- </div> -->
-            }
+            <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">
+              <h3 class="text-2xl mb-8 font-semibold text-center text-black">Lista de servicios del mecánico seleccionado</h3>
+              <ul>
+                <li *ngFor="let servicio of mechanic.servicios">- {{ servicio.nombre }}</li>
+              </ul>
+              <!-- Botón de aceptar -->
+              <div class="flex items-center justify-center mt-6 mr-24 ml-24">
+                <button type="button" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block mt-4" style="background: #F7941F"  (click)="toggleServicios()">Aceptar</button>
+              </div>
+            </div>
+            </div>
+          }
+
+
         </td>
+
         <td class="border-gray-400 py-4" style="width: 20%;">
           <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F">☰</button>
         </td>
@@ -56,7 +60,7 @@
 
 
   <!-- TABLA xs-->
-  <div class="lg:hidden mt-8 w-4/5 bg-white border-2 border-gray-400 text-center" style="height: 32pc">
+  <div class="lg:hidden mt-10 w-4/5 bg-white border-2 border-gray-400 text-center" style="height: 28.5pc">
     <table class="w-full">
       <thead>
       <tr>
@@ -66,7 +70,7 @@
       </tr>
       </thead>
       <tbody class="w-full">
-      <tr *ngFor="let mechanic of mechanics  | paginate: { itemsPerPage: 7, currentPage: p }">
+      <tr *ngFor="let mechanic of mechanics  | paginate: { itemsPerPage: 6, currentPage: p }">
         <td class="text-xs font-semibold border-gray-400 py-4" style="width: 20%;">{{ mechanic.nombre }}</td>
         <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ mechanic.correoElectronico }}</td>
         <td class="text-xs border-gray-400 py-4" style="width: 20%;">
@@ -95,15 +99,21 @@
   <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">
 
     <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">
+
+      <button class="top-2 ml-72 " (click)="closeModal()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-black hover:text-gray-800 -mt-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
       <h3 class="text-2xl mb-4 font-semibold text-center " style="color: #d82733">Crear nuevo mecánico</h3>
 
       <!-- Campos de registro -->
-
       <div class="mb-4">
-        <input type="text" placeholder="Nombre" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-4 mt-4" name="nombre" [(ngModel)]="newMechanic.nombre">
-        <input type="email" placeholder="Correo Electrónico" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-4" name="correoElectronico" [(ngModel)]="newMechanic.correoElectronico">
+        <input type="text" placeholder="Nombre" maxlength="30" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-4 mt-4" name="nombre" [(ngModel)]="newMechanic.nombre">
+        <input type="email" placeholder="Correo Electrónico" maxlength="30" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-4" name="correoElectronico" [(ngModel)]="newMechanic.correoElectronico">
         <div class=" relative">
-          <input type="{{ showPassword ? 'text': 'password'}}" placeholder="Contraseña" autocomplete="password" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="contrasenia" [(ngModel)]="newMechanic.contrasenia">
+          <input type="{{ showPassword ? 'text': 'password'}}" placeholder="Contraseña" maxlength="30" autocomplete="password" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="contrasenia" [(ngModel)]="newMechanic.contrasenia">
           <span class="absolute top-0 right-0 mr-3 mt-2 cursor-pointer" (click)="togglePassword()">
           @if (showPassword){
             <i class="fa fa-eye"></i>
@@ -164,21 +174,38 @@
   </div>
 }
 
+
 @if (showModal2){
+
+  <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">
+
+    <div class="rounded-xs p-10" style="background: #B5B7B6; width: 350px">
+      <h3 class="text-2xl font-bold text-black mb-6 text-center">ASIGNANDO MECANICO AL  TALLER </h3>
+      <div class="-mb-10">
+        <app-loader />
+      </div>
+
+
+    </div>
+  </div>
+}
+
+@if (showModal3){
 
   <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">
 
     <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">
       <h3 class="text-2xl mb-4 font-semibold text-center text-black">El mecanico fue registrado correctamente!</h3>
-      <img src="../../../../assets/img/LogoG_trans.png" alt="Logo" class="ml-2">
 
       <!-- Botón de guardar -->
       <div class="flex items-center justify-center mr-24 ml-24">
-        <button type="button" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block mt-4" style="background: #F7941F"  (click)="closeModal2()">Aceptar</button>
+        <button type="button" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block mt-4" style="background: #F7941F"  (click)="closeModal3()">Aceptar</button>
       </div>
     </div>
   </div>
 }
+
+
 
 
 

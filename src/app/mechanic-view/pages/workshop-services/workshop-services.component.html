@@ -1,49 +1,54 @@
-<div class="flex justify-center items-center mt-12 lg:mt-32 mb-10 lg:mb-28 mr-5 ml-5">
+<!--<div class="fixed top-0 right-0 w-full h-full bg-white justify-center items-center">-->
+<!--  <div class="fixed top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center ">-->
+    <div class="flex justify-center items-center mt-32 mb-10 lg:mb-28 mr-5 ml-5">
 
-  <div class="p-10 text-black  w-full lg:w-4/12" style="background: #D9D9D9">
+      <div class="p-10 text-black  w-full lg:w-4/12" style="background: #D9D9D9">
 
-    <h2 class="text-2xl mb-6">Servicios prestados del taller:</h2>
+        <h2 class="text-2xl mb-6">Registre sus servicios para continuar</h2>
 
-    <!-- Lista de acciones-->
-    <div class="bg-white p-6 rounded-lg text-black overflow-y-auto" style="height: 470px;">
+        <!-- Lista de acciones-->
+        <div class="bg-white p-6 rounded-lg text-black overflow-y-auto" style="height: 470px;">
 
-      <!-- Lista de acciones de Mantenimiento -->
-      <div class="mb-4">
-        <h3 class="flex text-lg mb-2 font-semibold">Mantenimiento</h3>
-        <div class="flex flex-col">
-          @for (servicio of accionesMantenimiento; track $index) {
-          <label class="flex items-center">
-            <input type="checkbox" class="mr-2" (change)="toggleService(servicio.id)">
-            {{ servicio.nombre }}
-          </label>
-          }
+          <!-- Lista de acciones de Mantenimiento -->
+          <div class="mb-4">
+            <h3 class="flex text-lg mb-2 font-semibold">Mantenimiento</h3>
+            <div class="flex flex-col">
+              @for (servicio of accionesMantenimiento; track $index) {
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2" (change)="toggleService(servicio.id)">
+                  {{ servicio.nombre }}
+                </label>
+              }
+            </div>
+          </div>
+
+          <!-- Lista de acciones de Reparacion -->
+          <div class="mb-4">
+            <h3 class="flex text-lg mb-2 font-semibold">Reparación</h3>
+            <div class="flex flex-col">
+              @for (servicio of accionesReparacion; track $index) {
+                <label class="flex items-center">
+                  <input type="checkbox" class="mr-2" (change)="toggleService(servicio.id)">
+                  {{ servicio.nombre }}
+                </label>
+              }
+            </div>
+          </div>
         </div>
-      </div>
 
-      <!-- Lista de acciones de Reparacion -->
-      <div class="mb-4">
-        <h3 class="flex text-lg mb-2 font-semibold">Reparación</h3>
-        <div class="flex flex-col">
-          @for (servicio of accionesReparacion; track $index) {
-          <label class="flex items-center">
-            <input type="checkbox" class="mr-2" (change)="toggleService(servicio.id)">
-            {{ servicio.nombre }}
-          </label>
-          }
+        <!-- Botón de guardar -->
+        <div class=" text-center mt-1">
+          <button type="button" class="text-xl mt-5 bg-blue-500 font-semibold text-black px-10 py-3 rounded-lg"
+                  style="background: #F7941F" (click)="openModal()">Guardar</button>
         </div>
+
       </div>
     </div>
 
-    <!-- Botón de guardar -->
-    <div class=" text-center mt-1">
-      <button type="button" class="text-xl mt-5 bg-blue-500 font-semibold text-black px-10 py-3 rounded-lg"
-        style="background: #F7941F" (click)="openModal()">Guardar</button>
-    </div>
-
-  </div>
-</div>
+<!--  </div>-->
 
 
+<!--</div>-->
 
 
 @if (showModal){
@@ -57,7 +62,7 @@
     <!-- Botón de guardar -->
     <div class="flex items-center justify-center mr-24 ml-24">
       <button type="button" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block mt-4"
-        style="background: #F7941F" [routerLink]="['/mechanic/workshop-info']" (click)="closeModal()">Aceptar</button>
+        style="background: #F7941F" [routerLink]="['/workshop/workshop-mechanics']" (click)="closeModal()">Aceptar</button>
     </div>
   </div>
 </div>

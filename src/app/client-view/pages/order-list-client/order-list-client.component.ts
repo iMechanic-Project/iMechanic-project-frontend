@@ -32,27 +32,45 @@ export default class OrderListClientComponent implements OnInit {
 
   getColorClass(estado: string): string {
     switch (estado) {
-      case 'EN_PROCESO':
+      case 'En Proceso':
         return 'text-green-600';
-      case 'EN_ESPERA':
+      case 'En Espera':
         return 'text-red-600';
-      case 'FINALIZADO':
+      case 'Finalizado':
         return 'text-black';
       default:
         return '';
     }
   }
 
+  mapEstado(estado: string): string {
+    switch (estado) {
+      case 'EN_PROCESO':
+        return 'En Proceso';
+      case 'EN_ESPERA':
+        return 'En Espera';
+      case 'FINALIZADO':
+        return 'Finalizado';
+      default:
+        return estado;
+    }
+  }
+
   getAllOrdersByCliente(): void {
     this.clientService.getAllOrderByCliente().subscribe(
       (ordenes: OrdenTrabajoClienteDTOList[]) => {
-        this.vehicles = ordenes;
+        this.vehicles = ordenes.map((orden: OrdenTrabajoClienteDTOList) => ({
+          ...orden,
+          estado: this.mapEstado(orden.estado)
+        }));
       },
       (error) => {
         console.error('Error al obtener las órdenes de trabajo:', error);
       }
     );
   }
+
+
 
   onInputChange(event: any): void {
     let value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); // Elimina caracteres no deseados
