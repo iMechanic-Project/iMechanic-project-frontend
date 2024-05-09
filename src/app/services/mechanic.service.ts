@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { MechanicDTO } from '../interfaces/MechanicDTO';
 import { MechanicDTORequest } from '../interfaces/MechanicDTORequest';
 import { MechanicDTOResponse } from '../interfaces/MechanicDTOResponse';
 import { MecanicoDTOList } from '../interfaces/MecanicoDTOList';
 import { OrdenTrabajoMecanicoDTOList } from '../interfaces/OrdenTrabajoMecanicoDTOList';
 import { OrderDetailMecanicoDTO } from '../interfaces/OrderDetailMecanicoDTO';
+import {tap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +16,26 @@ import { OrderDetailMecanicoDTO } from '../interfaces/OrderDetailMecanicoDTO';
 export class MechanicService {
 
   public baseUrl: string = environment.apiUrl;
+  private _refresh$ = new Subject<void>();
+
 
   constructor(private http: HttpClient) { }
+
+  get refresh$(){
+    return this._refresh$;
+  }
 
   getAllMechanics(): Observable<MechanicDTO[]> {
     return this.http.get<MechanicDTO[]>(`${this.baseUrl}/mecanico/all`);
   }
 
   createMechanic(mecanico: MechanicDTORequest): Observable<MechanicDTOResponse> {
-    return this.http.post<MechanicDTOResponse>(`${this.baseUrl}/mecanico/crear`, mecanico);
+    return this.http.post<MechanicDTOResponse>(`${this.baseUrl}/mecanico/crear`, mecanico)
+      .pipe(
+        tap(()=>  {
+          this._refresh$.next();
+        })
+      )
   }
 
   getMechanicsByService(serviceId: number): Observable<MecanicoDTOList[]> {

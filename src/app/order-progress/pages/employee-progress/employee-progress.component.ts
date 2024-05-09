@@ -40,7 +40,10 @@ export default class EmployeeProgressComponent implements OnInit {
       if (!isNaN(orderId)) {
         this.mecanicService.orderDetailByMecanic(orderId).subscribe(
           (orderDetail) => {
-            this.datosOrden = orderDetail;
+            this.datosOrden = {
+              ...orderDetail,
+              estadoServicio: this.mapEstado(orderDetail.estadoServicio)
+            };
             console.log(orderDetail);
           },
           (error) => {
@@ -53,14 +56,27 @@ export default class EmployeeProgressComponent implements OnInit {
 
   getColorClass(estado: string): string {
     switch (estado) {
-      case 'En progreso':
-        return 'text-green-600'; // Verde
-      case 'EN_ESPERA':
-        return 'text-red-600'; // Rojo
-      case 'FINALIZADO':
-        return 'text-black'; // Negro
+      case 'En Proceso':
+        return 'text-green-600';
+      case 'En Espera':
+        return 'text-red-600';
+      case 'Finalizado':
+        return 'text-black';
       default:
-        return estado; // Devuelve el estado tal cual si no coincide con ninguno de los casos anteriores
+        return '';
+    }
+  }
+
+  mapEstado(estado: string): string {
+    switch (estado) {
+      case 'EN_PROCESO':
+        return 'En Proceso';
+      case 'EN_ESPERA':
+        return 'En Espera';
+      case 'FINALIZADO':
+        return 'Finalizado';
+      default:
+        return estado;
     }
   }
 

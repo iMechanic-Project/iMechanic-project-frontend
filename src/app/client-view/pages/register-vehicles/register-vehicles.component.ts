@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { RouterOutlet } from "@angular/router";
 import { RouterModule } from "@angular/router";
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -11,6 +11,7 @@ import { ModeloDTO } from '../../../interfaces/ModeloDTO';
 import { FormsModule } from '@angular/forms';
 import { VehiculoDTORequest } from '../../../interfaces/VehiculoDTORequest';
 import { Categoria } from '../../../interfaces/Categoria';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-register-vehicles',
@@ -25,11 +26,12 @@ import { Categoria } from '../../../interfaces/Categoria';
   templateUrl: './register-vehicles.component.html',
   styles: ''
 })
-export default class RegisterVehiclesComponent implements OnInit {
+export default class RegisterVehiclesComponent implements OnInit, OnDestroy{
 
   @ViewChild('placaInput') placaInput!: ElementRef;
 
   vehicles: VehiculoDTOResponse[] = [];
+  suscription: Subscription| undefined;
   newVehicle: VehiculoDTORequest = { placa: '', marcaId: 0, modeloId: 0, categoria: Categoria.AUTO };
   marcas: MarcaDTO[] = [];
   modelos: ModeloDTO[] = [];
@@ -48,6 +50,17 @@ export default class RegisterVehiclesComponent implements OnInit {
     this.vehicleService.getAllVehiclesByUser().subscribe(vehicle => {
       this.vehicles = vehicle;
     });
+
+    this.suscription = this.vehicleService.refresh$.subscribe(() =>{
+      this.vehicleService.getAllVehiclesByUser().subscribe(vehicles => {
+        this.vehicles = vehicles; // Aquí asigna los datos actualizados a la variable vehicles
+      });
+    });
+  }
+
+  ngOnDestroy():void{
+    this.suscription?.unsubscribe();
+    console.log("obserbable morido")
   }
 
   openModal(): void {
@@ -109,6 +122,9 @@ export default class RegisterVehiclesComponent implements OnInit {
         this.showModal = false;
         // Reinicia el objeto newVehicle para limpiar los campos del formulario
         this.newVehicle = { placa: '', marcaId: 0, modeloId: 0, categoria: Categoria.AUTO };
+        this.selectedMarcaId = null; // Restablece el campo de selección de marca
+        this.selectedModeloId = null; // Restablece el campo de selección de modelo
+        this.selectedCategoria = null; // Restablece el campo de selección de categoría
       },
       (error) => {
         console.error('Error al crear vehículo:', error);
@@ -119,6 +135,7 @@ export default class RegisterVehiclesComponent implements OnInit {
     this.closeModal();
     this.openModal2();
   }
+
 
 
 }

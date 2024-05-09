@@ -19,7 +19,6 @@ export class MultiProgressBarComponent {
   showModal = false;
 
   constructor() {
-    this.addStartEndSteps();
   }
 
   getColorClass(estado: string): string {
@@ -35,17 +34,17 @@ export class MultiProgressBarComponent {
     }
   }
 
-  addStartEndSteps(): void {
-    this.orderServices.forEach(order => {
-      // Agregar el paso de inicio si no está presente
-      if (!order.pasos.find(step => step.nombre === 'Inicio')) {
-        order.pasos.unshift({ nombre: 'Inicio', completado: true });
-      }
-      // Agregar el paso de fin si no está presente
-      if (!order.pasos.find(step => step.nombre === 'Fin')) {
-        order.pasos.push({ nombre: 'Fin', completado: false });
-      }
-    });
+  mapEstado(estado: string): string {
+    switch (estado) {
+      case 'EN_PROCESO':
+        return 'En Proceso';
+      case 'EN_ESPERA':
+        return 'En Espera';
+      case 'FINALIZADO':
+        return 'Finalizado';
+      default:
+        return estado; // Devuelve el estado tal cual si no coincide con ninguno de los casos anteriores
+    }
   }
 
-}
+  }

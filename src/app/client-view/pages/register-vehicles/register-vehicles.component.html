@@ -39,8 +39,9 @@
   </div>
 
 
+
   <!-- TABLA xs-->
-  <div class="lg:hidden mt-8  w-4/5 bg-white border-2 border-gray-400 text-center" style="height: 32pc">
+  <div class="lg:hidden mt-8  w-4/5 bg-white border-2 border-gray-400 text-center" style="height: 28.5pc">
     <table class="w-full">
       <thead>
         <tr>
@@ -52,7 +53,7 @@
         </tr>
       </thead>
       <tbody class="w-full">
-        <tr *ngFor="let vehicle of vehicles | paginate: { itemsPerPage: 7, currentPage: p }">
+        <tr *ngFor="let vehicle of vehicles | paginate: { itemsPerPage: 6, currentPage: p }">
           <td class="text-xs font-semibold border-gray-400 py-4" style="width: 20%;">{{ vehicle.placa }}</td>
           <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ vehicle.marca }}</td>
           <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ vehicle.modelo }}</td>
@@ -66,7 +67,7 @@
   </div>
 
   <!-- paginacion lg-->
-  <div class="flex justify-center -mt-14 mb-16 lg:mb-36">
+  <div class="flex justify-center -mt-14 lg:mb-36">
     <pagination-controls (pageChange)="p = $event" previousLabel="" nextLabel=""></pagination-controls>
   </div>
 
@@ -88,7 +89,6 @@
     <p class="text-xl mb-10 font-semibold text-center">Información del vehículo</p>
 
     <!-- Campos de registro -->
-
     <div class="mb-4">
       <input #placaInput type="text" placeholder="Placa"
         class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4  mb-2 lg:mb-0"
@@ -119,9 +119,6 @@
       <option [ngValue]="null" disabled selected>Seleccionar Categoría</option>
       <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
     </select>
-
-
-
 
     <!-- Botón de guardar -->
     <div class="flex items-center justify-center mr-24 ml-24">

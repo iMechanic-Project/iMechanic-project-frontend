@@ -18,6 +18,7 @@ export class ProgressBarComponent {
 
   @Input() services: PasoDTO[] = [];
 
+
   currentServiceIndex = 0;
   showButtons = false;
   showModal = false;
@@ -30,10 +31,6 @@ export class ProgressBarComponent {
   //   { name: 'Revision y recarga del sistema del aire acondicionado', completed: false },
 
   //   { name: 'Inspeccion visual', completed: false },
-
-
-
-
   //   { name: 'Fin', completed: false }
   // ];
 
@@ -54,6 +51,7 @@ export class ProgressBarComponent {
       //Se muestra en que servicio se encuentra
       console.log(this.currentServiceIndex);
     }
+
   }
 
   startOrder() {
@@ -64,6 +62,7 @@ export class ProgressBarComponent {
       console.log(this.currentServiceIndex);
     }
     this.showButtons = true;
+
   }
 
 
@@ -75,8 +74,4 @@ export class ProgressBarComponent {
       console.log(this.currentServiceIndex);
     }
   }
-
-
-
-
 }

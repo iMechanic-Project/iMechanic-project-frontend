@@ -9,14 +9,14 @@
 
     <p class="text-m text-black mb-6 font-semibold">Convirtiendo talleres mecánicos en espacios inteligentes</p>
 
-    <form class="w-full max-w-md mb-3" (ngSubmit)="onSubmit()">
+    <form class="w-full max-w-md" (ngSubmit)="onSubmit()">
 
       <div class="mb-4 w-full mx-auto">
-        <input type="email" placeholder="Correo Electrónico" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="correoElectronico" [(ngModel)]="loginDTORequest.correoElectronico">
+        <input type="email" placeholder="Correo Electrónico" maxlength="30" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="correoElectronico" [(ngModel)]="loginDTORequest.correoElectronico">
       </div>
 
-      <div class="mb-7 w-full relative">
-        <input type="{{ showPassword ? 'text': 'password'}}" placeholder="Contraseña" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="contrasenia" [(ngModel)]="loginDTORequest.contrasenia">
+      <div class="mb-2 w-full relative">
+        <input type="{{ showPassword ? 'text': 'password'}}" maxlength="30" placeholder="Contraseña" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="contrasenia" [(ngModel)]="loginDTORequest.contrasenia">
         <span class="absolute top-0 right-0 mr-3 mt-2 cursor-pointer" (click)="togglePassword()">
           @if (showPassword){
             <i class="fa fa-eye"></i>
@@ -26,8 +26,17 @@
         </span>
       </div>
 
+      <div class="col-span-2 flex justify-center">
+        @if (showMSGdi){
+          <h1 class="text-x text-red-500 font-semibold lg:-mb-10 -mb-12">Los campos no pueden estar vacios</h1>
+        }
+        @if (showMSGne){
+          <h1 class="text-x text-red-500 font-semibold lg:-mb-10 -mb-12">Esta cuenta no existe</h1>
+        }
+      </div>
 
-      <div class="flex justify-center">
+
+      <div class="flex justify-center mt-10">
         <button type="submit" class=" text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block" style="background: #F7941F" (click)="onSubmit">Ingresar</button>
       </div>
 

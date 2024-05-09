@@ -21,11 +21,11 @@
         <h2 class="text-lg font-semibold mb-2">Información de la cuenta</h2>
 
         <div class="mb-4">
-          <input type="email" placeholder="Correo Electrónico" autocomplete="email" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="correoElectronico" [(ngModel)]="signUpDTORequest.correoElectronico">
+          <input type="email" maxlength="30" placeholder="Correo Electrónico" autocomplete="email" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="correoElectronico" [(ngModel)]="signUpDTORequest.correoElectronico" >
         </div>
 
         <div class="mb-4 relative">
-          <input type="{{ showPassword ? 'text': 'password'}}" placeholder="Contraseña" autocomplete="password" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400">
+          <input type="{{ showPassword ? 'text': 'password'}}" maxlength="30" placeholder="Contraseña" autocomplete="password" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="confirmarContrasenia" [(ngModel)]="confirmarContrasenia">
           <span class="absolute top-0 right-0 mr-3 mt-2 cursor-pointer" (click)="togglePassword()">
           @if (showPassword){
             <i class="fa fa-eye"></i>
@@ -36,9 +36,10 @@
         </span>
         </div>
 
-        <div class="mb-4 relative">
-          <input type="{{ showPasswordConfirmation ? 'text': 'password'}}" placeholder="Confirmar Contraseña" autocomplete="new-password" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="contrasenia" [(ngModel)]="signUpDTORequest.contrasenia">
+        <div class=" relative">
+          <input type="{{ showPasswordConfirmation ? 'text': 'password'}}" maxlength="30" placeholder="Confirmar Contraseña" autocomplete="new-password" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="contrasenia" [(ngModel)]="signUpDTORequest.contrasenia">
           <span class="absolute top-0 right-0 mr-3 mt-2 cursor-pointer" (click)="togglePasswordConfirmation()">
+
           @if (showPasswordConfirmation){
             <i class="fa fa-eye"></i>
           } @else {
@@ -52,24 +53,41 @@
       <div class=" w-full mx-auto ">
 
         @if (showDescripcion){
-          <h2 class="text-lg font-semibold mb-2">Información del Taller</h2>
+          <h2 class="text-lg font-semibold lg:mt-0 mb-2 mt-3">Información del Taller</h2>
         } @else {
-          <h2 class="text-lg font-semibold mb-2">Información del Cliente</h2>
+          <h2 class="text-lg font-semibold lg:mt-0 mb-2 mt-3">Información del Cliente</h2>
         }
 
 
         <div class="mb-4">
-          <input type="text" placeholder="Nombre" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="nombre" [(ngModel)]="signUpDTORequest.nombre">
+          <input type="text" maxlength="30" placeholder="Nombre" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="nombre" [(ngModel)]="signUpDTORequest.nombre">
         </div>
         <div class="mb-4">
-          <input type="text" placeholder="Dirección" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="direccion" [(ngModel)]="signUpDTORequest.direccion">
+          <input type="text" maxlength="30" placeholder="Dirección" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="direccion" [(ngModel)]="signUpDTORequest.direccion">
         </div>
-        <div class="mb-4">
-          <input type="text" placeholder="Número de contacto" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="telefono" [(ngModel)]="signUpDTORequest.telefono">
+        <div class="lg:mb-0 mb-4">
+          <input type="text" placeholder="Número de contacto"
+                 class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400"
+                 name="telefono" [(ngModel)]="signUpDTORequest.telefono"
+                 (keypress)="onKeyPress($event)"
+                 maxlength="9"
+                 required>
         </div>
+
+
       </div>
 
       <div class="col-span-2 flex justify-center">
+        @if (showMSGci){
+          <h1 class="text-x text-red-500 font-semibold lg:-mb-8 -mb-12">Las contraseñas no coinciden</h1>
+        }
+        @if (showMSGdi){
+          <h1 class="text-x text-red-500 font-semibold lg:-mb-8 -mb-12">Los campos no pueden estar vacios</h1>
+        }
+      </div>
+
+
+      <div class="col-span-2 flex justify-center lg:mt-5 mt-6">
 
         @if (!showDescripcion){
           <p class="text-x text-black mb-2 font-semibold">¿Quieres trabajar con nosotros? <span class="text-orange-500 hover:underline" (click)="toogleRol()" style="cursor: pointer;">Click aquí</span></p>
@@ -80,7 +98,7 @@
       </div>
 
       <div class="col-span-2 flex justify-center">
-        <button type="submit" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block" (click)="openModal()" style="background: #F7941F">Crear cuenta</button>
+        <button type="submit" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block lg:mt-0 mt-5"  style="background: #F7941F">Crear cuenta</button>
       </div>
 
     </form>
@@ -99,6 +117,24 @@
       <!-- Botón de guardar -->
       <div class="flex items-center justify-center mr-24 ml-24">
         <button type="button" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block mt-4" style="background: #F7941F"  (click)="closeModal()" [routerLink]="['/inicio/login-users']">Aceptar</button>
+      </div>
+    </div>
+  </div>
+}
+
+
+@if (showModal2){
+
+  <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">
+
+    <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">
+      <h2 class="text-lg mb-4 font-semibold text-center text-black">Datos incorrectos</h2>
+      <h2 class="text-lg mb-4 font-semibold text-center text-black">No puede dejar campos vacios</h2>
+      <h2 class="text-lg mb-4 font-semibold text-center text-black">Las contraseñas deben coincidir</h2>
+
+      <!-- Botón de guardar -->
+      <div class="flex items-center justify-center mr-24 ml-24">
+        <button type="button" class="text-xl text-black rounded-xl px-10 py-3 font-semibold inline-block mt-4" style="background: #F7941F"  (click)="closeModal2()" >Aceptar</button>
       </div>
     </div>
   </div>

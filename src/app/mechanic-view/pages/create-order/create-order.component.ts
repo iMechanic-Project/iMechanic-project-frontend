@@ -16,6 +16,7 @@ import { MecanicoDTOList } from '../../../interfaces/MecanicoDTOList';
 import { MechanicService } from '../../../services/mechanic.service';
 import { ServicioMecanicoDTO } from '../../../interfaces/ServicioMecanicoDTO';
 import OrderListComponent from "../order-list/order-list.component";
+import {LoaderComponent} from "../loader/loader.component";
 
 @Component({
   selector: 'app-create-order',
@@ -25,6 +26,7 @@ import OrderListComponent from "../order-list/order-list.component";
     FormsModule,
     CommonModule,
     OrderListComponent,
+    LoaderComponent,
   ],
   templateUrl: './create-order.component.html',
   styles: ''
@@ -39,7 +41,7 @@ export default class CreateOrderComponent implements OnInit {
   mecanicos: MecanicoDTOList[] = [];
   selectedMecanicId: number = 0;
   relacionMecanicoServicio: ServicioMecanicoDTO[] = [];
-  
+
   selectedServices: { tipo_servicio: string, servicioMecanico: ServicioMecanicoDTO }[] = [{ tipo_servicio: '', servicioMecanico: {
     servicioId: 0,
     mecanicoId: 0
@@ -60,7 +62,7 @@ export default class CreateOrderComponent implements OnInit {
 
       console.log(this.serviciosMantenimiento);
     });
-    
+
     this.tallerService.getAllServiceToRepair().subscribe(servicios => {
       this.serviciosReparacion = servicios;
       console.log(this.serviciosReparacion);
@@ -167,7 +169,7 @@ export default class CreateOrderComponent implements OnInit {
       .map(relacion => this.mecanicos.find(mecanico => mecanico.id === relacion.mecanicoId));
 
     const mecanicosFiltrados = mecanicosMapeados.filter(mecanico => mecanico !== undefined) as MecanicoDTOList[];
-    
+
     return mecanicosFiltrados;
   }
 
