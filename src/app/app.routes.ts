@@ -130,6 +130,11 @@ export const routes: Routes = [
         loadComponent: () => import('./order-progress/pages/client-progress/client-progress.component')
       },
       {
+        path: 'workshop-progress/:id',
+        title: 'Workshop Progress',
+        loadComponent: () => import('./order-progress/pages/workshop-progress/workshop-progress.component')
+      },
+      {
         path: '',
         redirectTo: '/progress/employee-progress/:id',
         pathMatch: 'full'

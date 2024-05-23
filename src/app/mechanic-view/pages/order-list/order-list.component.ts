@@ -4,8 +4,9 @@ import { NgxPaginationModule } from "ngx-pagination";
 import { NgForOf } from "@angular/common";
 import { OrderService } from '../../../services/order.service';
 import { OrdenTrabajoDTOList } from '../../../interfaces/OrdenTrabajoDTOList';
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {OrdenTrabajoClienteDTOList} from "../../../interfaces/OrdenTrabajoClienteDTOList";
+import {ClientService} from "../../../services/client.service";
 
 
 @Component({
@@ -24,6 +25,21 @@ export default class OrderListComponent implements OnInit {
   p: number = 1;
 
   vehicles: OrdenTrabajoDTOList[] = [];
+
+  constructor (private orderService: OrderService, private router: Router) { }
+
+
+  @ViewChild('placaInput') placaInput!: ElementRef;
+
+
+  ngOnInit(): void {
+    this.orderService.getAllOrdersByTaller().subscribe(ordenes => {
+      this.vehicles = ordenes.map((orden: OrdenTrabajoDTOList) => ({
+        ...orden,
+        estado: this.mapEstado(orden.estado)
+      }));
+    });
+  }
 
   getColorClass(estado: string): string {
     switch (estado) {
@@ -51,20 +67,6 @@ export default class OrderListComponent implements OnInit {
     }
   }
 
-  @ViewChild('placaInput') placaInput!: ElementRef;
-
-  constructor(private orderService: OrderService) { }
-
-  ngOnInit(): void {
-    this.orderService.getAllOrdersByTaller().subscribe(ordenes => {
-      this.vehicles = ordenes.map((orden: OrdenTrabajoDTOList) => ({
-        ...orden,
-        estado: this.mapEstado(orden.estado)
-      }));
-    });
-  }
-
-
   onInputChange(event: any): void {
     let value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); // Elimina caracteres no deseados
     if (value.length > 3) {
@@ -73,6 +75,8 @@ export default class OrderListComponent implements OnInit {
     this.placaInput.nativeElement.value = value.substring(0, 7); // Limita la longitud a 7 caracteres
   }
 
-
+  detailOrder(placa: string): void {
+    this.router.navigate(['/progress/client-progress/', placa]);
+  }
 
 }

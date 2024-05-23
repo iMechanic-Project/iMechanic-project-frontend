@@ -78,6 +78,7 @@ export default class WorkshopMechanicsComponent implements OnInit, OnDestroy {
         this.newMechanic.nombre = '';
         this.newMechanic.correoElectronico = '';
         this.newMechanic.contrasenia = '';
+        this.newMechanic.servicioIds = [];
       },
       error => {
         console.error('Error creating mechanic: ', error);

@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
   templateUrl: './order-list-client.component.html',
   styles: ''
 })
+
 export default class OrderListClientComponent implements OnInit {
 
   p: number = 1;
@@ -70,8 +71,6 @@ export default class OrderListClientComponent implements OnInit {
     );
   }
 
-
-
   onInputChange(event: any): void {
     let value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); // Elimina caracteres no deseados
     if (value.length > 3) {
@@ -83,6 +82,4 @@ export default class OrderListClientComponent implements OnInit {
   detailOrder(orderId: number): void {
     this.router.navigate(['/progress/client-progress/', orderId]);
   }
-
-
 }
