@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ProgressBarComponent } from "../progress-bar/progress-bar.component";
-import { NgForOf, NgIf } from "@angular/common";
-import { MultiProgressBarComponent } from "../multi-progress-bar/multi-progress-bar.component";
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
+import { NgForOf, NgIf } from '@angular/common';
+import { MultiProgressBarComponent } from '../multi-progress-bar/multi-progress-bar.component';
 import { OrderDetailDTO } from '../../../interfaces/OrderDetailDTO';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ClientService } from '../../../services/client.service';
 
 @Component({
@@ -14,26 +14,28 @@ import { ClientService } from '../../../services/client.service';
     NgForOf,
     NgIf,
     MultiProgressBarComponent,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './client-progress.component.html',
-  styles: ''
+  styles: '',
 })
 export default class ClientProgressComponent implements OnInit {
-
   showChat = false;
 
   orders: OrderDetailDTO = {
     nombreTaller: '',
     direccionTaller: '',
     telefonoTaller: '',
-    servicios: []
+    servicios: [],
   };
 
-  constructor(private route: ActivatedRoute, private clientService: ClientService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private clientService: ClientService
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       const orderId = +params['id'];
       if (!isNaN(orderId)) {
         this.clientService.orderDetailByClient(orderId).subscribe(
@@ -49,12 +51,15 @@ export default class ClientProgressComponent implements OnInit {
     });
   }
 
-
   openChat(): void {
     this.showChat = true;
   }
 
   closeChat(): void {
     this.showChat = false;
+  }
+
+  goBack(): void {
+    window.history.back();
   }
 }

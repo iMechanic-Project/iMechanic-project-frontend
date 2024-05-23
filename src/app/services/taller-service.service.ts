@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ServicioDTO } from '../interfaces/ServicioDTO';
+import { OrderDetailDTO } from '../interfaces/OrderDetailDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class TallerServiceService {
 
   addServicioToTaller(serviciosIds: number[]): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/servicio/add`, serviciosIds);
+  }
+
+  orderDetailByTaller(orderId: number): Observable<OrderDetailDTO> {
+    return this.http.get<OrderDetailDTO>(`${this.baseUrl}/taller/order-detail/${orderId}`);
   }
 
 }

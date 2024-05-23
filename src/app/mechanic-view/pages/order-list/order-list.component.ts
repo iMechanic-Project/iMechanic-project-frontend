@@ -75,8 +75,8 @@ export default class OrderListComponent implements OnInit {
     this.placaInput.nativeElement.value = value.substring(0, 7); // Limita la longitud a 7 caracteres
   }
 
-  detailOrder(placa: string): void {
-    this.router.navigate(['/progress/client-progress/', placa]);
+  detailOrder(id: number): void {
+    this.router.navigate(['/progress/workshop-progress/', id]);
   }
 
 }

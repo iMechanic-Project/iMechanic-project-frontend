@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ProgressBarComponent } from "../progress-bar/progress-bar.component";
-import { NgForOf, NgIf } from "@angular/common";
-import { MultiProgressBarComponent } from "../multi-progress-bar/multi-progress-bar.component";
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
+import { NgForOf, NgIf } from '@angular/common';
+import { MultiProgressBarComponent } from '../multi-progress-bar/multi-progress-bar.component';
 import { OrderDetailDTO } from '../../../interfaces/OrderDetailDTO';
-import {ActivatedRoute, RouterLink} from '@angular/router';
-import { ClientService } from '../../../services/client.service';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { TallerServiceService } from '../../../services/taller-service.service';
 @Component({
   selector: 'app-workshop-progress',
   standalone: true,
@@ -13,28 +13,29 @@ import { ClientService } from '../../../services/client.service';
     NgForOf,
     NgIf,
     MultiProgressBarComponent,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './workshop-progress.component.html',
-  styles: ''
+  styles: '',
 })
 export default class WorkshopProgressComponent implements OnInit {
-
-
   orders: OrderDetailDTO = {
     nombreTaller: '',
     direccionTaller: '',
     telefonoTaller: '',
-    servicios: []
+    servicios: [],
   };
 
-  constructor(private route: ActivatedRoute, private clientService: ClientService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private tallerService: TallerServiceService
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       const orderId = +params['id'];
       if (!isNaN(orderId)) {
-        this.clientService.orderDetailByClient(orderId).subscribe(
+        this.tallerService.orderDetailByTaller(orderId).subscribe(
           (orderDetail) => {
             this.orders = orderDetail;
             console.log(orderDetail);
@@ -47,5 +48,7 @@ export default class WorkshopProgressComponent implements OnInit {
     });
   }
 
-
+  goBack(): void {
+    window.history.back();
+  }
 }
