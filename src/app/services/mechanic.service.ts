@@ -55,16 +55,19 @@ export class MechanicService {
     return this.http.get<MecanicoDTOList[]>(`${this.baseUrl}/mecanico/all/order`);
   }
 
-  initService(orderId: number): Observable<string> {
-    return this.http.put<string>(`${this.baseUrl}/mecanico/iniciar-servicio/${orderId}`, {});
+  initService(orderId: number, serviceId: number): Observable<string> {
+    return this.http.put<string>(`${this.baseUrl}/mecanico/iniciar/${orderId}/servicio/${serviceId}`, {});
   }
-
+  
   completeStep(ordenId: number, servicioId: number, pasoId: number): Observable<MecanicoPasoDTO> {
     return this.http.put<MecanicoPasoDTO>(`${this.baseUrl}/mecanico/orden/${ordenId}/service/${servicioId}/paso/${pasoId}/complete`, {});
   }
-
+  
   getStepComplete(ordenId: number, servicioId: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/mecanico/orden/${ordenId}/service/${servicioId}/complete-list`, {});
   }
-
+  
+  finalService(orderId: number, serviceId: number): Observable<string> {
+    return this.http.put<string>(`${this.baseUrl}/mecanico/terminar/${orderId}/servicio/${serviceId}`, {});
+  }
 }

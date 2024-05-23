@@ -101,14 +101,18 @@
   <div class="flex lg:flex-row flex-col mt-10">
 
     @if(showButtons && currentServiceIndex < pasos.length - 1){
-      <div class="boton flex justify-center mt-5">
-        <button type="submit" class="text-black font-semibold inline-block" (click)="nextStep()">Siguiente Paso</button>
-      </div>
+      @if (finishedOrder){
+        <div class="boton flex justify-center mt-5">
+          <button type="submit" class="text-black font-semibold inline-block" (click)="nextStep()">Siguiente Paso</button>
+        </div>
+      }
     }
     @if(showButtons && currentServiceIndex < pasos.length - 1 || showButtons && currentServiceIndex === pasos.length - 1 ){
+      @if (finishedOrder){
       <div class="botonfn flex justify-center mt-5">
         <button type="submit" class="text-black font-semibold inline-block" (click)="openModal()" >Finalizar Orden</button>
       </div>
+      }
     }
     @if(!showButtons){
       <div class="boton flex justify-center mt-5">
