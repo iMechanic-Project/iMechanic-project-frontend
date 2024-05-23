@@ -29,7 +29,7 @@ export default class WorkshopMechanicsComponent implements OnInit, OnDestroy {
 
   mechanics: MechanicDTO[] = [];
   suscription: Subscription | undefined;
-  newMechanic: MechanicDTORequest = { nombre: '', correoElectronico: '', contrasenia: '', servicioIds: [] };
+  newMechanic: MechanicDTORequest = { nombre: '', correoElectronico: '', contrasenia: '', telefono:'', servicioIds: [] };
   servicios: ServicioDTO[] = [];
   selectedServicesMechanic: number[] = [];
 
@@ -122,6 +122,15 @@ export default class WorkshopMechanicsComponent implements OnInit, OnDestroy {
 
   closeModal3(): void {
     this.showModal3 = false;
+  }
+
+  onKeyPress(event: any) {
+    // Obtener el código de la tecla presionada
+    const charCode = (event.which) ? event.which : event.keyCode;
+    // Permitir solo números (del 0 al 9) y teclas de control como borrar y retroceso
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      event.preventDefault(); // Cancelar el evento si no es un número
+    }
   }
 
 

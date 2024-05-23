@@ -6,9 +6,10 @@ export interface OrderDetailMecanicoDTO {
     id: number,
     nombre: string;
     direccion: string;
-    telefono: string;
+    telefonoTaller: string;
     servicio: ServicioDTO;
     estadoServicio: string;
     mecanico: MecanicoDTOList;
+    telefonoMecanico: string;
     pasos: PasoDTO[];
 }

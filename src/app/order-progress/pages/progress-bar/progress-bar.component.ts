@@ -1,9 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PasoDTO } from '../../../interfaces/PasoDTO';
 import { MecanicoPasoDTO } from '../../../interfaces/MecanicoPasoDTO';
 import { MechanicService } from '../../../services/mechanic.service';
+import { OrderDetailMecanicoDTO } from '../../../interfaces/OrderDetailMecanicoDTO';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-progress-bar',
@@ -12,7 +14,7 @@ import { MechanicService } from '../../../services/mechanic.service';
   templateUrl: './progress-bar.component.html',
   styleUrl: './progress-bar.component.css',
 })
-export class ProgressBarComponent implements OnInit {
+export class ProgressBarComponent implements OnInit, OnDestroy {
   @Input() mecanicoPaso: MecanicoPasoDTO = {
     ordenTrabajoId: 0,
     mecanicoId: 0,
@@ -22,17 +24,68 @@ export class ProgressBarComponent implements OnInit {
     complete: false,
   };
   @Input() pasos: PasoDTO[] = [];
-  @Input() estatuto: string = '';
+  estadoServicio: string = '';
+
+  datosOrden: OrderDetailMecanicoDTO = {
+    id: 0,
+    nombre: '',
+    direccion: '',
+    telefonoTaller: '',
+    servicio: {
+      id: 0,
+      nombre: '',
+    },
+    estadoServicio: '',
+    mecanico: {
+      id: 0,
+      nombre: '',
+    },
+    telefonoMecanico: '',
+    pasos: [],
+  };
 
   currentServiceIndex = 0;
   showButtons = false;
   finishedOrder = false;
   showModal = false;
+  suscription: Subscription | undefined;
 
-  constructor(private mechanicService: MechanicService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private mechanicService: MechanicService
+  ) {}
 
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      const orderId = +params['id'];
+      if (!isNaN(orderId)) {
+        this.mechanicService.orderDetailByMecanic(orderId).subscribe(
+          (orderDetail) => {
+            this.datosOrden = {
+              ...orderDetail,
+              estadoServicio: this.mapEstado(orderDetail.estadoServicio),
+            };
+            console.log(orderDetail.estadoServicio);
+            this.estadoServicio = this.datosOrden.estadoServicio;
+
+            console.log('MecanicoPaso:', this.mecanicoPaso);
+          },
+          (error) => {
+            console.error('Error al obtener el detalle de la orden:', error);
+          }
+        );
+        this.suscription = this.mechanicService.refresh$.subscribe(() => {
+          this.mechanicService
+            .orderDetailByMecanic(orderId)
+            .subscribe((orderDetail) => {
+              this.datosOrden = orderDetail; // Aquí asigna los datos actualizados a la variable vehicles
+            });
+        });
+      }
+    });
+
     console.log('botom comenzar 1:', this.showButtons);
+
     setTimeout(() => {
       this.mechanicService
         .getStepComplete(
@@ -60,7 +113,12 @@ export class ProgressBarComponent implements OnInit {
           console.log('botom comenzar 2:', this.showButtons);
           console.log('current:', this.currentServiceIndex);
         });
-    }, 1000); // 4000 milisegundos = 4 segundos
+    }, 500); // 4000 milisegundos = 4 segundos
+  }
+
+  ngOnDestroy(): void {
+    this.suscription?.unsubscribe();
+    console.log('obserbable morido');
   }
 
   openModal(): void {
@@ -100,7 +158,10 @@ export class ProgressBarComponent implements OnInit {
 
   startOrder() {
     this.mechanicService
-      .initService(this.mecanicoPaso.ordenTrabajoId, this.mecanicoPaso.servicioId)
+      .initService(
+        this.mecanicoPaso.ordenTrabajoId,
+        this.mecanicoPaso.servicioId
+      )
       .subscribe(
         (response) => {
           console.log('Servicio iniciado:', response);
@@ -116,7 +177,10 @@ export class ProgressBarComponent implements OnInit {
 
   finishOrder() {
     this.mechanicService
-      .finalService(this.mecanicoPaso.ordenTrabajoId, this.mecanicoPaso.servicioId)
+      .finalService(
+        this.mecanicoPaso.ordenTrabajoId,
+        this.mecanicoPaso.servicioId
+      )
       .subscribe(
         (response) => {
           console.log('Servicio terminado:', response);
@@ -127,5 +191,31 @@ export class ProgressBarComponent implements OnInit {
           console.error('Error al terminar el servicio:', error);
         }
       );
+  }
+
+  getColorClass(estado: string): string {
+    switch (estado) {
+      case 'En Proceso':
+        return 'text-green-600';
+      case 'En Espera':
+        return 'text-red-600';
+      case 'Finalizado':
+        return 'text-black';
+      default:
+        return '';
+    }
+  }
+
+  mapEstado(estado: string): string {
+    switch (estado) {
+      case 'EN_PROCESO':
+        return 'En Proceso';
+      case 'EN_ESPERA':
+        return 'En Espera';
+      case 'FINALIZADO':
+        return 'Finalizado';
+      default:
+        return estado;
+    }
   }
 }

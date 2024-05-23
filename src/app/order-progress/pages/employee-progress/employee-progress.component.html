@@ -15,7 +15,7 @@
       <p class="font-bold text-xl mb-2">Información del cliente</p>
       <p class="text-lg mt-2">Nombre: {{ datosOrden.nombre }}</p>
       <p class="text-lg mt-2">Direccion: {{ datosOrden.direccion}}</p>
-      <p class="text-lg mt-2">Teléfono/Celular: {{ datosOrden.telefono }}</p>
+      <p class="text-lg mt-2">Teléfono/Celular: {{ datosOrden.telefonoTaller }}</p>
     </div>
 
     <div class="flex flex-col lg:mt-10 mr-7 ml-7 lg:w-1/2">
@@ -25,8 +25,9 @@
       <div class="p-4 flex items-center justify-between" style="background: #D9D9D9;">
         <p>{{ datosOrden.servicio.nombre }}</p>
         <button (click)="openChat()">
-          <img src="./assets/img/iconoChat.png" alt="Logo" class="h-6 mr-1" style="cursor: pointer;">
-
+          <a [href]="'https://wa.me/51' + datosOrden.telefonoMecanico" target="_blank">
+            <img src="./assets/img/iconoChat.png" alt="Logo" class="h-6 mr-1" style="cursor: pointer;">
+          </a>
         </button>
       </div>
     </div>
@@ -38,16 +39,9 @@
     <div class="items-center text-center">
       <h2 class="font-bold text-2xl lg:mr-10 mb-2 lg:mb-12">Monitoreo </h2>
     </div>
-    <div class="items-start lg:ml-0 ml-5">
-      <p class="text-lg "><strong>Servicio: </strong>{{ datosOrden.servicio.nombre }}</p>
-      <p class="text-lg "><strong>Mecánico: </strong>{{ datosOrden.mecanico.nombre }}</p>
-      <div class="flex">
-        <p class="text-lg"><strong>Estado:</strong>&nbsp;</p>
-        <p class="text-lg {{ getColorClass(datosOrden.estadoServicio) }}">{{ datosOrden.estadoServicio }}</p>
-      </div>
-    </div>
 
-    <app-progress-bar [mecanicoPaso]="mecanicoPaso" [pasos]="datosOrden.pasos" [estatuto]="datosOrden.estadoServicio" />
+
+    <app-progress-bar [mecanicoPaso]="mecanicoPaso" [pasos]="datosOrden.pasos" />
 
   </div>
 
@@ -73,5 +67,5 @@
       <h3 class="text-2xl mb-4 font-semibold text-center text-black">CHAT</h3>
     </div>
   </div>
-  
+
 }
