@@ -23,10 +23,11 @@ export default class ClientProgressComponent implements OnInit {
   showChat = false;
 
   orders: OrderDetailDTO = {
+    id: 0,
     nombreTaller: '',
     direccionTaller: '',
     telefonoTaller: '',
-    servicios: [],
+    servicios: []
   };
 
   constructor(

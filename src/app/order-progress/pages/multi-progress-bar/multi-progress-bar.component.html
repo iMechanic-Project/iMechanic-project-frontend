@@ -1,12 +1,10 @@
-<!--- Segunda columna --->
-
 <!--- informacion --->
-<div class="items-center text-center">
+<!-- <div class="items-center text-center">
   <h2 class="font-bold text-2xl lg:mr-10 lg:mb-5 -mb-5  ">Monitoreo </h2>
-</div>
+</div> -->
 
 <!--- detalles para pantalla lg--->
-<div class="bg-white p-6 rounded-lg text-black overflow-y-auto lg:block hidden" style="height: 600px;">
+<!-- <div class="bg-white p-6 rounded-lg text-black overflow-y-auto lg:block hidden" style="height: 600px;">
   <div *ngFor="let order of orderServices" >
     <div class="flex flex-col w-full mt-2 p-5">
       <div class="items-start">
@@ -17,15 +15,15 @@
           <p class="text-lg {{ getColorClass(order.estadoServicio) }}">{{ order.estadoServicio }}</p>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!--- Barra de progreso --->
 
-    @if(order.pasos.length >=8){
+    <!-- @if(order.pasos.length >=8){ -->
 
       <!--- mayores que 8 van pegados a la derecha--->
 
-      <div class="main p-4 lg:ml-0 lg:mr-0 ml-5 mr-5 overflow-x-auto">
+      <!-- <div class="main p-4 lg:ml-0 lg:mr-0 ml-5 mr-5 overflow-x-auto">
         <div class="order-progress">
           <ul>
             <li *ngFor="let service of order.pasos; let i = index" [class.active]="service.completado">
@@ -71,13 +69,13 @@
             </li>
           </ul>
         </div>
-      </div>
+      </div> -->
 
-    } @else {
+    <!-- } @else { -->
 
       <!--- menores van centrados--->
 
-      <div class="main p-4 lg:ml-0 lg:mr-0 ml-5 mr-5 overflow-x-auto items-center">
+      <!-- <div class="main p-4 lg:ml-0 lg:mr-0 ml-5 mr-5 overflow-x-auto items-center">
         <div class="order-progress">
           <ul>
             <li *ngFor="let service of order.pasos; let i = index" [class.active]="service.completado">
@@ -128,10 +126,10 @@
     }
   </div>
 
-</div>
+</div> -->
 
 <!--- detalles para pantalla xs--->
-<div class="bg-white p-6 rounded-lg text-black lg:overflow-y-auto lg:hidden">
+<!-- <div class="bg-white p-6 rounded-lg text-black lg:overflow-y-auto lg:hidden">
   <div *ngFor="let order of orderServices" >
     <div class="flex flex-col w-full mt-2 p-5">
       <div class="items-start">
@@ -142,15 +140,15 @@
           <p class="text-lg {{ getColorClass(order.estadoServicio) }}">{{ mapEstado(order.estadoServicio) }}</p>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!--- Barra de progreso --->
-
-    @if(order.pasos.length >=8){
+<!-- 
+    @if(order.pasos.length >=8){ -->
 
       <!--- mayores que 8 van pegados a la derecha--->
 
-      <div class="main p-4 lg:ml-0 lg:mr-0 ml-5 mr-5 overflow-x-auto">
+      <!-- <div class="main p-4 lg:ml-0 lg:mr-0 ml-5 mr-5 overflow-x-auto">
         <div class="order-progress">
           <ul>
             <li *ngFor="let service of order.pasos; let i = index" [class.active]="service.completado">
@@ -198,11 +196,11 @@
         </div>
       </div>
 
-    } @else {
+    } @else { -->
 
       <!--- menores van centrados--->
 
-      <div class="main p-4 lg:ml-0 lg:mr-0 ml-5 mr-5 overflow-x-auto">
+      <!-- <div class="main p-4 lg:ml-0 lg:mr-0 ml-5 mr-5 overflow-x-auto">
         <div class="order-progress">
           <ul>
             <li *ngFor="let service of order.pasos; let i = index" [class.active]="service.completado">
@@ -251,6 +249,6 @@
       </div>
 
     }
-  </div>
+  </div> -->
 
-</div>
+<!-- </div> -->

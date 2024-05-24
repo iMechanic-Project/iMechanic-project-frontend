@@ -1,10 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { RouterTestingModule } from '@angular/router/testing'; // Importar el RouterTestingModule para manejar las rutas
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent, RouterTestingModule] 
     }).compileComponents();
   });
 
@@ -13,6 +14,7 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
+
 
   it(`should have the 'iMechanic-project-frontend' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
@@ -26,4 +28,5 @@ describe('AppComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain('Hello, iMechanic-project-frontend');
   });
+
 });
