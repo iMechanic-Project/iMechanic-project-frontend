@@ -33,7 +33,7 @@ describe('RegisterUsersComponent', () => {
   it('should validate that passwords match', () => {
 
 
-    component.signUpDTORequest.contrasenia='password123'
+    component.signUpDTORequest.contrasenia='password1234'
     component.confirmarContrasenia='password123'
 
     component.onSubmit();
