@@ -3,7 +3,7 @@
   <p class="text-lg "><strong>Mecánico: </strong>{{ datosOrden.mecanico.name }}</p>
   <div class="flex">
     <p class="text-lg"><strong>Estado:</strong>&nbsp;</p>
-    <p class="text-lg {{ getColorClass(datosOrden.estadoServicio) }}">{{ datosOrden.estadoServicio }}</p>
+    <p class="text-lg {{ getColorClass(datosOrden.estadoServicio) }}">{{ mapEstado(datosOrden.estadoServicio) }}</p>
   </div>
 </div>
 
@@ -113,22 +113,22 @@
       @if (currentServiceIndex < pasos.length - 1){
         <div class="boton flex justify-center mt-5">
           <button type="submit" class="text-black font-semibold inline-block" (click)="nextStep()">Siguiente Paso</button>
-        </div>      
+        </div>
       }
     }
-    
+
     @if (datosOrden.estadoServicio === 'En Proceso' || datosOrden.estadoServicio === 'EN_PROCESO'){
       <div class="botonfn flex justify-center mt-5">
         <button type="submit" class="text-black font-semibold inline-block" (click)="openModal()" >Finalizar Orden</button>
       </div>
     }
-    
+
     @if(datosOrden.estadoServicio === 'En Espera'  || datosOrden.estadoServicio === 'EN_ESPERA') {
       <div class="boton flex justify-center mt-5">
         <button type="submit" class="text-black font-semibold inline-block" (click)="startOrder()">Empezar Orden</button>
       </div>
     }
-    
+
   </div>
 </div>
 

@@ -20,4 +20,8 @@ import {MenuMechanicComponent} from "./menu-mechanic/menu-mechanic.component";
 })
 export default class MechanicViewComponent {
 
+  closeSesion(): void {
+    //logica para cerrar sesion
+  }
+
 }

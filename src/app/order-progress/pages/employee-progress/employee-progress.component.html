@@ -1,7 +1,7 @@
 <div class="flex justify-end items-start absolute right-0 mr-10 mt-5">
   <h1 class="text-xl font-bold mr-3 -mt-1">Regresar</h1>
   <button>
-    <img src="./assets/img/botonSalir.png" alt="Logo" class="h-6 mr-1" [routerLink]="['/employee/order-list-employee']" style="cursor: pointer;">
+    <img src="./assets/img/botonSalir.png" alt="Logo" class="h-6 mr-1" (click)="goBack()" style="cursor: pointer;">
   </button>
 </div>
 
@@ -51,21 +51,21 @@
 
 
 
-@if (showChat){
+<!--@if (showChat){-->
 
-  <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">
+<!--  <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">-->
 
 
-    <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">
+<!--    <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">-->
 
-      <button class="top-2 ml-72 mb-5" (click)="closeChat()">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-black hover:text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+<!--      <button class="top-2 ml-72 mb-5" (click)="closeChat()">-->
+<!--        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-black hover:text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
+<!--          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />-->
+<!--        </svg>-->
+<!--      </button>-->
 
-      <h3 class="text-2xl mb-4 font-semibold text-center text-black">CHAT</h3>
-    </div>
-  </div>
+<!--      <h3 class="text-2xl mb-4 font-semibold text-center text-black">CHAT</h3>-->
+<!--    </div>-->
+<!--  </div>-->
 
-}
+<!--}-->

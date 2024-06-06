@@ -18,4 +18,9 @@ import {MenuEmployeeComponent} from "./menu-employee/menu-employee.component";
 })
 export default class EmployeeViewComponent {
 
+  closeSesion(): void {
+    //logica para cerrar sesion
+  }
+
+
 }

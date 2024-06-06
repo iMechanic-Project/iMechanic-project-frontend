@@ -58,12 +58,12 @@ export default class EmployeeProgressComponent implements OnInit {
             estadoServicio: this.mapEstado(orderDetail.estadoServicio),
           };
           console.log(orderDetail);
-  
+
           this.mecanicoPaso.ordenTrabajoId = this.datosOrden.id;
           this.mecanicoPaso.mecanicoId = this.datosOrden.mecanico.id;
           this.mecanicoPaso.servicioId = this.datosOrden.operation.id;
           this.mecanicoPaso.servicioNombre = this.datosOrden.operation.name;
-  
+
           console.log('MecanicoPaso:', this.mecanicoPaso);
         },
         (error) => {
@@ -81,10 +81,14 @@ export default class EmployeeProgressComponent implements OnInit {
   }
 
   openChat(): void {
-    this.showChat = true;
+    // this.showChat = true;
   }
 
   closeChat(): void {
     this.showChat = false;
+  }
+
+  goBack(): void {
+    window.history.back();
   }
 }

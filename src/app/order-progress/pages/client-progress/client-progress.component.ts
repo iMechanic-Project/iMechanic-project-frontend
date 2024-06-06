@@ -73,7 +73,7 @@ export default class ClientProgressComponent implements OnInit {
   }
 
   openChat(): void {
-    this.showChat = true;
+    // this.showChat = true;
   }
 
   closeChat(): void {

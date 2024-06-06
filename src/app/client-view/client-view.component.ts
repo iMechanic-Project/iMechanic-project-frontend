@@ -19,4 +19,9 @@ import {FooterComponent} from "../footer/footer.component";
 })
 export default class ClientViewComponent {
 
+  closeSesion(): void {
+    //logica para cerrar sesion
+  }
+
+  protected readonly close = close;
 }

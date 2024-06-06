@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { VehicleService } from '../../../services/vehicle.service';
@@ -15,6 +15,7 @@ import OrderListComponent from '../order-list/order-list.component';
 import { LoaderComponent } from '../loader/loader.component';
 import { OperationDTOResponse } from '../../../interfaces/ServicioDTO';
 import { AssignmentService } from '../../../services/assignment.service';
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-create-order',
@@ -72,8 +73,8 @@ export default class CreateOrderComponent implements OnInit {
     model: '',
     category: '',
   };
-
   constructor(
+    private router: Router,
     private vehicleService: VehicleService,
     private orderService: OrderService,
     private tallerService: TallerServiceService,
@@ -135,6 +136,7 @@ export default class CreateOrderComponent implements OnInit {
 
   closeModal(): void {
     this.showModal = false;
+    this.router.navigate(['/workshop/order-list']);
   }
 
   onInputChange(event: any): void {
