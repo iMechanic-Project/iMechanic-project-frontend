@@ -17,25 +17,25 @@ export default class EmployeeProgressComponent implements OnInit {
   showChat = false;
 
   datosOrden: OrderDetailMecanicoDTO = {
-    id: 0,
+    id: '',
     nombre: '',
     direccion: '',
     telefonoTaller: '',
-    servicio: {
+    operation: {
       id: 0,
-      nombre: '',
+      name: '',
     },
     estadoServicio: '',
     mecanico: {
       id: 0,
-      nombre: '',
+      name: '',
     },
     telefonoMecanico: '',
     pasos: [],
   };
 
   mecanicoPaso: MecanicoPasoDTO = {
-    ordenTrabajoId: 0,
+    ordenTrabajoId: '',
     mecanicoId: 0,
     servicioId: 0,
     servicioNombre: '',
@@ -50,28 +50,26 @@ export default class EmployeeProgressComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      const orderId = +params['id'];
-      if (!isNaN(orderId)) {
-        this.mecanicService.orderDetailByMecanic(orderId).subscribe(
-          (orderDetail) => {
-            this.datosOrden = {
-              ...orderDetail,
-              estadoServicio: this.mapEstado(orderDetail.estadoServicio),
-            };
-            console.log(orderDetail);
-
-            this.mecanicoPaso.ordenTrabajoId = this.datosOrden.id;
-            this.mecanicoPaso.mecanicoId = this.datosOrden.mecanico.id;
-            this.mecanicoPaso.servicioId = this.datosOrden.servicio.id;
-            this.mecanicoPaso.servicioNombre = this.datosOrden.servicio.nombre;
-
-            console.log('MecanicoPaso:', this.mecanicoPaso);
-          },
-          (error) => {
-            console.error('Error al obtener el detalle de la orden:', error);
-          }
-        );
-      }
+      const orderId = params['id'];
+      this.mecanicService.orderDetailByMecanic(orderId).subscribe(
+        (orderDetail) => {
+          this.datosOrden = {
+            ...orderDetail,
+            estadoServicio: this.mapEstado(orderDetail.estadoServicio),
+          };
+          console.log(orderDetail);
+  
+          this.mecanicoPaso.ordenTrabajoId = this.datosOrden.id;
+          this.mecanicoPaso.mecanicoId = this.datosOrden.mecanico.id;
+          this.mecanicoPaso.servicioId = this.datosOrden.operation.id;
+          this.mecanicoPaso.servicioNombre = this.datosOrden.operation.name;
+  
+          console.log('MecanicoPaso:', this.mecanicoPaso);
+        },
+        (error) => {
+          console.error('Error al obtener el detalle de la orden:', error);
+        }
+      );
     });
   }
 

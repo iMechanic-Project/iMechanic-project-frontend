@@ -1,8 +1,7 @@
 export interface OrdenTrabajoDTOList {
-    id: number;
-    placa: string;
-    nombreCliente: string;
-    fechaRegistro: string;
-    horaRegistro: string;
-    estado: string;
+    id: string;
+    plate: string;
+    orderDate: string;
+    hourDate: string;
+    status: string;
 }

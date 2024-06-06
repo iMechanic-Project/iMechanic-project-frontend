@@ -4,9 +4,8 @@ import { NgForOf, NgIf } from '@angular/common';
 import { MultiProgressBarComponent } from '../multi-progress-bar/multi-progress-bar.component';
 import { OrderDetailDTO } from '../../../interfaces/OrderDetailDTO';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { TallerServiceService } from '../../../services/taller-service.service';
 import { MecanicoPasoDTO } from '../../../interfaces/MecanicoPasoDTO';
-import { ServicioDetalleDTO } from '../../../interfaces/ServicioDetalleDTO';
+import { OrderService } from '../../../services/order.service';
 @Component({
   selector: 'app-workshop-progress',
   standalone: true,
@@ -22,28 +21,28 @@ import { ServicioDetalleDTO } from '../../../interfaces/ServicioDetalleDTO';
 })
 export default class WorkshopProgressComponent implements OnInit {
   orders: OrderDetailDTO = {
-    id: 0,
-    nombreTaller: '',
-    direccionTaller: '',
-    telefonoTaller: '',
-    servicios: [
+    id: '',
+    nameWorkshop: '',
+    addressWorkshop: '',
+    phoneWorkShop: '',
+    operationDetails: [
       {
-        servicio: {
+        operation: {
           id: 0,
-          nombre: '',
+          name: '',
         },
-        mecanico: {
+        mechanic: {
           id: 0,
-          nombre: '',
+          name: '',
         },
-        estadoServicio: '',
-        pasos: [],
+        statusOperation: '',
+        steps: [],
       },
     ],
   };
 
   mecanicoPaso: MecanicoPasoDTO = {
-    ordenTrabajoId: 0,
+    ordenTrabajoId: '',
     mecanicoId: 0,
     servicioId: 0,
     servicioNombre: '',
@@ -53,28 +52,27 @@ export default class WorkshopProgressComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private tallerService: TallerServiceService
+    private orderService: OrderService
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      const orderId = +params['id'];
-      if (!isNaN(orderId)) {
-        this.tallerService.orderDetailByTaller(orderId).subscribe(
+      const orderId = params['id'];
+      if (orderId) {
+        this.orderService.orderDetailByTaller(orderId).subscribe(
           (orderDetail) => {
             this.orders = orderDetail;
             console.log(orderDetail);
 
-            this.orders.servicios.forEach((servicioDetalle) => {
+            this.orders.operationDetails.forEach((servicioDetalle) => {
               this.mecanicoPaso.ordenTrabajoId = this.orders.id;
-              this.mecanicoPaso.mecanicoId = servicioDetalle.mecanico.id;
-              this.mecanicoPaso.servicioId = servicioDetalle.servicio.id;
-              this.mecanicoPaso.servicioNombre =
-                servicioDetalle.servicio.nombre;
+              this.mecanicoPaso.mecanicoId = servicioDetalle.mechanic.id;
+              this.mecanicoPaso.servicioId = servicioDetalle.operation.id;
+              this.mecanicoPaso.servicioNombre = servicioDetalle.operation.name;
 
-              // Si hay pasos, puedes también actualizar pasoId y complete
-              if (servicioDetalle.pasos.length > 0) {
-                const paso = servicioDetalle.pasos[1]; // Solo un ejemplo, ajustar según sea necesario
+              // Si hay steps, puedes también actualizar pasoId y complete
+              if (servicioDetalle.steps.length > 0) {
+                const paso = servicioDetalle.steps[1]; // Solo un ejemplo, ajustar según sea necesario
                 this.mecanicoPaso.pasoId = paso.id;
                 this.mecanicoPaso.complete = paso.completado; // Asegúrate de que el paso tiene la propiedad `complete`
               }
@@ -88,6 +86,8 @@ export default class WorkshopProgressComponent implements OnInit {
             console.error('Error al obtener el detalle de la orden:', error);
           }
         );
+      } else {
+        console.log('No se proporcionó el ID en la ruta');
       }
     });
   }

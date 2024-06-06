@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthenticationLoginDTORequest } from '../interfaces/AuthenticationLoginDTORequest ';
@@ -15,14 +15,14 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   signUp(signUpDTORequest: AuthenticationSignUpDTORequest): Observable<any> {
-    return this.http.post(`${this.baseUrl}/cuenta/signup`, signUpDTORequest);
+    return this.http.post(`${this.baseUrl}/api/auth/signup`, signUpDTORequest);
   }
 
   login(loginDtoRequest: AuthenticationLoginDTORequest): Observable<any> {
-    return this.http.post(`${this.baseUrl}/cuenta/login`, loginDtoRequest);
+    return this.http.post(`${this.baseUrl}/api/auth/login`, loginDtoRequest);
   }
 
   confirmation(token: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/cuenta/confirmation/${token}`);
+    return this.http.get(`${this.baseUrl}/api/auth/confirmation/${token}`);
   }
 }

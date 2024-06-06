@@ -15,17 +15,17 @@
     <div class="flex flex-col border border-gray-300 mt-5 p-8 mb-4 justify-center mr-7 ml-7 lg:w-1/2" style="background: #D9D9D9">
       <h2 class="font-bold text-2xl mb-2">Detalle de la Orden de Trabajo</h2>
       <p class="font-bold text-xl mb-2">Información del taller</p>
-      <p class="text-lg mt-2">Nombre: {{ orders.nombreTaller }}</p>
-      <p class="text-lg mt-2">Dirección: {{ orders.direccionTaller }}</p>
-      <p class="text-lg mt-2">Teléfono/Celular: {{ orders.telefonoTaller }}</p>
+      <p class="text-lg mt-2">Nombre: {{ orders.nameWorkshop }}</p>
+      <p class="text-lg mt-2">Dirección: {{ orders.addressWorkshop }}</p>
+      <p class="text-lg mt-2">Teléfono/Celular: {{ orders.phoneWorkShop }}</p>
     </div>
 
     <div class="flex flex-col lg:mt-10 mr-7 ml-7 lg:w-1/2" >
       <div class="bg-yellow-300 p-4" style="background: #FED338">
         <h2 class="font-bold text-lg">Bandeja de Chat</h2>
       </div>
-      <div class="p-4 flex items-center justify-between" style="background: #D9D9D9;" *ngFor="let servicio of orders.servicios">
-        <p>{{ servicio.servicio.nombre }}</p>
+      <div class="p-4 flex items-center justify-between" style="background: #D9D9D9;" *ngFor="let servicio of orders.operationDetails">
+        <p>{{ servicio.operation.name }}</p>
         <button (click)="openChat()">
           <img src="./assets/img/iconoChat.png" alt="Logo" class="h-6 mr-1" style="cursor: pointer;">
 

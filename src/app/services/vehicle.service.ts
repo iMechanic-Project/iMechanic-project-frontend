@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 import { VehiculoDTOResponse } from '../interfaces/VehiculoDTOResponse';
@@ -25,19 +25,19 @@ export class VehicleService {
   }
 
   getAllVehiclesByUser(): Observable<VehiculoDTOResponse[]> {
-    return this.http.get<VehiculoDTOResponse[]>(`${this.baseUrl}/vehiculo/all`);
+    return this.http.get<VehiculoDTOResponse[]>(`${this.baseUrl}/api/vehicles/all`);
   }
 
   getAllMarcas(): Observable<MarcaDTO[]> {
-    return this.http.get<MarcaDTO[]>(`${this.baseUrl}/vehiculo/marcas`);
+    return this.http.get<MarcaDTO[]>(`${this.baseUrl}/api/vehicles/marcas`);
   }
 
   getAllModelos(marcaId: number): Observable<ModeloDTO[]> {
-    return this.http.get<ModeloDTO[]>(`${this.baseUrl}/vehiculo/modelos/${marcaId}`);
+    return this.http.get<ModeloDTO[]>(`${this.baseUrl}/api/vehicles/modelos/${marcaId}`);
   }
 
   createVehicle(vehiculoDTORequest: VehiculoDTORequest): Observable<VehiculoDTOResponse> {
-    return this.http.post<VehiculoDTOResponse>(`${this.baseUrl}/vehiculo/crear`, vehiculoDTORequest)
+    return this.http.post<VehiculoDTOResponse>(`${this.baseUrl}/api/vehicles/crear`, vehiculoDTORequest)
       .pipe(
         tap(()=>  {
           this._refresh$.next();
@@ -45,8 +45,8 @@ export class VehicleService {
       )
   }
 
-  getDataByPlaca(vehiculoSearchDTORequest: VehiculoSearchDTORequest): Observable<VehiculoSearchDTOResponse> {
-    return this.http.post<VehiculoSearchDTOResponse>(`${this.baseUrl}/vehiculo/placa`, vehiculoSearchDTORequest);
+  getDataByPlaca(plate: string): Observable<VehiculoSearchDTOResponse> {
+    return this.http.get<VehiculoSearchDTOResponse>(`${this.baseUrl}/api/vehicles/placa/${plate}`);
   }
 
 }

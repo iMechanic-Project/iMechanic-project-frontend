@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import { RouterOutlet } from "@angular/router";
-import { RouterModule } from "@angular/router";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { ElementRef, ViewChild } from '@angular/core';
@@ -11,7 +11,7 @@ import { ModeloDTO } from '../../../interfaces/ModeloDTO';
 import { FormsModule } from '@angular/forms';
 import { VehiculoDTORequest } from '../../../interfaces/VehiculoDTORequest';
 import { Categoria } from '../../../interfaces/Categoria';
-import {Subscription} from "rxjs";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register-vehicles',
@@ -21,18 +21,22 @@ import {Subscription} from "rxjs";
     RouterModule,
     CommonModule,
     NgxPaginationModule,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './register-vehicles.component.html',
-  styles: ''
+  styles: '',
 })
-export default class RegisterVehiclesComponent implements OnInit, OnDestroy{
-
+export default class RegisterVehiclesComponent implements OnInit, OnDestroy {
   @ViewChild('placaInput') placaInput!: ElementRef;
 
   vehicles: VehiculoDTOResponse[] = [];
-  suscription: Subscription| undefined;
-  newVehicle: VehiculoDTORequest = { placa: '', marcaId: 0, modeloId: 0, categoria: Categoria.AUTO };
+  suscription: Subscription | undefined;
+  newVehicle: VehiculoDTORequest = {
+    plate: '',
+    brandId: 0,
+    modelId: 0,
+    category: Categoria.AUTO,
+  };
   marcas: MarcaDTO[] = [];
   modelos: ModeloDTO[] = [];
   selectedMarcaId: number | null = null;
@@ -43,29 +47,28 @@ export default class RegisterVehiclesComponent implements OnInit, OnDestroy{
   showModal = false;
   showModal2 = false;
 
-
-  constructor(private vehicleService: VehicleService) { }
+  constructor(private vehicleService: VehicleService) {}
 
   ngOnInit(): void {
-    this.vehicleService.getAllVehiclesByUser().subscribe(vehicle => {
+    this.vehicleService.getAllVehiclesByUser().subscribe((vehicle) => {
       this.vehicles = vehicle;
     });
 
-    this.suscription = this.vehicleService.refresh$.subscribe(() =>{
-      this.vehicleService.getAllVehiclesByUser().subscribe(vehicles => {
+    this.suscription = this.vehicleService.refresh$.subscribe(() => {
+      this.vehicleService.getAllVehiclesByUser().subscribe((vehicles) => {
         this.vehicles = vehicles; // Aquí asigna los datos actualizados a la variable vehicles
       });
     });
   }
 
-  ngOnDestroy():void{
+  ngOnDestroy(): void {
     this.suscription?.unsubscribe();
-    console.log("obserbable morido")
+    console.log('obserbable morido');
   }
 
   openModal(): void {
     this.showModal = true;
-    this.vehicleService.getAllMarcas().subscribe(marcas => {
+    this.vehicleService.getAllMarcas().subscribe((marcas) => {
       this.marcas = marcas;
     });
   }
@@ -88,7 +91,7 @@ export default class RegisterVehiclesComponent implements OnInit, OnDestroy{
   }
 
   loadModelos(marcaId: number): void {
-    this.vehicleService.getAllModelos(marcaId).subscribe(modelos => {
+    this.vehicleService.getAllModelos(marcaId).subscribe((modelos) => {
       this.modelos = modelos;
       console.log(marcaId);
     });
@@ -100,7 +103,7 @@ export default class RegisterVehiclesComponent implements OnInit, OnDestroy{
   }
 
   onCategoriaSelect(categoria: Categoria): void {
-    this.newVehicle.categoria = categoria;
+    this.newVehicle.category = categoria;
   }
 
   onInputChange(event: any): void {
@@ -109,19 +112,24 @@ export default class RegisterVehiclesComponent implements OnInit, OnDestroy{
       value = value.substring(0, 3) + '-' + value.substring(3); // Agrega el guion después de los primeros 3 caracteres
     }
     this.placaInput.nativeElement.value = value.substring(0, 7); // Limita la longitud a 7 caracteres
-    this.newVehicle.placa = this.placaInput.nativeElement.value;
+    this.newVehicle.plate = this.placaInput.nativeElement.value;
   }
 
   saveVehicle(): void {
-    this.newVehicle.marcaId = this.selectedMarcaId || 0;
-    this.newVehicle.modeloId = this.selectedModeloId || 0;
+    this.newVehicle.brandId = this.selectedMarcaId || 0;
+    this.newVehicle.modelId = this.selectedModeloId || 0;
 
     this.vehicleService.createVehicle(this.newVehicle).subscribe(
       (response) => {
         console.log('Vehículo creado:', response);
         this.showModal = false;
         // Reinicia el objeto newVehicle para limpiar los campos del formulario
-        this.newVehicle = { placa: '', marcaId: 0, modeloId: 0, categoria: Categoria.AUTO };
+        this.newVehicle = {
+          plate: '',
+          brandId: 0,
+          modelId: 0,
+          category: Categoria.AUTO,
+        };
         this.selectedMarcaId = null; // Restablece el campo de selección de marca
         this.selectedModeloId = null; // Restablece el campo de selección de modelo
         this.selectedCategoria = null; // Restablece el campo de selección de categoría
@@ -135,7 +143,4 @@ export default class RegisterVehiclesComponent implements OnInit, OnDestroy{
     this.closeModal();
     this.openModal2();
   }
-
-
-
 }

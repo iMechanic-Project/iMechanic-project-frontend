@@ -4,32 +4,30 @@ import { AuthService } from '../../../services/auth.service';
 import { AuthenticationLoginDTORequest } from '../../../interfaces/AuthenticationLoginDTORequest ';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-login-users',
   standalone: true,
-  imports: [
-    FormsModule
-  ],
+  imports: [FormsModule],
   templateUrl: './login-users.component.html',
-  styles: ''
+  styles: '',
 })
 export default class LoginUsersComponent {
-
-  showMSGdi:boolean = false;
-  showMSGne:boolean = false;
+  showMSGdi: boolean = false;
+  showMSGne: boolean = false;
   showPassword: boolean = false;
-  loginDTORequest: AuthenticationLoginDTORequest = { correoElectronico: '', contrasenia: '' };
+  loginDTORequest: AuthenticationLoginDTORequest = {
+    email: '',
+    password: '',
+  };
   roleUser: string = '';
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {}
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
   onSubmit() {
-
     if (this.checkIncompleteData()) {
       this.showMSGdi = true;
       this.showMSGne = false;
@@ -37,30 +35,33 @@ export default class LoginUsersComponent {
       return; // Detener la función si hay algún dato incompleto
     }
     this.showMSGdi = false;
-    this.authService.login(this.loginDTORequest).subscribe(response => {
-      localStorage.setItem('token', response.token);
-      console.log('Login successfully', response);
-      if (response.role == 'ROLE_TALLER') {
-        this.router.navigate(['/workshop/workshop-services']);
-      } else if (response.role == 'ROLE_CLIENTE') {
-        this.router.navigate(['/client/register-vehicles']);
-      } else if (response.role == 'ROLE_MECANICO') {
-        this.router.navigate(['/employee/order-list-employee']);
+    this.authService.login(this.loginDTORequest).subscribe(
+      (response) => {
+        localStorage.setItem('token', response.token);
+        console.log('Login successfully', response);
+        if (response.role == 'WORKSHOP') {
+          this.router.navigate(['/workshop/workshop-services']);
+        } else if (response.role == 'CUSTOMER') {
+          this.router.navigate(['/client/register-vehicles']);
+        } else if (response.role == 'MECHANIC') {
+          this.router.navigate(['/employee/order-list-employee']);
+        }
+      },
+      (error) => {
+        console.log('Error during login: ', error);
+        this.showMSGne = true;
+        this.showMSGdi = false;
       }
-    }, error => {
-      console.log('Error during login: ', error)
-      this.showMSGne = true;
-      this.showMSGdi = false;
-    });
+    );
   }
 
   checkIncompleteData(): boolean {
-    if(!this.loginDTORequest.correoElectronico ||
-      !this.loginDTORequest.contrasenia) {
+    if (
+      !this.loginDTORequest.email ||
+      !this.loginDTORequest.password
+    ) {
       return true; // Hay datos incompletos
     }
     return false; // No hay datos incompletos
   }
-
-
 }

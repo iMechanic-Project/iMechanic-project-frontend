@@ -1,5 +1,5 @@
 export interface PasoDTO {
     id: number;
-    nombre: string;
+    name: string;
     completado: boolean;
 }

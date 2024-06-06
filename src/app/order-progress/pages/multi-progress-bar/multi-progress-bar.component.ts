@@ -1,6 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgForOf, NgIf } from "@angular/common";
-import { ServicioDetalleDTO } from '../../../interfaces/ServicioDetalleDTO';
 import { ActivatedRoute } from '@angular/router';
 import { MechanicService } from '../../../services/mechanic.service';
 import { MecanicoPasoDTO } from '../../../interfaces/MecanicoPasoDTO';

@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
 })
 export class ProgressBarComponent implements OnInit, OnDestroy {
   @Input() mecanicoPaso: MecanicoPasoDTO = {
-    ordenTrabajoId: 0,
+    ordenTrabajoId: '',
     mecanicoId: 0,
     servicioId: 0,
     servicioNombre: '',
@@ -27,18 +27,18 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
   estadoServicio: string = '';
 
   datosOrden: OrderDetailMecanicoDTO = {
-    id: 0,
+    id: '',
     nombre: '',
     direccion: '',
     telefonoTaller: '',
-    servicio: {
+    operation: {
       id: 0,
-      nombre: '',
+      name: '',
     },
     estadoServicio: '',
     mecanico: {
       id: 0,
-      nombre: '',
+      name: '',
     },
     telefonoMecanico: '',
     pasos: [],

@@ -1,4 +1,4 @@
-export interface ServicioDTO {
+export interface OperationDTOResponse {
     id: number;
-    nombre: string;
+    name: string;
 }

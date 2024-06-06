@@ -1,3 +1,3 @@
 export interface VehiculoSearchDTORequest {
-    placa: string;
+    plate: string;
 }

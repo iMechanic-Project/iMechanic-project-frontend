@@ -1,48 +1,41 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { ViewChild } from '@angular/core';
-import { NgxPaginationModule } from "ngx-pagination";
-import { NgForOf } from "@angular/common";
+import { NgxPaginationModule } from 'ngx-pagination';
+import { NgForOf } from '@angular/common';
 import { OrderService } from '../../../services/order.service';
 import { OrdenTrabajoDTOList } from '../../../interfaces/OrdenTrabajoDTOList';
-import {Router, RouterLink} from "@angular/router";
-import {OrdenTrabajoClienteDTOList} from "../../../interfaces/OrdenTrabajoClienteDTOList";
-import {ClientService} from "../../../services/client.service";
-
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-order-list',
   standalone: true,
-  imports: [
-    NgxPaginationModule,
-    NgForOf,
-    RouterLink
-  ],
+  imports: [NgxPaginationModule, NgForOf, RouterLink],
   templateUrl: './order-list.component.html',
-  styles: ''
+  styles: '',
 })
 export default class OrderListComponent implements OnInit {
-
   p: number = 1;
-
-  vehicles: OrdenTrabajoDTOList[] = [];
-
-  constructor (private orderService: OrderService, private router: Router) { }
-
-
+  orderList: OrdenTrabajoDTOList[] = [];
   @ViewChild('placaInput') placaInput!: ElementRef;
 
+  constructor(private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
-    this.orderService.getAllOrdersByTaller().subscribe(ordenes => {
-      this.vehicles = ordenes.map((orden: OrdenTrabajoDTOList) => ({
+    this.orderService.getAllOrdersByTaller().subscribe((ordenes) => {
+      this.orderList = ordenes.map((orden: OrdenTrabajoDTOList) => ({
         ...orden,
-        estado: this.mapEstado(orden.estado)
+        status: this.mapEstado(orden.status),
       }));
-    });
+      console.log(ordenes);
+    },
+    (error) => {
+      console.error('Error al obtener las órdenes de trabajo:', error);
+    }
+  );
   }
 
-  getColorClass(estado: string): string {
-    switch (estado) {
+  getColorClass(status: string): string {
+    switch (status) {
       case 'En Proceso':
         return 'text-green-600';
       case 'En Espera':
@@ -54,8 +47,8 @@ export default class OrderListComponent implements OnInit {
     }
   }
 
-  mapEstado(estado: string): string {
-    switch (estado) {
+  mapEstado(status: string): string {
+    switch (status) {
       case 'EN_PROCESO':
         return 'En Proceso';
       case 'EN_ESPERA':
@@ -63,7 +56,7 @@ export default class OrderListComponent implements OnInit {
       case 'FINALIZADO':
         return 'Finalizado';
       default:
-        return estado;
+        return status;
     }
   }
 
@@ -75,8 +68,12 @@ export default class OrderListComponent implements OnInit {
     this.placaInput.nativeElement.value = value.substring(0, 7); // Limita la longitud a 7 caracteres
   }
 
-  detailOrder(id: number): void {
+  detailOrder(id: string): void {
+    console.log('ID', id);
+    const url = this.router
+      .createUrlTree(['/progress/workshop-progress/', id])
+      .toString();
+    console.log('URL', url);
     this.router.navigate(['/progress/workshop-progress/', id]);
   }
-
 }

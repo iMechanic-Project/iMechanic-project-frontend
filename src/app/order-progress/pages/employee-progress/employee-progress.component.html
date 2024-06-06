@@ -23,7 +23,7 @@
         <h2 class="font-bold text-lg">Bandeja de Chat</h2>
       </div>
       <div class="p-4 flex items-center justify-between" style="background: #D9D9D9;">
-        <p>{{ datosOrden.servicio.nombre }}</p>
+        <p>{{ datosOrden.operation.name }}</p>
         <button (click)="openChat()">
           <a [href]="'https://wa.me/51' + datosOrden.telefonoMecanico" target="_blank">
             <img src="./assets/img/iconoChat.png" alt="Logo" class="h-6 mr-1" style="cursor: pointer;">

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ServicioDTO } from '../interfaces/ServicioDTO';
 import { OrderDetailDTO } from '../interfaces/OrderDetailDTO';
+import { OperationDTOResponse } from '../interfaces/ServicioDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -14,24 +14,20 @@ export class TallerServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getAllServiceToMaintenance(): Observable<ServicioDTO[]> {
-    return this.http.get<ServicioDTO[]>(`${this.baseUrl}/servicio/mantenimiento`);
+  getAllServiceToMaintenance(): Observable<OperationDTOResponse[]> {
+    return this.http.get<OperationDTOResponse[]>(`${this.baseUrl}/api/operations/mantenimiento`);
   }
 
-  getAllServiceToRepair(): Observable<ServicioDTO[]> {
-    return this.http.get<ServicioDTO[]>(`${this.baseUrl}/servicio/reparacion`);
+  getAllServiceToRepair(): Observable<OperationDTOResponse[]> {
+    return this.http.get<OperationDTOResponse[]>(`${this.baseUrl}/api/operations/reparacion`);
   }
   
-  getAllServices(): Observable<ServicioDTO[]> {
-    return this.http.get<ServicioDTO[]>(`${this.baseUrl}/servicio/all`);
+  getAllServices(): Observable<OperationDTOResponse[]> {
+    return this.http.get<OperationDTOResponse[]>(`${this.baseUrl}/api/operations/all`);
   }
 
   addServicioToTaller(serviciosIds: number[]): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/servicio/add`, serviciosIds);
-  }
-
-  orderDetailByTaller(orderId: number): Observable<OrderDetailDTO> {
-    return this.http.get<OrderDetailDTO>(`${this.baseUrl}/taller/order-detail/${orderId}`);
+    return this.http.put<any>(`${this.baseUrl}/api/operations/add`, serviciosIds);
   }
 
 }

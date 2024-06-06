@@ -4,7 +4,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { MultiProgressBarComponent } from '../multi-progress-bar/multi-progress-bar.component';
 import { OrderDetailDTO } from '../../../interfaces/OrderDetailDTO';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ClientService } from '../../../services/client.service';
+import { OrderService } from '../../../services/order.service';
 
 @Component({
   selector: 'app-client-progress',
@@ -23,31 +23,51 @@ export default class ClientProgressComponent implements OnInit {
   showChat = false;
 
   orders: OrderDetailDTO = {
-    id: 0,
-    nombreTaller: '',
-    direccionTaller: '',
-    telefonoTaller: '',
-    servicios: []
+    id: '',
+    nameWorkshop: '',
+    addressWorkshop: '',
+    phoneWorkShop: '',
+    operationDetails: [
+      {
+        operation: {
+          id: 0,
+          name: '',
+        },
+        mechanic: {
+          id: 0,
+          name: '',
+        },
+        statusOperation: '',
+        steps: [],
+      },
+    ],
   };
 
   constructor(
     private route: ActivatedRoute,
-    private clientService: ClientService
+    private orderService: OrderService
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      const orderId = +params['id'];
-      if (!isNaN(orderId)) {
-        this.clientService.orderDetailByClient(orderId).subscribe(
+      const orderId = params['id'];
+      console.log(orderId);
+      if (orderId) {
+        console.log("hola1");
+        this.orderService.orderDetailByClient(orderId).subscribe(
           (orderDetail) => {
+            console.log(orderDetail.id);
             this.orders = orderDetail;
+            console.log("Orders", this.orders);
             console.log(orderDetail);
+            console.log("hola3");
           },
           (error) => {
             console.error('Error al obtener el detalle de la orden:', error);
           }
         );
+      } else {
+        console.log('No se proporcionó el ID en la ruta');
       }
     });
   }

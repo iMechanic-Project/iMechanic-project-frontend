@@ -1,10 +1,10 @@
 export interface VehiculoSearchDTOResponse {
-    correoTaller: string;
-    nombreCliente: string;
-    direccion: string;
-    telefono: string;
-    placa: string;
-    marca: string;
-    modelo: string;
-    categoria: string;
+    nameCustomer: string;
+    emailCustomer: string;
+    addressCustomer: string;
+    phoneCustomer: string;
+    plate: string;
+    brand: string;
+    model: string;
+    category: string;
 }

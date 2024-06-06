@@ -43,18 +43,18 @@ export default class RegisterUsersComponent {
   }
 
   signUpDTORequest: AuthenticationSignUpDTORequest = {
-    correoElectronico: '',
-    contrasenia: '',
-    nombre: '',
-    telefono: '',
-    direccion: '',
+    email: '',
+    password: '',
+    name: '',
+    phone: '',
+    address: '',
     role: ''
   };
 
   showPassword: boolean = false;
   showPasswordConfirmation: boolean = false;
   showDescripcion: boolean = false;
-  rol: string = 'CLIENTE';
+  rol: string = 'CUSTOMER';
 
   constructor(private authService: AuthService) { }
 
@@ -69,14 +69,14 @@ export default class RegisterUsersComponent {
 
   toogleRol(): void {
     this.showDescripcion = !this.showDescripcion;
-    this.rol = this.showDescripcion ? 'TALLER' : 'CLIENTE';
+    this.rol = this.showDescripcion ? 'WORKSHOP' : 'CUSTOMER';
     console.log('Estado de showDescripcion:', this.showDescripcion);
     console.log('Rol:', this.rol);
   }
 
   onSubmit() {
     // Verificar si las contraseñas coinciden
-    if (this.signUpDTORequest.contrasenia !== this.confirmarContrasenia) {
+    if (this.signUpDTORequest.password !== this.confirmarContrasenia) {
       this.passwordsMatch = false;
       console.log("Contraseñas iguales:", this.passwordsMatch)
       this.showMSGdi = false;
@@ -118,12 +118,12 @@ export default class RegisterUsersComponent {
   }
 
   checkIncompleteData(): boolean {
-    if(!this.signUpDTORequest.correoElectronico ||
+    if(!this.signUpDTORequest.email ||
       !this.confirmarContrasenia ||
-      !this.signUpDTORequest.contrasenia ||
-      !this.signUpDTORequest.nombre ||
-      !this.signUpDTORequest.direccion ||
-      !this.signUpDTORequest.telefono) {
+      !this.signUpDTORequest.password ||
+      !this.signUpDTORequest.name ||
+      !this.signUpDTORequest.address ||
+      !this.signUpDTORequest.phone) {
       return true; // Hay datos incompletos
     }
     return false; // No hay datos incompletos

@@ -12,11 +12,11 @@
     <form class="w-full max-w-md" (ngSubmit)="onSubmit()">
 
       <div class="mb-4 w-full mx-auto">
-        <input type="email" placeholder="Correo Electrónico" maxlength="30" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="correoElectronico" [(ngModel)]="loginDTORequest.correoElectronico">
+        <input type="email" placeholder="Correo Electrónico" maxlength="30" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="correoElectronico" [(ngModel)]="loginDTORequest.email">
       </div>
 
       <div class="mb-2 w-full relative">
-        <input type="{{ showPassword ? 'text': 'password'}}" maxlength="30" placeholder="Contraseña" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="contrasenia" [(ngModel)]="loginDTORequest.contrasenia">
+        <input type="{{ showPassword ? 'text': 'password'}}" maxlength="30" placeholder="Contraseña" class="w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="contrasenia" [(ngModel)]="loginDTORequest.password">
         <span class="absolute top-0 right-0 mr-3 mt-2 cursor-pointer" (click)="togglePassword()">
           @if (showPassword){
             <i class="fa fa-eye"></i>

@@ -1,7 +1,7 @@
 export interface MechanicDTORequest {
-    nombre: string;
-    correoElectronico: string;
-    contrasenia: string;
-    telefono: string;
-    servicioIds: number[];
+    name: string;
+    email: string;
+    password: string;
+    phone: string;
+    operationsIds: number[];
 }

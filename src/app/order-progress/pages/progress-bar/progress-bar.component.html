@@ -1,6 +1,6 @@
 <div class="items-start lg:ml-0 ml-5">
-  <p class="text-lg "><strong>Servicio: </strong>{{ datosOrden.servicio.nombre }}</p>
-  <p class="text-lg "><strong>Mecánico: </strong>{{ datosOrden.mecanico.nombre }}</p>
+  <p class="text-lg "><strong>Servicio: </strong>{{ datosOrden.operation.name }}</p>
+  <p class="text-lg "><strong>Mecánico: </strong>{{ datosOrden.mecanico.name }}</p>
   <div class="flex">
     <p class="text-lg"><strong>Estado:</strong>&nbsp;</p>
     <p class="text-lg {{ getColorClass(datosOrden.estadoServicio) }}">{{ datosOrden.estadoServicio }}</p>
@@ -18,7 +18,7 @@
               <p class="service-name text-white">.</p>
             }
             @if (i < pasos.length-1 && i > 0){
-              <p class="service-name text-black">{{service.nombre}}</p>
+              <p class="service-name text-black">{{service.name}}</p>
             }
           </div>
         </div>
@@ -43,10 +43,10 @@
           @if(i < pasos.length){
             <div class="mt-2">
               @if (i === 0 ){
-                <p class="text-black ml-1.5">{{service.nombre}}</p>
+                <p class="text-black ml-1.5">{{service.name}}</p>
               }
               @if (i === pasos.length-1){
-                <p class="text-black ml-9">{{service.nombre}}</p>
+                <p class="text-black ml-9">{{service.name}}</p>
               }
             </div>
           }
@@ -67,7 +67,7 @@
               <p class="service-name text-white">.</p>
             }
             @if (i < pasos.length-1 && i > 0){
-              <p class="service-name text-black">{{service.nombre}}</p>
+              <p class="service-name text-black">{{service.name}}</p>
             }
           </div>
         </div>
@@ -92,10 +92,10 @@
           @if(i < pasos.length){
             <div class="mt-2">
               @if (i === 0 ){
-                <p class="text-black mr-2">{{service.nombre}}</p>
+                <p class="text-black mr-2">{{service.name}}</p>
               }
               @if (i === pasos.length-1){
-                <p class="text-black ml-9">{{service.nombre}}</p>
+                <p class="text-black ml-9">{{service.name}}</p>
               }
             </div>
           }

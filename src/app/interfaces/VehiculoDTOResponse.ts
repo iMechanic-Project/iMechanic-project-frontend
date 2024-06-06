@@ -1,6 +1,6 @@
 export interface VehiculoDTOResponse {
-    placa: string;
-    marca: string;
-    modelo: string;
-    categoria: string;
+    plate: string;
+    brand: string;
+    model: string;
+    category: string;
 }

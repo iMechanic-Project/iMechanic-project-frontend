@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from "@angular/common";
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { TallerServiceService } from '../../../services/taller-service.service';
-import { ServicioDTO } from '../../../interfaces/ServicioDTO';
+import { OperationDTOResponse } from '../../../interfaces/ServicioDTO';
 
 
 @Component({
@@ -17,8 +17,8 @@ import { ServicioDTO } from '../../../interfaces/ServicioDTO';
 })
 export default class WorkshopServicesComponent implements OnInit {
 
-  accionesMantenimiento: ServicioDTO[] = [];
-  accionesReparacion: ServicioDTO[] = [];
+  accionesMantenimiento: OperationDTOResponse[] = [];
+  accionesReparacion: OperationDTOResponse[] = [];
   selectedServices: number[] = [];
   showModal = false;
 
