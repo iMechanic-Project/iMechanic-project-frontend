@@ -25,7 +25,7 @@ describe('RegisterUsersComponent', () => {
   });
 
   it('should validate that passwords match', () => {
-    component.signUpDTORequest.contrasenia = 'password123';
+    component.signUpDTORequest.password = 'password123';
     component.confirmarContrasenia = 'password123';
 
     component.onSubmit();
@@ -38,13 +38,13 @@ describe('RegisterUsersComponent', () => {
 
   it('should validate that passwords do not match', () => {
     const passwordInput = fixture.debugElement.query(
-      By.css('input[name="contrasenia"]')
+      By.css('input[name="password"]')
     ).nativeElement;
     const confirmPasswordInput = fixture.debugElement.query(
       By.css('input[name="confirmarContrasenia"]')
     ).nativeElement;
 
-    component.signUpDTORequest.contrasenia = 'password143';
+    component.signUpDTORequest.password = 'password143';
     component.confirmarContrasenia = 'password123';
 
     fixture.detectChanges();
