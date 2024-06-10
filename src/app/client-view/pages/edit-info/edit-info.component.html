@@ -6,25 +6,25 @@
 
     <input type="text" placeholder="Correo"
            class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-5"
-           [(ngModel)]="cliente.emailCustomer" readonly>
+           [(ngModel)]="userInformation.email" readonly>
     <input type="password" placeholder="Contraseña"
-           class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-5"
-           [(ngModel)]="cliente.passwordCustomer" readonly>
+           class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-5" 
+           [(ngModel)]="password"  readonly>
 
 
     <h2 class="text-2xl mb-4 mt-5">Cliente:</h2>
 
     <input type="text" placeholder="Nombre"
            class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-5"
-           [(ngModel)]="cliente.nameCustomer" readonly>
+           [(ngModel)]="userInformation.name" readonly>
 
     <input type="text" placeholder="Dirección"
            class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-5"
-           [(ngModel)]="cliente.addressCustomer" readonly>
+           [(ngModel)]="userInformation.address" readonly>
 
     <input type="text" placeholder="Teléfono"
            class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-5"
-           [(ngModel)]="cliente.phoneCustomer" readonly>
+           [(ngModel)]="userInformation.phone" readonly>
 
 
     <!-- Botón de editar -->
