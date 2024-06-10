@@ -109,7 +109,7 @@ export const routes: Routes = [
 
       {
         path: '',
-        redirectTo: '/employee/view-info',
+        redirectTo: '/employee/order-list-employee',
         pathMatch: 'full'
       }
     ]
