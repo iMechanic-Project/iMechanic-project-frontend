@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FooterComponent} from "../footer/footer.component";
-import {RouterOutlet} from "@angular/router";
+import {Router, RouterOutlet} from "@angular/router";
 import {SidebarEmployeeComponent} from "./sidebar-employee/sidebar-employee.component";
 import {MenuEmployeeComponent} from "./menu-employee/menu-employee.component";
 
@@ -18,9 +18,20 @@ import {MenuEmployeeComponent} from "./menu-employee/menu-employee.component";
 })
 export default class EmployeeViewComponent {
 
+  constructor(private router: Router) {}
+
   closeSesion(): void {
-    //logica para cerrar sesion
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('token');
+      this.router.navigate(['/inicio/login-users']).then(success => {
+        if (!success) {
+          console.error('Navigation failed!');
+        }
+      }).catch(error => {
+        console.error('Navigation error:', error);
+      });
+    } else {
+      console.error('LocalStorage is not available.');
+    }
   }
-
-
 }

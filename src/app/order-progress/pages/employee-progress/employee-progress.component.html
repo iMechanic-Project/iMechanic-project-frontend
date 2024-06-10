@@ -13,9 +13,9 @@
     <div class="flex flex-col border border-gray-300 mt-5 p-8 mb-4 justify-center mr-7 ml-7 lg:w-1/2" style="background: #D9D9D9">
       <h2 class="font-bold text-2xl mb-2">Detalle de la Orden de Trabajo</h2>
       <p class="font-bold text-xl mb-2">Información del cliente</p>
-      <p class="text-lg mt-2">Nombre: {{ datosOrden.nombre }}</p>
-      <p class="text-lg mt-2">Direccion: {{ datosOrden.direccion}}</p>
-      <p class="text-lg mt-2">Teléfono/Celular: {{ datosOrden.telefonoTaller }}</p>
+      <p class="text-lg mt-2">Nombre: {{ datosOrden.name }}</p>
+      <p class="text-lg mt-2">Direccion: {{ datosOrden.address}}</p>
+      <p class="text-lg mt-2">Teléfono/Celular: {{ datosOrden.phoneWorkshop }}</p>
     </div>
 
     <div class="flex flex-col lg:mt-10 mr-7 ml-7 lg:w-1/2">
@@ -25,7 +25,7 @@
       <div class="p-4 flex items-center justify-between" style="background: #D9D9D9;">
         <p>{{ datosOrden.operation.name }}</p>
         <button (click)="openChat()">
-          <a [href]="'https://wa.me/51' + datosOrden.telefonoMecanico" target="_blank">
+          <a [href]="'https://wa.me/51' + datosOrden.phoneMechanic" target="_blank">
             <img src="./assets/img/iconoChat.png" alt="Logo" class="h-6 mr-1" style="cursor: pointer;">
           </a>
         </button>
@@ -41,7 +41,7 @@
     </div>
 
 
-    <app-progress-bar [mecanicoPaso]="mecanicoPaso" [pasos]="datosOrden.pasos" />
+    <app-progress-bar [mecanicoPaso]="mecanicoPaso" [pasos]="datosOrden.steps" />
 
   </div>
 

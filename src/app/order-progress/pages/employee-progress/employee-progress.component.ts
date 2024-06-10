@@ -5,6 +5,7 @@ import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { OrderDetailMecanicoDTO } from '../../../interfaces/OrderDetailMecanicoDTO';
 import { MechanicService } from '../../../services/mechanic.service';
 import { MecanicoPasoDTO } from '../../../interfaces/MecanicoPasoDTO';
+import { OrderService } from '../../../services/order.service';
 
 @Component({
   selector: 'app-employee-progress',
@@ -18,51 +19,51 @@ export default class EmployeeProgressComponent implements OnInit {
 
   datosOrden: OrderDetailMecanicoDTO = {
     id: '',
-    nombre: '',
-    direccion: '',
-    telefonoTaller: '',
+    name: '',
+    address: '',
+    phoneWorkshop: '',
     operation: {
       id: 0,
       name: '',
     },
-    estadoServicio: '',
-    mecanico: {
+    statusOperation: '',
+    mechanic: {
       id: 0,
       name: '',
     },
-    telefonoMecanico: '',
-    pasos: [],
+    phoneMechanic: '',
+    steps: [],
   };
 
   mecanicoPaso: MecanicoPasoDTO = {
-    ordenTrabajoId: '',
-    mecanicoId: 0,
-    servicioId: 0,
-    servicioNombre: '',
-    pasoId: 0,
+    workOrderId: '',
+    mechanicId: 0,
+    operationId: 0,
+    operationName: '',
+    stepId: 0,
     complete: false,
   };
 
   constructor(
     private route: ActivatedRoute,
-    private mecanicService: MechanicService
+    private orderService: OrderService
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       const orderId = params['id'];
-      this.mecanicService.orderDetailByMecanic(orderId).subscribe(
+      this.orderService.orderDetailByMecanic(orderId).subscribe(
         (orderDetail) => {
           this.datosOrden = {
             ...orderDetail,
-            estadoServicio: this.mapEstado(orderDetail.estadoServicio),
+            statusOperation: this.mapEstado(orderDetail.statusOperation),
           };
           console.log(orderDetail);
 
-          this.mecanicoPaso.ordenTrabajoId = this.datosOrden.id;
-          this.mecanicoPaso.mecanicoId = this.datosOrden.mecanico.id;
-          this.mecanicoPaso.servicioId = this.datosOrden.operation.id;
-          this.mecanicoPaso.servicioNombre = this.datosOrden.operation.name;
+          this.mecanicoPaso.workOrderId = this.datosOrden.id;
+          this.mecanicoPaso.mechanicId = this.datosOrden.mechanic.id;
+          this.mecanicoPaso.operationId = this.datosOrden.operation.id;
+          this.mecanicoPaso.operationName = this.datosOrden.operation.name;
 
           console.log('MecanicoPaso:', this.mecanicoPaso);
         },

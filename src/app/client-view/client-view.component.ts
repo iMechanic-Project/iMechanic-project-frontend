@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {SidebarClientComponent} from "./sidebar-client/sidebar-client.component";
 import {MenuClientComponent} from "./menu-client/menu-client.component";
-import {RouterModule, RouterOutlet} from "@angular/router";
+import {Router, RouterModule, RouterOutlet} from "@angular/router";
 import {FooterComponent} from "../footer/footer.component";
 
 @Component({
@@ -19,9 +19,20 @@ import {FooterComponent} from "../footer/footer.component";
 })
 export default class ClientViewComponent {
 
-  closeSesion(): void {
-    //logica para cerrar sesion
-  }
+  constructor(private router: Router) {}
 
-  protected readonly close = close;
+  closeSesion(): void {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('token');
+      this.router.navigate(['/inicio/login-users']).then(success => {
+        if (!success) {
+          console.error('Navigation failed!');
+        }
+      }).catch(error => {
+        console.error('Navigation error:', error);
+      });
+    } else {
+      console.error('LocalStorage is not available.');
+    }
+  }
 }

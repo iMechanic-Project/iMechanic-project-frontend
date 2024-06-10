@@ -2,6 +2,7 @@ import type { HttpInterceptorFn } from '@angular/common/http';
 
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const authToken = localStorage.getItem('token');
+  // const authToken = sessionStorage.getItem('token');
 
   // Clonar la solicitud y agregar el encabezado de autorización
   if (authToken) {

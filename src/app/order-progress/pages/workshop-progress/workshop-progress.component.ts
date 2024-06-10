@@ -21,7 +21,7 @@ import { OrderService } from '../../../services/order.service';
 })
 export default class WorkshopProgressComponent implements OnInit {
   orders: OrderDetailDTO = {
-    id: '',
+    workOrderId: '',
     nameWorkshop: '',
     addressWorkshop: '',
     phoneWorkShop: '',
@@ -42,11 +42,11 @@ export default class WorkshopProgressComponent implements OnInit {
   };
 
   mecanicoPaso: MecanicoPasoDTO = {
-    ordenTrabajoId: '',
-    mecanicoId: 0,
-    servicioId: 0,
-    servicioNombre: '',
-    pasoId: 0,
+    workOrderId: '',
+    mechanicId: 0,
+    operationId: 0,
+    operationName: '',
+    stepId: 0,
     complete: false,
   };
 
@@ -63,17 +63,18 @@ export default class WorkshopProgressComponent implements OnInit {
           (orderDetail) => {
             this.orders = orderDetail;
             console.log(orderDetail);
+            console.log(orderDetail);
 
             this.orders.operationDetails.forEach((servicioDetalle) => {
-              this.mecanicoPaso.ordenTrabajoId = this.orders.id;
-              this.mecanicoPaso.mecanicoId = servicioDetalle.mechanic.id;
-              this.mecanicoPaso.servicioId = servicioDetalle.operation.id;
-              this.mecanicoPaso.servicioNombre = servicioDetalle.operation.name;
+              this.mecanicoPaso.workOrderId = this.orders.workOrderId;
+              this.mecanicoPaso.mechanicId = servicioDetalle.mechanic.id;
+              this.mecanicoPaso.operationId = servicioDetalle.operation.id;
+              this.mecanicoPaso.operationName = servicioDetalle.operation.name;
 
               // Si hay steps, puedes también actualizar pasoId y complete
               if (servicioDetalle.steps.length > 0) {
                 const paso = servicioDetalle.steps[1]; // Solo un ejemplo, ajustar según sea necesario
-                this.mecanicoPaso.pasoId = paso.id;
+                this.mecanicoPaso.stepId = paso.id;
                 this.mecanicoPaso.complete = paso.completado; // Asegúrate de que el paso tiene la propiedad `complete`
               }
 

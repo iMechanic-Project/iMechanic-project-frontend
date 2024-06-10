@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { VehicleService } from '../../../services/vehicle.service';
@@ -15,7 +15,6 @@ import OrderListComponent from '../order-list/order-list.component';
 import { LoaderComponent } from '../loader/loader.component';
 import { OperationDTOResponse } from '../../../interfaces/ServicioDTO';
 import { AssignmentService } from '../../../services/assignment.service';
-import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-create-order',
@@ -95,14 +94,17 @@ export default class CreateOrderComponent implements OnInit {
 
     this.mechanicService.getAllMechanicsForOrder().subscribe((mecanicos) => {
       this.mecanicos = mecanicos;
-      console.log('Mecánicos:', this.mecanicos);
+      console.log('Mecánicos del taller:', this.mecanicos);
     });
 
     this.assignmentService
       .getAllWorkshopAssignments()
       .subscribe((serviciosMecanicos) => {
         this.relacionMecanicoServicio = serviciosMecanicos;
-        console.log('Relación Mecánico-Servicio:', this.relacionMecanicoServicio);
+        console.log(
+          'Relación Assignacion(mecanico-servicio):',
+          this.relacionMecanicoServicio
+        );
       });
   }
 

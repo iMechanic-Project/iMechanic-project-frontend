@@ -4,12 +4,12 @@ import { OperationDTOResponse } from "./ServicioDTO";
 
 export interface OrderDetailMecanicoDTO {
     id: string,
-    nombre: string;
-    direccion: string;
-    telefonoTaller: string;
+    name: string;
+    address: string;
+    phoneWorkshop: string;
     operation: OperationDTOResponse;
-    estadoServicio: string;
-    mecanico: MecanicoDTOList;
-    telefonoMecanico: string;
-    pasos: PasoDTO[];
+    statusOperation: string;
+    mechanic: MecanicoDTOList;
+    phoneMechanic: string;
+    steps: PasoDTO[];
 }

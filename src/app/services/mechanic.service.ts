@@ -5,8 +5,6 @@ import { Observable, Subject } from 'rxjs';
 import { MechanicDTORequest } from '../interfaces/MechanicDTORequest';
 import { MechanicDTOResponse } from '../interfaces/MechanicDTOResponse';
 import { MecanicoDTOList } from '../interfaces/MecanicoDTOList';
-import { OrdenTrabajoMecanicoDTOList } from '../interfaces/OrdenTrabajoMecanicoDTOList';
-import { OrderDetailMecanicoDTO } from '../interfaces/OrderDetailMecanicoDTO';
 import { tap } from 'rxjs/operators';
 import { MecanicoPasoDTO } from '../interfaces/MecanicoPasoDTO';
 import { MechanicDetailsDTOResponse } from '../interfaces/MechanicDetailsDTOResponse';
@@ -51,53 +49,9 @@ export class MechanicService {
     );
   }
 
-  orderDetailByMecanic(orderId: number): Observable<OrderDetailMecanicoDTO> {
-    return this.http
-      .get<OrderDetailMecanicoDTO>(
-        `${this.baseUrl}/api/mechanics/order-detail/${orderId}`
-      )
-      .pipe(
-        tap(() => {
-          this._refresh$.next();
-        })
-      );
-  }
-
   getAllMechanicsForOrder(): Observable<MecanicoDTOList[]> {
     return this.http.get<MecanicoDTOList[]>(
       `${this.baseUrl}/api/mechanics/all/order`
-    );
-  }
-
-  initService(orderId: string, serviceId: number): Observable<string> {
-    return this.http.put<string>(
-      `${this.baseUrl}/api/mechanics/iniciar/${orderId}/servicio/${serviceId}`,
-      {}
-    );
-  }
-
-  completeStep(
-    ordenId: string,
-    servicioId: number,
-    pasoId: number
-  ): Observable<MecanicoPasoDTO> {
-    return this.http.put<MecanicoPasoDTO>(
-      `${this.baseUrl}/api/mechanics/orden/${ordenId}/service/${servicioId}/paso/${pasoId}/complete`,
-      {}
-    );
-  }
-
-  getStepComplete(ordenId: string, servicioId: number): Observable<any> {
-    return this.http.get<any>(
-      `${this.baseUrl}/api/mechanics/orden/${ordenId}/service/${servicioId}/complete-list`,
-      {}
-    );
-  }
-
-  finalService(orderId: string, serviceId: number): Observable<string> {
-    return this.http.put<string>(
-      `${this.baseUrl}/api/mechanics/terminar/${orderId}/servicio/${serviceId}`,
-      {}
     );
   }
 }

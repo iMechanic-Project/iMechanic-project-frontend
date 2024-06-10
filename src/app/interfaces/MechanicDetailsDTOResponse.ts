@@ -2,7 +2,7 @@ import { OperationDTOResponse } from "./ServicioDTO";
 
 export interface MechanicDetailsDTOResponse {
     name: string;
-    password: string;
+    phone: string;
     email: string;
     operations: OperationDTOResponse[];
 }

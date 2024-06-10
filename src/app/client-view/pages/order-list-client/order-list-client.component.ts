@@ -24,11 +24,17 @@ export default class OrderListClientComponent implements OnInit {
   ngOnInit(): void {
     this.orderService.getAllOrderByCliente().subscribe(
       (ordenes: OrdenTrabajoClienteDTOList[]) => {
-        this.orderListClient = ordenes.map((orden: OrdenTrabajoClienteDTOList) => ({
-          ...orden,
-          status: this.mapEstado(orden.status),
-        }));
-        console.log(ordenes);
+        if (ordenes.length == 0) {
+          console.log('No existen ordenes de trabajo.');
+        } else {
+          this.orderListClient = ordenes.map(
+            (orden: OrdenTrabajoClienteDTOList) => ({
+              ...orden,
+              status: this.mapEstado(orden.status),
+            })
+          );
+          console.log(ordenes);
+        }
       },
       (error) => {
         console.error('Error al obtener las órdenes de trabajo:', error);

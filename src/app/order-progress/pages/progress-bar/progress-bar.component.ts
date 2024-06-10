@@ -1,11 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { PasoDTO } from '../../../interfaces/PasoDTO';
 import { MecanicoPasoDTO } from '../../../interfaces/MecanicoPasoDTO';
-import { MechanicService } from '../../../services/mechanic.service';
+import { PasoDTO } from '../../../interfaces/PasoDTO';
 import { OrderDetailMecanicoDTO } from '../../../interfaces/OrderDetailMecanicoDTO';
 import { Subscription } from 'rxjs';
+import { OrderService } from '../../../services/order.service';
+import { MechanicService } from '../../../services/mechanic.service';
 
 @Component({
   selector: 'app-progress-bar',
@@ -16,32 +17,33 @@ import { Subscription } from 'rxjs';
 })
 export class ProgressBarComponent implements OnInit, OnDestroy {
   @Input() mecanicoPaso: MecanicoPasoDTO = {
-    ordenTrabajoId: '',
-    mecanicoId: 0,
-    servicioId: 0,
-    servicioNombre: '',
-    pasoId: 0,
+    workOrderId: '',
+    mechanicId: 0,
+    operationId: 0,
+    operationName: '',
+    stepId: 0,
     complete: false,
   };
+
   @Input() pasos: PasoDTO[] = [];
-  estadoServicio: string = '';
+  statusOperation: string = '';
 
   datosOrden: OrderDetailMecanicoDTO = {
     id: '',
-    nombre: '',
-    direccion: '',
-    telefonoTaller: '',
+    name: '',
+    address: '',
+    phoneWorkshop: '',
     operation: {
       id: 0,
       name: '',
     },
-    estadoServicio: '',
-    mecanico: {
+    statusOperation: '',
+    mechanic: {
       id: 0,
       name: '',
     },
-    telefonoMecanico: '',
-    pasos: [],
+    phoneMechanic: '',
+    steps: [],
   };
 
   currentServiceIndex = 0;
@@ -52,45 +54,45 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private orderService: OrderService,
     private mechanicService: MechanicService
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      const orderId = +params['id'];
-      if (!isNaN(orderId)) {
-        this.mechanicService.orderDetailByMecanic(orderId).subscribe(
-          (orderDetail) => {
-            this.datosOrden = {
-              ...orderDetail,
-              estadoServicio: this.mapEstado(orderDetail.estadoServicio),
-            };
-            console.log(orderDetail.estadoServicio);
-            this.estadoServicio = this.datosOrden.estadoServicio;
+      const orderId = params['id'];
+      console.log(orderId)
+      this.orderService.orderDetailByMecanic(orderId).subscribe(
+        (orderDetail) => {
+          this.datosOrden = {
+            ...orderDetail,
+            statusOperation: this.mapEstado(orderDetail.statusOperation),
+          };
+          console.log(orderDetail.statusOperation);
+          this.statusOperation = this.datosOrden.statusOperation;
 
-            console.log('MecanicoPaso:', this.mecanicoPaso);
-          },
-          (error) => {
-            console.error('Error al obtener el detalle de la orden:', error);
-          }
-        );
-        this.suscription = this.mechanicService.refresh$.subscribe(() => {
-          this.mechanicService
-            .orderDetailByMecanic(orderId)
-            .subscribe((orderDetail) => {
-              this.datosOrden = orderDetail; // Aquí asigna los datos actualizados a la variable vehicles
-            });
-        });
-      }
+          console.log('MecanicoPaso:', this.mecanicoPaso);
+        },
+        (error) => {
+          console.error('Error al obtener el detalle de la orden:', error);
+        }
+      );
+      this.suscription = this.mechanicService.refresh$.subscribe(() => {
+        this.orderService
+          .orderDetailByMecanic(orderId)
+          .subscribe((orderDetail) => {
+            this.datosOrden = orderDetail; // Aquí asigna los datos actualizados a la variable vehicles
+          });
+      });
     });
 
     console.log('botom comenzar 1:', this.showButtons);
 
     setTimeout(() => {
-      this.mechanicService
+      this.orderService
         .getStepComplete(
-          this.mecanicoPaso.ordenTrabajoId,
-          this.mecanicoPaso.servicioId
+          this.mecanicoPaso.workOrderId,
+          this.mecanicoPaso.operationId
         )
         .subscribe((pasosCompletados: PasoDTO[]) => {
           this.pasos.forEach((paso: PasoDTO) => {
@@ -135,10 +137,10 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
       console.log('pasos:', this.pasos.length);
 
       const paso = this.pasos[this.currentServiceIndex];
-      this.mechanicService
+      this.orderService
         .completeStep(
-          this.mecanicoPaso.ordenTrabajoId,
-          this.mecanicoPaso.servicioId,
+          this.mecanicoPaso.workOrderId,
+          this.mecanicoPaso.operationId,
           paso.id
         )
         .subscribe(
@@ -157,11 +159,8 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
   }
 
   startOrder() {
-    this.mechanicService
-      .initService(
-        this.mecanicoPaso.ordenTrabajoId,
-        this.mecanicoPaso.servicioId
-      )
+    this.orderService
+      .initService(this.mecanicoPaso.workOrderId, this.mecanicoPaso.operationId)
       .subscribe(
         (response) => {
           console.log('Servicio iniciado:', response);
@@ -176,10 +175,10 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
   }
 
   finishOrder() {
-    this.mechanicService
+    this.orderService
       .finalService(
-        this.mecanicoPaso.ordenTrabajoId,
-        this.mecanicoPaso.servicioId
+        this.mecanicoPaso.workOrderId,
+        this.mecanicoPaso.operationId
       )
       .subscribe(
         (response) => {

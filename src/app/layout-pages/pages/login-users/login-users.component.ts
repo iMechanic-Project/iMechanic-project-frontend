@@ -38,6 +38,7 @@ export default class LoginUsersComponent {
     this.authService.login(this.loginDTORequest).subscribe(
       (response) => {
         localStorage.setItem('token', response.token);
+        // sessionStorage.setItem('token', response.token);
         console.log('Login successfully', response);
         if (response.role == 'WORKSHOP') {
           this.router.navigate(['/workshop/workshop-services']);

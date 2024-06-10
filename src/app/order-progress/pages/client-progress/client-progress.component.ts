@@ -23,7 +23,7 @@ export default class ClientProgressComponent implements OnInit {
   showChat = false;
 
   orders: OrderDetailDTO = {
-    id: '',
+    workOrderId: '',
     nameWorkshop: '',
     addressWorkshop: '',
     phoneWorkShop: '',
@@ -56,7 +56,7 @@ export default class ClientProgressComponent implements OnInit {
         console.log("hola1");
         this.orderService.orderDetailByClient(orderId).subscribe(
           (orderDetail) => {
-            console.log(orderDetail.id);
+            console.log(orderDetail.workOrderId);
             this.orders = orderDetail;
             console.log("Orders", this.orders);
             console.log(orderDetail);
