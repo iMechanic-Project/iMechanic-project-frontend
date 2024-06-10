@@ -1,10 +1,10 @@
 import { MecanicoDTOList } from "./MecanicoDTOList";
-import { PasoDTO } from "./PasoDTO";
 import { OperationDTOResponse } from "./ServicioDTO";
+import { StepOrderResponse } from "./StepOrderResponse";
 
 export interface OperationDetailsDTOResponse {
     operation: OperationDTOResponse;
     mechanic: MecanicoDTOList;
     statusOperation: string;
-    steps: PasoDTO[];
+    steps: StepOrderResponse[];
 }

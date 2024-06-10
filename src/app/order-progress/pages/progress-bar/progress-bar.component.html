@@ -27,17 +27,17 @@
         <div class="bloque2">
           @if (i === 0){
             <div class="progress-ball2" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completado"></i>
+              <i class="uil uil-check" *ngIf="service.complete"></i>
             </div>
           }
           @if(i > 0 && i < pasos.length - 1){
             <div class="progress" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completado"></i>
+              <i class="uil uil-check" *ngIf="service.complete"></i>
             </div>
           }
           @if(i === pasos.length - 1){
             <div  class="progress-ball" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completado"></i>
+              <i class="uil uil-check" *ngIf="service.complete"></i>
             </div>
           }
           @if(i < pasos.length){
@@ -76,17 +76,17 @@
         <div class="bloque2">
           @if (i === 0){
             <div class="progress-ball2" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completado"></i>
+              <i class="uil uil-check" *ngIf="service.complete"></i>
             </div>
           }
           @if(i > 0 && i < pasos.length - 1){
             <div class="progress" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completado"></i>
+              <i class="uil uil-check" *ngIf="service.complete"></i>
             </div>
           }
           @if(i === pasos.length - 1){
             <div  class="progress-ball" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completado"></i>
+              <i class="uil uil-check" *ngIf="service.complete"></i>
             </div>
           }
           @if(i < pasos.length){

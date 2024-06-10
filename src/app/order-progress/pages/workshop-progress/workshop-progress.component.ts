@@ -74,8 +74,8 @@ export default class WorkshopProgressComponent implements OnInit {
               // Si hay steps, puedes también actualizar pasoId y complete
               if (servicioDetalle.steps.length > 0) {
                 const paso = servicioDetalle.steps[1]; // Solo un ejemplo, ajustar según sea necesario
-                this.mecanicoPaso.stepId = paso.id;
-                this.mecanicoPaso.complete = paso.completado; // Asegúrate de que el paso tiene la propiedad `complete`
+                this.mecanicoPaso.stepId = paso.stepId;
+                this.mecanicoPaso.complete = paso.complete; // Asegúrate de que el paso tiene la propiedad `complete`
               }
 
               console.log('Actualizado MecanicoPaso:', this.mecanicoPaso);

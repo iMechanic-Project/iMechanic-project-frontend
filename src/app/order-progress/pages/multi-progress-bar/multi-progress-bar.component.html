@@ -26,7 +26,7 @@
       <div class="main p-4 lg:ml-0 lg:mr-0 ml-5 mr-5 overflow-x-auto">
         <div class="order-progress">
           <ul>
-            <li *ngFor="let service of order.steps; let i = index" [class.active]="service.completado">
+            <li *ngFor="let service of order.steps; let i = index" [class.active]="service.complete">
               <div class="bloque1">
                 <div *ngIf="i < order.steps.length" class="diagonal-text mb-10">
                   @if (i === 0 || i === order.steps.length-1){
@@ -40,18 +40,18 @@
 
               <div class="bloque2">
                 @if (i === 0){
-                  <div class="progress-ball2" [class.active]="service.completado">
-                    <i class="uil uil-check" *ngIf="service.completado"></i>
+                  <div class="progress-ball2" [class.active]="service.complete">
+                    <i class="uil uil-check" *ngIf="service.complete"></i>
                   </div>
                 }
                 @if(i > 0 && i < order.steps.length - 1){
-                  <div class="progress" [class.active]="service.completado">
-                    <i class="uil uil-check" *ngIf="service.completado"></i>
+                  <div class="progress" [class.active]="service.complete">
+                    <i class="uil uil-check" *ngIf="service.complete"></i>
                   </div>
                 }
                 @if(i === order.steps.length - 1){
-                  <div  class="progress-ball" [class.active]="service.completado">
-                    <i class="uil uil-check" *ngIf="service.completado"></i>
+                  <div  class="progress-ball" [class.active]="service.complete">
+                    <i class="uil uil-check" *ngIf="service.complete"></i>
                   </div>
                 }
                 @if(i < order.steps.length){
@@ -78,7 +78,7 @@
       <div class="main p-4 lg:ml-0 lg:mr-0 ml-5 mr-5 overflow-x-auto items-center">
         <div class="order-progress">
           <ul>
-            <li *ngFor="let service of order.steps; let i = index" [class.active]="service.completado">
+            <li *ngFor="let service of order.steps; let i = index" [class.active]="service.complete">
               <div class="bloque1">
                 <div *ngIf="i < order.steps.length" class="diagonal-text mb-10">
                   @if (i === 0 || i === order.steps.length-1){
@@ -92,18 +92,18 @@
 
               <div class="bloque2">
                 @if (i === 0){
-                  <div class="progress-ball2" [class.active]="service.completado">
-                    <i class="uil uil-check" *ngIf="service.completado"></i>
+                  <div class="progress-ball2" [class.active]="service.complete">
+                    <i class="uil uil-check" *ngIf="service.complete"></i>
                   </div>
                 }
                 @if(i > 0 && i < order.steps.length - 1){
-                  <div class="progress" [class.active]="service.completado">
-                    <i class="uil uil-check" *ngIf="service.completado"></i>
+                  <div class="progress" [class.active]="service.complete">
+                    <i class="uil uil-check" *ngIf="service.complete"></i>
                   </div>
                 }
                 @if(i === order.steps.length - 1){
-                  <div  class="progress-ball" [class.active]="service.completado">
-                    <i class="uil uil-check" *ngIf="service.completado"></i>
+                  <div  class="progress-ball" [class.active]="service.complete">
+                    <i class="uil uil-check" *ngIf="service.complete"></i>
                   </div>
                 }
                 @if(i < order.steps.length){
@@ -151,7 +151,7 @@
       <div class="main p-4 lg:ml-0 lg:mr-0 ml-5 mr-5 overflow-x-auto">
         <div class="order-progress">
           <ul>
-            <li *ngFor="let service of order.steps; let i = index" [class.active]="service.completado">
+            <li *ngFor="let service of order.steps; let i = index" [class.active]="service.complete">
               <div class="bloque1">
                 <div *ngIf="i < order.steps.length" class="diagonal-text mb-10">
                   @if (i === 0 || i === order.steps.length-1){
@@ -165,18 +165,18 @@
 
               <div class="bloque2">
                 @if (i === 0){
-                  <div class="progress-ball2" [class.active]="service.completado">
-                    <i class="uil uil-check" *ngIf="service.completado"></i>
+                  <div class="progress-ball2" [class.active]="service.complete">
+                    <i class="uil uil-check" *ngIf="service.complete"></i>
                   </div>
                 }
                 @if(i > 0 && i < order.steps.length - 1){
-                  <div class="progress" [class.active]="service.completado">
-                    <i class="uil uil-check" *ngIf="service.completado"></i>
+                  <div class="progress" [class.active]="service.complete">
+                    <i class="uil uil-check" *ngIf="service.complete"></i>
                   </div>
                 }
                 @if(i === order.steps.length - 1){
-                  <div  class="progress-ball" [class.active]="service.completado">
-                    <i class="uil uil-check" *ngIf="service.completado"></i>
+                  <div  class="progress-ball" [class.active]="service.complete">
+                    <i class="uil uil-check" *ngIf="service.complete"></i>
                   </div>
                 }
                 @if(i < order.steps.length){
@@ -203,7 +203,7 @@
       <div class="main p-4 lg:ml-0 lg:mr-0 ml-5 mr-5 overflow-x-auto">
         <div class="order-progress">
           <ul>
-            <li *ngFor="let service of order.steps; let i = index" [class.active]="service.completado">
+            <li *ngFor="let service of order.steps; let i = index" [class.active]="service.complete">
               <div class="bloque1">
                 <div *ngIf="i < order.steps.length" class="diagonal-text mb-10">
                   @if (i === 0 || i === order.steps.length-1){
@@ -217,18 +217,18 @@
 
               <div class="bloque2">
                 @if (i === 0){
-                  <div class="progress-ball2" [class.active]="service.completado">
-                    <i class="uil uil-check" *ngIf="service.completado"></i>
+                  <div class="progress-ball2" [class.active]="service.complete">
+                    <i class="uil uil-check" *ngIf="service.complete"></i>
                   </div>
                 }
                 @if(i > 0 && i < order.steps.length - 1){
-                  <div class="progress" [class.active]="service.completado">
-                    <i class="uil uil-check" *ngIf="service.completado"></i>
+                  <div class="progress" [class.active]="service.complete">
+                    <i class="uil uil-check" *ngIf="service.complete"></i>
                   </div>
                 }
                 @if(i === order.steps.length - 1){
-                  <div  class="progress-ball" [class.active]="service.completado">
-                    <i class="uil uil-check" *ngIf="service.completado"></i>
+                  <div  class="progress-ball" [class.active]="service.complete">
+                    <i class="uil uil-check" *ngIf="service.complete"></i>
                   </div>
                 }
                 @if(i < order.steps.length){

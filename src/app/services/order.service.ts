@@ -10,6 +10,7 @@ import { OrdenTrabajoClienteDTOList } from '../interfaces/OrdenTrabajoClienteDTO
 import { OrderDetailDTO } from '../interfaces/OrderDetailDTO';
 import { OrderDetailMecanicoDTO } from '../interfaces/OrderDetailMecanicoDTO';
 import { MecanicoPasoDTO } from '../interfaces/MecanicoPasoDTO';
+import { StepOrderResponse } from '../interfaces/StepOrderResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -56,7 +57,7 @@ export class OrderService {
   // TRAER DETALLE DE ORDEN DEL CLIENTE
   orderDetailByClient(orderId: string): Observable<OrderDetailDTO> {
     return this.http.get<OrderDetailDTO>(
-      `${this.baseUrl}}/order-detail/${orderId}/customer`
+      `${this.baseUrl}/order-detail/${orderId}/customer`
     );
   }
 
@@ -99,8 +100,11 @@ export class OrderService {
     );
   }
 
-  getStepComplete(ordenId: string, servicioId: number): Observable<any> {
-    return this.http.get<any>(
+  getStepComplete(
+    ordenId: string,
+    servicioId: number
+  ): Observable<StepOrderResponse[]> {
+    return this.http.get<StepOrderResponse[]>(
       `${this.baseUrl}/${ordenId}/service/${servicioId}/complete-list`,
       {}
     );
@@ -109,6 +113,13 @@ export class OrderService {
   finalService(orderId: string, serviceId: number): Observable<string> {
     return this.http.put<string>(
       `${this.baseUrl}/terminar/${orderId}/servicio/${serviceId}`,
+      {}
+    );
+  }
+
+  getStepCompleteByUser(ordenId: string): Observable<OrderDetailDTO> {
+    return this.http.get<OrderDetailDTO>(
+      `${this.baseUrl}/order-detail/${ordenId}/operations`,
       {}
     );
   }

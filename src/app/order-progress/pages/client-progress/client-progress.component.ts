@@ -5,6 +5,7 @@ import { MultiProgressBarComponent } from '../multi-progress-bar/multi-progress-
 import { OrderDetailDTO } from '../../../interfaces/OrderDetailDTO';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrderService } from '../../../services/order.service';
+import { MecanicoPasoDTO } from '../../../interfaces/MecanicoPasoDTO';
 
 @Component({
   selector: 'app-client-progress',
@@ -43,6 +44,15 @@ export default class ClientProgressComponent implements OnInit {
     ],
   };
 
+  mecanicoPaso: MecanicoPasoDTO = {
+    workOrderId: '',
+    mechanicId: 0,
+    operationId: 0,
+    operationName: '',
+    stepId: 0,
+    complete: false,
+  };
+
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService
@@ -56,11 +66,27 @@ export default class ClientProgressComponent implements OnInit {
         console.log("hola1");
         this.orderService.orderDetailByClient(orderId).subscribe(
           (orderDetail) => {
-            console.log(orderDetail.workOrderId);
             this.orders = orderDetail;
-            console.log("Orders", this.orders);
             console.log(orderDetail);
-            console.log("hola3");
+            console.log(orderDetail);
+
+            this.orders.operationDetails.forEach((servicioDetalle) => {
+              this.mecanicoPaso.workOrderId = this.orders.workOrderId;
+              this.mecanicoPaso.mechanicId = servicioDetalle.mechanic.id;
+              this.mecanicoPaso.operationId = servicioDetalle.operation.id;
+              this.mecanicoPaso.operationName = servicioDetalle.operation.name;
+
+              // Si hay steps, puedes también actualizar pasoId y complete
+              if (servicioDetalle.steps.length > 0) {
+                const paso = servicioDetalle.steps[1]; // Solo un ejemplo, ajustar según sea necesario
+                this.mecanicoPaso.stepId = paso.stepId;
+                this.mecanicoPaso.complete = paso.complete; // Asegúrate de que el paso tiene la propiedad `complete`
+              }
+
+              console.log('Actualizado MecanicoPaso:', this.mecanicoPaso);
+            });
+
+            console.log('MecanicoPaso:', this.mecanicoPaso);
           },
           (error) => {
             console.error('Error al obtener el detalle de la orden:', error);

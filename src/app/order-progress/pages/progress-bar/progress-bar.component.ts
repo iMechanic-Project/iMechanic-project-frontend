@@ -2,11 +2,11 @@ import { NgForOf, NgIf } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MecanicoPasoDTO } from '../../../interfaces/MecanicoPasoDTO';
-import { PasoDTO } from '../../../interfaces/PasoDTO';
 import { OrderDetailMecanicoDTO } from '../../../interfaces/OrderDetailMecanicoDTO';
 import { Subscription } from 'rxjs';
 import { OrderService } from '../../../services/order.service';
 import { MechanicService } from '../../../services/mechanic.service';
+import { StepOrderResponse } from '../../../interfaces/StepOrderResponse';
 
 @Component({
   selector: 'app-progress-bar',
@@ -25,7 +25,7 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
     complete: false,
   };
 
-  @Input() pasos: PasoDTO[] = [];
+  @Input() pasos: StepOrderResponse[] = [];
   statusOperation: string = '';
 
   datosOrden: OrderDetailMecanicoDTO = {
@@ -94,18 +94,18 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
           this.mecanicoPaso.workOrderId,
           this.mecanicoPaso.operationId
         )
-        .subscribe((pasosCompletados: PasoDTO[]) => {
-          this.pasos.forEach((paso: PasoDTO) => {
+        .subscribe((pasosCompletados: StepOrderResponse[]) => {
+          this.pasos.forEach((paso: StepOrderResponse) => {
             const completado = pasosCompletados.find(
-              (pasoCompletado: PasoDTO) => pasoCompletado.id === paso.id
+              (pasoCompletado: StepOrderResponse) => pasoCompletado.stepId === paso.stepId
             );
             if (completado) {
-              paso.completado = true;
+              paso.complete = true;
             }
           });
 
           const ultimoPasoCompletadoIndex = this.pasos.findIndex(
-            (paso: PasoDTO) => !paso.completado
+            (paso: StepOrderResponse) => !paso.complete
           );
           this.currentServiceIndex =
             ultimoPasoCompletadoIndex === -1
@@ -141,12 +141,12 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
         .completeStep(
           this.mecanicoPaso.workOrderId,
           this.mecanicoPaso.operationId,
-          paso.id
+          paso.stepId
         )
         .subscribe(
           (response) => {
             console.log('Paso completado:', response);
-            paso.completado = true;
+            paso.complete = true;
             this.currentServiceIndex++;
             //Se muestra en que servicio se encuentra
             console.log(this.currentServiceIndex);

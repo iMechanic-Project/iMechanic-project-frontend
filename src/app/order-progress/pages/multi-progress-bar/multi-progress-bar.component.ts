@@ -2,11 +2,11 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MecanicoPasoDTO } from '../../../interfaces/MecanicoPasoDTO';
-import { PasoDTO } from '../../../interfaces/PasoDTO';
 import { Subscription } from 'rxjs';
 import { OrderDetailDTO } from '../../../interfaces/OrderDetailDTO';
 import { OrderService } from '../../../services/order.service';
 import { OperationDetailsDTOResponse } from '../../../interfaces/OperationDetailsDTOResponse';
+import { StepOrderResponse } from '../../../interfaces/StepOrderResponse';
 
 @Component({
   selector: 'app-multi-progress-bar',
@@ -100,21 +100,21 @@ export class MultiProgressBarComponent implements OnInit, OnDestroy {
           this.mecanicoPaso.workOrderId,
           this.mecanicoPaso.operationId
         )
-        .subscribe((pasosCompletados: PasoDTO[]) => {
+        .subscribe((pasosCompletados: StepOrderResponse[]) => {
           this.orderServices.operationDetails[
             this.currentServiceIndex
-          ].steps.forEach((paso: PasoDTO) => {
+          ].steps.forEach((paso: StepOrderResponse) => {
             const completado = pasosCompletados.find(
-              (pasoCompletado: PasoDTO) => pasoCompletado.id === paso.id
+              (pasoCompletado: StepOrderResponse) => pasoCompletado.stepId === paso.stepId
             );
             if (completado) {
-              paso.completado = true;
+              paso.complete = true;
             }
           });
 
           const ultimoPasoCompletadoIndex = this.orderServices.operationDetails[
             this.currentServiceIndex
-          ].steps.findIndex((paso: PasoDTO) => !paso.completado);
+          ].steps.findIndex((paso: StepOrderResponse) => !paso.complete);
           this.currentServiceIndex =
             ultimoPasoCompletadoIndex === -1
               ? this.orderServices.operationDetails[this.currentServiceIndex]
@@ -137,8 +137,8 @@ export class MultiProgressBarComponent implements OnInit, OnDestroy {
 
     if (servicioDetalle.steps.length > 0) {
       const paso = servicioDetalle.steps[0]; // Ejemplo, ajustar según sea necesario
-      this.mecanicoPaso.stepId = paso.id;
-      this.mecanicoPaso.complete = paso.completado; // Asegúrate de que el paso tiene la propiedad `completado`
+      this.mecanicoPaso.stepId = paso.stepId;
+      this.mecanicoPaso.complete = paso.complete; // Asegúrate de que el paso tiene la propiedad `completado`
     }
 
     console.log('Actualizado MecanicoPaso:', this.mecanicoPaso);
