@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import {customerGuard, mechanicGuard, workshopGuard} from "./guards/auth.guard";
 
 export const routes: Routes = [
   {
@@ -35,27 +36,27 @@ export const routes: Routes = [
       {
         path: 'workshop-info',
         title: 'Workshop Info',
-        loadComponent: () => import('./mechanic-view/pages/workshop-info/workshop-info.component')
+        loadComponent: () => import('./mechanic-view/pages/workshop-info/workshop-info.component'), canActivate: [workshopGuard]
       },
       {
         path: 'workshop-services',
         title: 'Workshop Services',
-        loadComponent: () => import('./mechanic-view/pages/workshop-services/workshop-services.component')
+        loadComponent: () => import('./mechanic-view/pages/workshop-services/workshop-services.component'), canActivate: [workshopGuard]
       },
       {
         path: 'workshop-mechanics',
         title: 'Workshop Services',
-        loadComponent: () => import('./mechanic-view/pages/workshop-mechanics/workshop-mechanics.component')
+        loadComponent: () => import('./mechanic-view/pages/workshop-mechanics/workshop-mechanics.component'), canActivate: [workshopGuard]
       },
       {
         path: 'create-order',
         title: 'Create Order',
-        loadComponent: () => import('./mechanic-view/pages/create-order/create-order.component')
+        loadComponent: () => import('./mechanic-view/pages/create-order/create-order.component'), canActivate: [workshopGuard]
       },
       {
         path: 'order-list',
         title: 'Order List',
-        loadComponent: () => import('./mechanic-view/pages/order-list/order-list.component')
+        loadComponent: () => import('./mechanic-view/pages/order-list/order-list.component'), canActivate: [workshopGuard]
       },
       {
         path: '',
@@ -72,17 +73,17 @@ export const routes: Routes = [
       {
         path: 'edit-info',
         title: 'Edit Info',
-        loadComponent: () => import('./client-view/pages/edit-info/edit-info.component')
+        loadComponent: () => import('./client-view/pages/edit-info/edit-info.component'), canActivate: [customerGuard]
       },
       {
         path: 'register-vehicles',
         title: 'Register Vehicles',
-        loadComponent: () => import('./client-view/pages/register-vehicles/register-vehicles.component')
+        loadComponent: () => import('./client-view/pages/register-vehicles/register-vehicles.component'), canActivate: [customerGuard]
       },
       {
         path: 'order-list-client',
         title: 'Order List Client',
-        loadComponent: () => import('./client-view/pages/order-list-client/order-list-client.component')
+        loadComponent: () => import('./client-view/pages/order-list-client/order-list-client.component'), canActivate: [customerGuard]
       },
       {
         path: '',
@@ -99,12 +100,12 @@ export const routes: Routes = [
       {
         path: 'order-list-employee',
         title: 'Order List Employee',
-        loadComponent: () => import('./employee-view/pages/order-list-employee/order-list-employee.component')
+        loadComponent: () => import('./employee-view/pages/order-list-employee/order-list-employee.component'), canActivate: [mechanicGuard]
       },
       {
         path: 'view-info',
         title: 'View Info',
-        loadComponent: () => import('./employee-view/pages/view-info/view-info.component')
+        loadComponent: () => import('./employee-view/pages/view-info/view-info.component'), canActivate: [mechanicGuard]
       },
 
       {
@@ -122,17 +123,17 @@ export const routes: Routes = [
       {
         path: 'employee-progress/:id',
         title: 'Employee Progress',
-        loadComponent: () => import('./order-progress/pages/employee-progress/employee-progress.component')
+        loadComponent: () => import('./order-progress/pages/employee-progress/employee-progress.component'), canActivate: [mechanicGuard]
       },
       {
         path: 'client-progress/:id',
         title: 'Client Progress',
-        loadComponent: () => import('./order-progress/pages/client-progress/client-progress.component')
+        loadComponent: () => import('./order-progress/pages/client-progress/client-progress.component'), canActivate: [customerGuard]
       },
       {
         path: 'workshop-progress/:id',
         title: 'Workshop Progress',
-        loadComponent: () => import('./order-progress/pages/workshop-progress/workshop-progress.component')
+        loadComponent: () => import('./order-progress/pages/workshop-progress/workshop-progress.component'), canActivate: [workshopGuard]
       },
       {
         path: '',

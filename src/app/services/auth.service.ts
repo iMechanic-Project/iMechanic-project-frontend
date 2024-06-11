@@ -12,7 +12,23 @@ export class AuthService {
 
   public baseUrl: string = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+ constructor(private http: HttpClient) { }
+
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+
+  get role(): string {
+    return localStorage.getItem('role') || '';
+  }
+
+  hasRole(role: string): boolean {
+    return this.role === role;
+  }
+
+  isAuth(): boolean {
+    return this.token.length > 0;
+  }
 
   signUp(signUpDTORequest: AuthenticationSignUpDTORequest): Observable<any> {
     return this.http.post(`${this.baseUrl}/api/auth/signup`, signUpDTORequest);

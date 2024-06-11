@@ -51,6 +51,7 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
   finishedOrder = false;
   showModal = false;
   suscription: Subscription | undefined;
+  suscription2: Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -83,6 +84,11 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
           .subscribe((orderDetail) => {
             this.datosOrden = orderDetail; // Aquí asigna los datos actualizados a la variable vehicles
           });
+      });
+      this.suscription2 = this.orderService.refresh2$.subscribe(() => {
+        this.orderService.orderDetailByMecanic(orderId).subscribe((orderDetail) => {
+          this.datosOrden = orderDetail; // Aquí asigna los datos actualizados a la variable vehicles
+        });
       });
     });
 
@@ -120,7 +126,9 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.suscription?.unsubscribe();
-    console.log('obserbable morido');
+    this.suscription2?.unsubscribe();
+    console.log('obserbable morido', this.suscription);
+    console.log('obserbable morido2', this.suscription2);
   }
 
   openModal(): void {

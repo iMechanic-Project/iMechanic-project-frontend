@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {NgClass} from "@angular/common";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-menu-mechanic',
@@ -18,6 +18,24 @@ export class MenuMechanicComponent {
 
   toggleDropdownxs(): void {
     this.isDropdownOpenxs = !this.isDropdownOpenxs;
+  }
+
+  constructor(private router: Router) {}
+
+  closeSesion(): void {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      this.router.navigate(['/inicio/login-users']).then(success => {
+        if (!success) {
+          console.error('Navigation failed!');
+        }
+      }).catch(error => {
+        console.error('Navigation error:', error);
+      });
+    } else {
+      console.error('LocalStorage is not available.');
+    }
   }
 
 

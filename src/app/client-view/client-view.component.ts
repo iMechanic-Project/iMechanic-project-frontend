@@ -24,6 +24,7 @@ export default class ClientViewComponent {
   closeSesion(): void {
     if (typeof localStorage !== 'undefined') {
       localStorage.removeItem('token');
+      localStorage.removeItem('role');
       this.router.navigate(['/inicio/login-users']).then(success => {
         if (!success) {
           console.error('Navigation failed!');

@@ -4,16 +4,18 @@ import { FormsModule } from '@angular/forms';
 import { AuthenticationSignUpDTORequest } from '../../../interfaces/AuthenticationSignUpDTORequest';
 import { AuthService } from '../../../services/auth.service';
 import { RouterLink } from '@angular/router';
+import {LoadingRegisterUserComponent} from "../loading-register-user/loading-register-user.component";
 
 @Component({
   selector: 'app-register-users',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, LoadingRegisterUserComponent],
   templateUrl: './register-users.component.html',
   styles: '',
 })
 export default class RegisterUsersComponent {
   passwordsMatch: boolean = true;
+  showModalLoading = false;
   showModal = false;
   showModal2 = false;
   confirmarContrasenia: String = '';
@@ -38,6 +40,14 @@ export default class RegisterUsersComponent {
 
   openModal(): void {
     this.showModal = true;
+  }
+
+  openModalLoading(): void {
+    this.showModalLoading = true;
+  }
+
+  closeModalLoading(): void {
+    this.showModalLoading = false;
   }
 
   openModal2(): void {
@@ -86,10 +96,12 @@ export default class RegisterUsersComponent {
     this.showMSGci = false;
     console.log('Contraseñas iguales:', this.passwordsMatch);
     this.signUpDTORequest.role = this.rol;
+    this.openModalLoading();
     this.authService.signUp(this.signUpDTORequest).subscribe(
       (response) => {
         // añadir pantalla de carga hasta que llegue correo de verificacion enviado por favor confirme su cuenta
         console.log('Registro exitoso:', response);
+        this.closeModalLoading();
         this.openModal();
       },
       (error) => {

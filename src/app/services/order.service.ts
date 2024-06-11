@@ -18,11 +18,16 @@ import { StepOrderResponse } from '../interfaces/StepOrderResponse';
 export class OrderService {
   public baseUrl: string = `${environment.apiUrl}/api/orders`;
   private _refresh$ = new Subject<void>();
+  private _refresh2$ = new Subject<void>();
 
   constructor(private http: HttpClient) {}
 
   get refresh$() {
     return this._refresh$;
+  }
+
+  get refresh2$() {
+    return this._refresh2$;
   }
 
   // CREAR ORDEN DE TRABAJO
@@ -86,6 +91,11 @@ export class OrderService {
     return this.http.put<string>(
       `${this.baseUrl}/iniciar/${orderId}/servicio/${serviceId}`,
       {}
+    )
+      .pipe(
+      tap(() => {
+        this._refresh2$.next();
+      })
     );
   }
 

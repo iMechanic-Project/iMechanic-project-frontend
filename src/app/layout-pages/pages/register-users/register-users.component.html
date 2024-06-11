@@ -107,12 +107,27 @@
 </div>
 
 
+@if (showModalLoading){
+
+  <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">
+
+    <div class="rounded-xs p-10 w-96 h-72" style="background: #B5B7B6">
+      <h2 class="text-lg font-semibold text-center text-black">Esta siendo registrado...</h2>
+      <div>
+        <app-loading-register-user />
+      </div>
+    </div>
+  </div>
+}
+
+
+
 @if (showModal){
 
   <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">
 
     <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">
-      <h2 class="text-2xl mb-2 font-semibold text-center text-black">Su cuenta fue registrada correctamente!</h2>
+      <h2 class="text-2xl mb-2 font-semibold text-center text-black">Su cuenta fue creada correctamente!</h2>
       <h2 class="text-lg mb-4 font-semibold text-center text-black">Por favor revise su correo electronico</h2>
       <!-- Botón de guardar -->
       <div class="flex items-center justify-center mr-24 ml-24">
@@ -139,4 +154,6 @@
     </div>
   </div>
 }
+
+
 

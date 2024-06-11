@@ -10,6 +10,7 @@
   @if(isDropdownOpenxs){
     <div class="flex flex-col">
       <button class="border-2 font-bold px-8 py-2 rounded-lg mt-3 hover:bg-red-500 hover:text-white" [routerLink]="['/employee/order-list-employee']" >LISTA DE ORDENES</button>
+      <button class="border-2 font-bold px-8 py-2 rounded-lg mt-3 hover:bg-red-500 hover:text-white" (click)="closeSesion()" >SALIR</button>
     </div>
   }
 

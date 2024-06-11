@@ -25,6 +25,7 @@ export default class MechanicViewComponent {
   closeSesion(): void {
     if (typeof localStorage !== 'undefined') {
       localStorage.removeItem('token');
+      localStorage.removeItem('role');
       // sessionStorage.removeItem('token');
       this.router.navigate(['/inicio/login-users']).then(success => {
         if (!success) {
