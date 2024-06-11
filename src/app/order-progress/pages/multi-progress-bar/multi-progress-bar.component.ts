@@ -55,7 +55,7 @@ export class MultiProgressBarComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private orderService: OrderService,
+    private orderService: OrderService
   ) {}
 
   ngOnInit(): void {
@@ -75,9 +75,9 @@ export class MultiProgressBarComponent implements OnInit, OnDestroy {
             });
 
             console.log('MecanicoPaso:', this.mecanicoPaso);
-            this.estadoServicio = this.orderServices.operationDetails.map(
-              (servicio) => this.mapEstado(servicio.statusOperation)
-            ).join(', ');
+            this.estadoServicio = this.orderServices.operationDetails
+              .map((servicio) => this.mapEstado(servicio.statusOperation))
+              .join(', ');
           },
           (error) => {
             console.error('Error al obtener el detalle de la orden:', error);
@@ -96,16 +96,14 @@ export class MultiProgressBarComponent implements OnInit, OnDestroy {
 
     setTimeout(() => {
       this.orderService
-        .getStepComplete(
-          this.mecanicoPaso.workOrderId,
-          this.mecanicoPaso.operationId
-        )
+        .getStepCompleteByUser(this.mecanicoPaso.workOrderId)
         .subscribe((pasosCompletados: StepOrderResponse[]) => {
           this.orderServices.operationDetails[
             this.currentServiceIndex
           ].steps.forEach((paso: StepOrderResponse) => {
             const completado = pasosCompletados.find(
-              (pasoCompletado: StepOrderResponse) => pasoCompletado.stepId === paso.stepId
+              (pasoCompletado: StepOrderResponse) =>
+                pasoCompletado.stepId === paso.stepId
             );
             if (completado) {
               paso.complete = true;
@@ -151,6 +149,12 @@ export class MultiProgressBarComponent implements OnInit, OnDestroy {
       case 'En Espera':
         return 'text-red-600';
       case 'Finalizado':
+        return 'text-black';
+      case 'EN_PROCESO':
+        return 'text-green-600';
+      case 'EN_ESPERA':
+        return 'text-red-600';
+      case 'FINALIZADO':
         return 'text-black';
       default:
         return '';

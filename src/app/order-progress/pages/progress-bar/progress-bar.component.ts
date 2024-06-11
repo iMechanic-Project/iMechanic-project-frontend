@@ -62,7 +62,7 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       const orderId = params['id'];
-      console.log(orderId)
+      console.log(orderId);
       this.orderService.orderDetailByMecanic(orderId).subscribe(
         (orderDetail) => {
           this.datosOrden = {
@@ -86,9 +86,11 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
           });
       });
       this.suscription2 = this.orderService.refresh2$.subscribe(() => {
-        this.orderService.orderDetailByMecanic(orderId).subscribe((orderDetail) => {
-          this.datosOrden = orderDetail; // Aquí asigna los datos actualizados a la variable vehicles
-        });
+        this.orderService
+          .orderDetailByMecanic(orderId)
+          .subscribe((orderDetail) => {
+            this.datosOrden = orderDetail; // Aquí asigna los datos actualizados a la variable vehicles
+          });
       });
     });
 
@@ -103,7 +105,8 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
         .subscribe((pasosCompletados: StepOrderResponse[]) => {
           this.pasos.forEach((paso: StepOrderResponse) => {
             const completado = pasosCompletados.find(
-              (pasoCompletado: StepOrderResponse) => pasoCompletado.stepId === paso.stepId
+              (pasoCompletado: StepOrderResponse) =>
+                pasoCompletado.stepId === paso.stepId
             );
             if (completado) {
               paso.complete = true;
@@ -207,6 +210,12 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
       case 'En Espera':
         return 'text-red-600';
       case 'Finalizado':
+        return 'text-black';
+      case 'EN_PROCESO':
+        return 'text-green-600';
+      case 'EN_ESPERA':
+        return 'text-red-600';
+      case 'FINALIZADO':
         return 'text-black';
       default:
         return '';

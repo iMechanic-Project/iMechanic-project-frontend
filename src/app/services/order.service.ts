@@ -127,8 +127,8 @@ export class OrderService {
     );
   }
 
-  getStepCompleteByUser(ordenId: string): Observable<OrderDetailDTO> {
-    return this.http.get<OrderDetailDTO>(
+  getStepCompleteByUser(ordenId: string): Observable<StepOrderResponse[]> {
+    return this.http.get<StepOrderResponse[]>(
       `${this.baseUrl}/order-detail/${ordenId}/operations`,
       {}
     );
