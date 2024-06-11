@@ -14,7 +14,7 @@ import {MenuEmployeeComponent} from "./menu-employee/menu-employee.component";
     MenuEmployeeComponent
   ],
   templateUrl: './employee-view.component.html',
-  styleUrl: './employee-view.component.css'
+  styles: ''
 })
 export default class EmployeeViewComponent {
 
@@ -24,13 +24,18 @@ export default class EmployeeViewComponent {
     if (typeof localStorage !== 'undefined') {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
-      this.router.navigate(['/inicio/login-users']).then(success => {
-        if (!success) {
-          console.error('Navigation failed!');
-        }
-      }).catch(error => {
-        console.error('Navigation error:', error);
-      });
+      const navigationPromise = this.router.navigate(['/inicio/login-users']);
+      if (navigationPromise) {
+        navigationPromise.then(success => {
+          if (!success) {
+            console.error('Navigation failed!');
+          }
+        }).catch(error => {
+          console.error('Navigation error:', error);
+        });
+      } else {
+        console.error('Navigation did not return a promise.');
+      }
     } else {
       console.error('LocalStorage is not available.');
     }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InformationResponseDTO } from '../../../interfaces/InformationResponseDTO';
 import { UserService } from '../../../services/user.service';
@@ -10,7 +10,7 @@ import { UserService } from '../../../services/user.service';
   templateUrl: './workshop-info.component.html',
   styles: '',
 })
-export default class WorkshopInfoComponent {
+export default class WorkshopInfoComponent implements OnInit{
   userInformation: InformationResponseDTO = {
     email: '',
     name: '',

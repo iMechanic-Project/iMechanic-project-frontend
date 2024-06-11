@@ -19,6 +19,7 @@ export class OrderService {
   public baseUrl: string = `${environment.apiUrl}/api/orders`;
   private _refresh$ = new Subject<void>();
   private _refresh2$ = new Subject<void>();
+  private _refreshNextStep$ = new Subject<void>();
 
   constructor(private http: HttpClient) {}
 
@@ -28,6 +29,10 @@ export class OrderService {
 
   get refresh2$() {
     return this._refresh2$;
+  }
+
+  get refreshNextStep$() {
+    return this._refreshNextStep$;
   }
 
   // CREAR ORDEN DE TRABAJO
@@ -107,6 +112,11 @@ export class OrderService {
     return this.http.put<MecanicoPasoDTO>(
       `${this.baseUrl}/${ordenId}/service/${servicioId}/paso/${pasoId}/complete`,
       {}
+    )
+      .pipe(
+      tap(() => {
+        this._refreshNextStep$.next();
+      })
     );
   }
 

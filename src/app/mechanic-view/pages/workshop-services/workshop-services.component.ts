@@ -25,13 +25,23 @@ export default class WorkshopServicesComponent implements OnInit {
   constructor(private tallerService: TallerServiceService) { }
 
   ngOnInit(): void {
-    this.tallerService.getAllServiceToMaintenance().subscribe(servicios => {
-      this.accionesMantenimiento = servicios;
-    });
+    this.tallerService.getAllServiceToMaintenance().subscribe(
+      servicios => {
+        this.accionesMantenimiento = servicios;
+      },
+      error => {
+        console.error('Error fetching services: ', error);
+      }
+    );
 
-    this.tallerService.getAllServiceToRepair().subscribe(servicios => {
-      this.accionesReparacion = servicios;
-    });
+    this.tallerService.getAllServiceToRepair().subscribe(
+      servicios => {
+        this.accionesReparacion = servicios;
+      },
+      error => {
+        console.error('Error fetching services: ', error);
+      }
+    );
   }
 
   toggleService(servicioId: number): void {

@@ -4,15 +4,14 @@
 
   <div class="lg:flex hidden w-1/5 h-screen flex-col items-center relative" style="background: #FED338">
 
+    <app-sidebar-employee />
+
     <div class="absolute bottom-0 right-0 mb-10 mr-10 flex items-center" (click)="closeSesion()" style="cursor: pointer;">
       <h1 class="text-xl font-bold mr-3 -mt-1">Salir</h1>
       <button>
         <img src="./assets/img/botonSalir.png" alt="Logo" class="h-6 mr-1" >
       </button>
     </div>
-
-
-    <app-sidebar-employee />
 
   </div>
 

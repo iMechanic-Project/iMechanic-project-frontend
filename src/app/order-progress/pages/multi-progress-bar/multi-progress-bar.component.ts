@@ -52,6 +52,7 @@ export class MultiProgressBarComponent implements OnInit, OnDestroy {
   finishedOrder = false;
   showModal = false;
   suscription: Subscription | undefined;
+  suscriptionNextStep: Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -83,6 +84,13 @@ export class MultiProgressBarComponent implements OnInit, OnDestroy {
             console.error('Error al obtener el detalle de la orden:', error);
           }
         );
+
+        this.suscriptionNextStep = this.orderService.refreshNextStep$.subscribe(() => {
+          this.orderService.orderDetailByTaller(orderId).subscribe((orderDetail) => {
+            this.orderServices = orderDetail; // Aquí asigna los datos actualizados a la variable vehicles
+          });
+        });
+
 
         this.suscription = this.orderService.refresh$.subscribe(() => {
           this.orderService
@@ -126,7 +134,9 @@ export class MultiProgressBarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.suscription?.unsubscribe();
-    console.log('Observable cerrado');
+    this.suscriptionNextStep?.unsubscribe();
+    console.log('Observable cerrado', this.suscription);
+    console.log('Observable next step cerrado', this.suscriptionNextStep);
   }
 
   updateMecanicoPaso(servicioDetalle: OperationDetailsDTOResponse): void {
