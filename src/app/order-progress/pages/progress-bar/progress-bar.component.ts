@@ -54,18 +54,15 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
   suscription2: Subscription | undefined;
 
 
-  private _stepCompletedSubject: Subject<string>;
 
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService,
     private mechanicService: MechanicService
 ) {
-    this._stepCompletedSubject = this.orderService.stepCompletedSubject;
   }
 
   ngOnInit(): void {
-    this._stepCompletedSubject.subscribe(this.handleStepCompleted.bind(this));
 
     this.route.params.subscribe((params) => {
       const orderId = params['id'];
@@ -137,7 +134,6 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.suscription?.unsubscribe();
     this.suscription2?.unsubscribe();
-    this._stepCompletedSubject.unsubscribe();
     console.log('obserbable morido', this.suscription);
     console.log('obserbable morido2', this.suscription2);
   }

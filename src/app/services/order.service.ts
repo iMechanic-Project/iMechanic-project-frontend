@@ -24,6 +24,7 @@ export class OrderService {
 
   private _stepCompletedSubject = new Subject<string>(); // Subject para paso completado
 
+
   constructor(private http: HttpClient) {}
 
   get stepCompletedSubject(): Subject<string> {
@@ -106,28 +107,35 @@ export class OrderService {
     )
       .pipe(
       tap(() => {
-        this._refresh2$.next();
         this._refreshNextStep$.next();
+        this._refresh2$.next();
         this._stepCompletedSubject.next(orderId); // Notifica que se completó un paso
+        console.log("iniciandooo")
+        console.log("id:", orderId)
       })
     );
+
   }
 
   completeStep(
     ordenId: string,
     servicioId: number,
     pasoId: number
+
   ): Observable<MecanicoPasoDTO> {
     return this.http.put<MecanicoPasoDTO>(
       `${this.baseUrl}/${ordenId}/service/${servicioId}/paso/${pasoId}/complete`,
       {}
     )
       .pipe(
-        tap(() => {
-          this._stepCompletedSubject.next(ordenId); // Notifica que se completó un paso
-          this._refreshNextStep$.next();
-        })
-      );
+      tap(() => {
+        this._stepCompletedSubject.next(ordenId); // Notifica que se completó un paso
+        this._refreshNextStep$.next();
+        console.log("siguienteeee")
+        console.log("id:", ordenId)
+      })
+    );
+
   }
 
 

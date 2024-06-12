@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { NgForOf, NgIf } from '@angular/common';
 import { MultiProgressBarComponent } from '../multi-progress-bar/multi-progress-bar.component';
@@ -6,6 +6,7 @@ import { OrderDetailDTO } from '../../../interfaces/OrderDetailDTO';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrderService } from '../../../services/order.service';
 import { MecanicoPasoDTO } from '../../../interfaces/MecanicoPasoDTO';
+import {interval, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-client-progress',
@@ -20,7 +21,7 @@ import { MecanicoPasoDTO } from '../../../interfaces/MecanicoPasoDTO';
   templateUrl: './client-progress.component.html',
   styles: '',
 })
-export default class ClientProgressComponent implements OnInit {
+export default class ClientProgressComponent implements OnInit, OnDestroy {
   showChat = false;
 
   orders: OrderDetailDTO = {
@@ -53,57 +54,65 @@ export default class ClientProgressComponent implements OnInit {
     complete: false,
   };
 
+  private stepCompletedSubscription: Subscription | null = null;
+  private intervalSubscription: Subscription | null = null;
+
+
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService
   ) {}
 
+
   ngOnInit(): void {
+    console.log("Component initialized");
+
     this.route.params.subscribe((params) => {
       const orderId = params['id'];
-      console.log(orderId);
       if (orderId) {
-        console.log("hola1");
-        this.orderService.orderDetailByClient(orderId).subscribe(
-          (orderDetail) => {
-            this.orders = orderDetail;
-            console.log(orderDetail);
-            console.log(orderDetail);
+        this.fetchOrderDetails(orderId);
 
-            this.orders.operationDetails.forEach((servicioDetalle) => {
-              this.mecanicoPaso.workOrderId = this.orders.workOrderId;
-              this.mecanicoPaso.mechanicId = servicioDetalle.mechanic.id;
-              this.mecanicoPaso.operationId = servicioDetalle.operation.id;
-              this.mecanicoPaso.operationName = servicioDetalle.operation.name;
-
-              // Si hay steps, puedes también actualizar pasoId y complete
-              if (servicioDetalle.steps.length > 0) {
-                const paso = servicioDetalle.steps[1]; // Solo un ejemplo, ajustar según sea necesario
-                this.mecanicoPaso.stepId = paso.stepId;
-                this.mecanicoPaso.complete = paso.complete; // Asegúrate de que el paso tiene la propiedad `complete`
-              }
-
-              console.log('Actualizado MecanicoPaso:', this.mecanicoPaso);
-            });
-
-            console.log('MecanicoPaso:', this.mecanicoPaso);
-          },
-          (error) => {
-            console.error('Error al obtener el detalle de la orden:', error);
+        this.stepCompletedSubscription = this.orderService.stepCompletedSubject.subscribe(
+          (completedOrderId) => {
+            if (completedOrderId === orderId) {
+              this.fetchOrderDetails(orderId);
+            }
           }
         );
-      } else {
-        console.log('No se proporcionó el ID en la ruta');
+
+        // Usar interval para ejecutar fetchOrderDetails cada 2 segundos
+        this.intervalSubscription = interval(2000).subscribe(() => {
+          this.fetchOrderDetails(orderId);
+        });
       }
     });
   }
 
-  openChat(): void {
-    // this.showChat = true;
+  ngOnDestroy(): void {
+    if (this.stepCompletedSubscription) {
+      this.stepCompletedSubscription.unsubscribe();
+    }
+    if (this.intervalSubscription) {
+      this.intervalSubscription.unsubscribe();
+    }
   }
 
-  closeChat(): void {
-    this.showChat = false;
+  fetchOrderDetails(orderId: string): void {
+    this.orderService.orderDetailByTaller(orderId).subscribe(
+      (orderDetail) => {
+        this.orders = orderDetail;
+        console.log(orderDetail);
+        this.orders.operationDetails.forEach((servicioDetalle) => {
+          this.mecanicoPaso.workOrderId = this.orders.workOrderId;
+          this.mecanicoPaso.mechanicId = servicioDetalle.mechanic.id;
+          this.mecanicoPaso.operationId = servicioDetalle.operation.id;
+          this.mecanicoPaso.operationName = servicioDetalle.operation.name;
+        });
+      },
+      (error) => {
+        console.error('Error fetching order details:', error);
+      }
+    );
   }
 
   goBack(): void {

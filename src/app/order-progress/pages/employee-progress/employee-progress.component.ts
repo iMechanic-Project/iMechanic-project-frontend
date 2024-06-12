@@ -81,13 +81,7 @@ export default class EmployeeProgressComponent implements OnInit {
     }
   }
 
-  openChat(): void {
-    // this.showChat = true;
-  }
 
-  closeChat(): void {
-    this.showChat = false;
-  }
 
   goBack(): void {
     window.history.back();
