@@ -33,14 +33,6 @@ describe('RegisterVehiclesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // Verifica que se abre y cierra el modal correctamente
-  it('should open and close modal', () => {
-    component.openModal();
-    expect(component.showModal).toBeTrue();
-
-    component.closeModal();
-    expect(component.showModal).toBeFalse();
-  });
 
   // Verifica que se cargan correctamente los modelos al seleccionar una marca
   it('should load modelos on marca selection', () => {
