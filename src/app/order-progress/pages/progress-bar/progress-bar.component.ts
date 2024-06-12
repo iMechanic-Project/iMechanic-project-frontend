@@ -3,7 +3,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MecanicoPasoDTO } from '../../../interfaces/MecanicoPasoDTO';
 import { OrderDetailMecanicoDTO } from '../../../interfaces/OrderDetailMecanicoDTO';
-import { Subscription } from 'rxjs';
+import {Subject, Subscription} from 'rxjs';
 import { OrderService } from '../../../services/order.service';
 import { MechanicService } from '../../../services/mechanic.service';
 import { StepOrderResponse } from '../../../interfaces/StepOrderResponse';
@@ -53,13 +53,20 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
   suscription: Subscription | undefined;
   suscription2: Subscription | undefined;
 
+
+  private _stepCompletedSubject: Subject<string>;
+
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService,
     private mechanicService: MechanicService
-  ) {}
+) {
+    this._stepCompletedSubject = this.orderService.stepCompletedSubject;
+  }
 
   ngOnInit(): void {
+    this._stepCompletedSubject.subscribe(this.handleStepCompleted.bind(this));
+
     this.route.params.subscribe((params) => {
       const orderId = params['id'];
       console.log(orderId);
@@ -130,8 +137,14 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.suscription?.unsubscribe();
     this.suscription2?.unsubscribe();
+    this._stepCompletedSubject.unsubscribe();
     console.log('obserbable morido', this.suscription);
     console.log('obserbable morido2', this.suscription2);
+  }
+
+  private handleStepCompleted(ordenId: string): void {
+    console.log('Paso completado para la orden:', ordenId);
+    // Actualiza los datos según sea necesario
   }
 
   openModal(): void {
@@ -141,6 +154,8 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
   closeModal(): void {
     this.showModal = false;
   }
+
+
 
   nextStep() {
     if (this.currentServiceIndex < this.pasos.length) {
@@ -165,7 +180,7 @@ export class ProgressBarComponent implements OnInit, OnDestroy {
           (error) => {
             console.error('Error al completar el paso:', error);
           }
-        );
+        )
     }
   }
 

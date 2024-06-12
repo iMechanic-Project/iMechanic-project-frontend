@@ -7,6 +7,8 @@ import { OrderDetailDTO } from '../../../interfaces/OrderDetailDTO';
 import { OrderService } from '../../../services/order.service';
 import { OperationDetailsDTOResponse } from '../../../interfaces/OperationDetailsDTOResponse';
 import { StepOrderResponse } from '../../../interfaces/StepOrderResponse';
+import { Subject } from 'rxjs';
+
 
 @Component({
   selector: 'app-multi-progress-bar',
@@ -54,12 +56,18 @@ export class MultiProgressBarComponent implements OnInit, OnDestroy {
   suscription: Subscription | undefined;
   suscriptionNextStep: Subscription | undefined;
 
+  private _stepCompletedSubject: Subject<string>;
+
+
   constructor(
     private route: ActivatedRoute,
     private orderService: OrderService
-  ) {}
+  ) {
+    this._stepCompletedSubject = this.orderService.stepCompletedSubject;
+  }
 
   ngOnInit(): void {
+    this._stepCompletedSubject.subscribe(this.handleStepCompleted.bind(this));
     this.route.params.subscribe((params) => {
       const orderId = params['id'];
       if (!isNaN(orderId)) {
@@ -75,6 +83,13 @@ export class MultiProgressBarComponent implements OnInit, OnDestroy {
               this.updateMecanicoPaso(servicio);
             });
 
+            this.suscriptionNextStep = this.orderService.refreshNextStep$.subscribe(() => {
+              this.orderServices.operationDetails.forEach((servicio) => {
+                this.updateMecanicoPaso(servicio);
+              });
+              console.log("creo que funciona",this.orderServices);
+            });
+
             console.log('MecanicoPaso:', this.mecanicoPaso);
             this.estadoServicio = this.orderServices.operationDetails
               .map((servicio) => this.mapEstado(servicio.statusOperation))
@@ -88,9 +103,9 @@ export class MultiProgressBarComponent implements OnInit, OnDestroy {
         this.suscriptionNextStep = this.orderService.refreshNextStep$.subscribe(() => {
           this.orderService.orderDetailByTaller(orderId).subscribe((orderDetail) => {
             this.orderServices = orderDetail; // Aquí asigna los datos actualizados a la variable vehicles
+
           });
         });
-
 
         this.suscription = this.orderService.refresh$.subscribe(() => {
           this.orderService
@@ -127,12 +142,44 @@ export class MultiProgressBarComponent implements OnInit, OnDestroy {
                   .steps.length
               : ultimoPasoCompletadoIndex;
         });
+
+      this.suscriptionNextStep = this.orderService.refreshNextStep$.subscribe(() => {
+        this.orderService
+          .getStepCompleteByUser(this.mecanicoPaso.workOrderId)
+          .subscribe((pasosCompletados: StepOrderResponse[]) => {
+            this.orderServices.operationDetails[
+              this.currentServiceIndex
+              ].steps.forEach((paso: StepOrderResponse) => {
+              const completado = pasosCompletados.find(
+                (pasoCompletado: StepOrderResponse) =>
+                  pasoCompletado.stepId === paso.stepId
+              );
+              if (completado) {
+                paso.complete = true;
+              }
+            });
+
+            const ultimoPasoCompletadoIndex = this.orderServices.operationDetails[
+              this.currentServiceIndex
+              ].steps.findIndex((paso: StepOrderResponse) => !paso.complete);
+            this.currentServiceIndex =
+              ultimoPasoCompletadoIndex === -1
+                ? this.orderServices.operationDetails[this.currentServiceIndex]
+                  .steps.length
+                : ultimoPasoCompletadoIndex;
+          });
+        console.log("creo que funciona3333333333");
+      });
+
+
     }, 500); // 500 milisegundos
   }
 
   ngOnDestroy(): void {
     this.suscription?.unsubscribe();
     this.suscriptionNextStep?.unsubscribe();
+    this._stepCompletedSubject.unsubscribe();
+
     console.log('Observable cerrado', this.suscription);
     console.log('Observable next step cerrado', this.suscriptionNextStep);
   }
@@ -182,5 +229,10 @@ export class MultiProgressBarComponent implements OnInit, OnDestroy {
       default:
         return estado;
     }
+  }
+
+  private handleStepCompleted(ordenId: string): void {
+    console.log('Paso completado para la orden:', ordenId);
+    // Actualiza los datos según sea necesario
   }
 }
