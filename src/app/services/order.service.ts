@@ -125,6 +125,7 @@ export class OrderService {
       .pipe(
         tap(() => {
           this._stepCompletedSubject.next(ordenId); // Notifica que se completó un paso
+          this._refreshNextStep$.next();
         })
       );
   }
