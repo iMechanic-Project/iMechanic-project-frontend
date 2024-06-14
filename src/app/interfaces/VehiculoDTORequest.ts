@@ -1,8 +1,8 @@
 import { Categoria } from "./Categoria";
 
 export interface VehiculoDTORequest {
-    placa: string;
-    marcaId: number
-    modeloId: number;
-    categoria: Categoria;
+    plate: string;
+    brandId: number
+    modelId: number;
+    category: Categoria;
 }

@@ -1,8 +1,9 @@
-import { ServicioDetalleDTO } from "./ServicioDetalleDTO";
+import { OperationDetailsDTOResponse } from "./OperationDetailsDTOResponse";
 
 export interface OrderDetailDTO {
-    nombreTaller: string;
-    direccionTaller: string;
-    telefonoTaller: string;
-    servicios: ServicioDetalleDTO[];
+    workOrderId: string;
+    nameWorkshop: string;
+    addressWorkshop: string;
+    phoneWorkShop: string;
+    operationDetails: OperationDetailsDTOResponse[];
 }

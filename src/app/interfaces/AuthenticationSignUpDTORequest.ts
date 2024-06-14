@@ -1,8 +1,8 @@
 export interface AuthenticationSignUpDTORequest {
-  correoElectronico: string;
-  contrasenia: string;
-  nombre: string;
-  telefono: string;
-  direccion: string;
+  email: string;
+  password: string;
+  name: string;
+  phone: string;
+  address: string;
   role: string;
 }

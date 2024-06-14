@@ -26,10 +26,10 @@
       </thead>
       <tbody class="w-full">
         <tr *ngFor="let vehicle of vehicles | paginate: { itemsPerPage: 6, currentPage: p }">
-          <td class="font-semibold border-gray-400 py-4" style="width: 20%;">{{ vehicle.placa }}</td>
-          <td class="border-gray-400 py-4" style="width: 20%;">{{ vehicle.marca }}</td>
-          <td class="border-gray-400 py-4" style="width: 20%;">{{ vehicle.modelo }}</td>
-          <td class="border-gray-400 py-4" style="width: 20%;">{{ vehicle.categoria }}</td>
+          <td class="font-semibold border-gray-400 py-4" style="width: 20%;">{{ vehicle.plate }}</td>
+          <td class="border-gray-400 py-4" style="width: 20%;">{{ vehicle.brand }}</td>
+          <td class="border-gray-400 py-4" style="width: 20%;">{{ vehicle.model }}</td>
+          <td class="border-gray-400 py-4" style="width: 20%;">{{ vehicle.category }}</td>
           <td class="border-gray-400 py-4" style="width: 20%;">
             <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F">☰</button>
           </td>
@@ -54,10 +54,10 @@
       </thead>
       <tbody class="w-full">
         <tr *ngFor="let vehicle of vehicles | paginate: { itemsPerPage: 6, currentPage: p }">
-          <td class="text-xs font-semibold border-gray-400 py-4" style="width: 20%;">{{ vehicle.placa }}</td>
-          <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ vehicle.marca }}</td>
-          <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ vehicle.modelo }}</td>
-          <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ vehicle.categoria }}</td>
+          <td class="text-xs font-semibold border-gray-400 py-4" style="width: 20%;">{{ vehicle.plate }}</td>
+          <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ vehicle.brand }}</td>
+          <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ vehicle.model }}</td>
+          <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ vehicle.category }}</td>
           <td class="text-xs border-gray-400 py-4" style="width: 20%;">
             <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F">☰</button>
           </td>
@@ -100,7 +100,7 @@
       (ngModelChange)="onMarcaSelect($event)" [(ngModel)]="selectedMarcaId">
       <option [ngValue]="null" disabled selected>Seleccionar Marca</option>
       @for (marca of marcas; track $index) {
-      <option [value]="marca.id">{{ marca.nombre }}</option>
+      <option [value]="marca.id">{{ marca.name }}</option>
       }
     </select>
 
@@ -109,7 +109,7 @@
       (ngModelChange)="onModeloSelect($event)" [(ngModel)]="selectedModeloId">
       <option [ngValue]="null" disabled selected>Seleccionar Modelo</option>
       @for (modelo of modelos; track $index) {
-      <option [value]="modelo.id">{{ modelo.nombre }}</option>
+      <option [value]="modelo.id">{{ modelo.name }}</option>
       }
     </select>
 

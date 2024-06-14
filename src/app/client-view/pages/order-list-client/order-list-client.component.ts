@@ -1,33 +1,45 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FooterComponent } from "../../../footer/footer.component";
-import { NgxPaginationModule } from "ngx-pagination";
-import { NgForOf } from "@angular/common";
+import { FooterComponent } from '../../../footer/footer.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { NgForOf } from '@angular/common';
 import { OrdenTrabajoClienteDTOList } from '../../../interfaces/OrdenTrabajoClienteDTOList';
-import { ClientService } from '../../../services/client.service';
 import { Router } from '@angular/router';
+import { OrderService } from '../../../services/order.service';
 
 @Component({
   selector: 'app-order-list-client',
   standalone: true,
-  imports: [
-    FooterComponent,
-    NgxPaginationModule,
-    NgForOf
-  ],
+  imports: [FooterComponent, NgxPaginationModule, NgForOf],
   templateUrl: './order-list-client.component.html',
-  styles: ''
+  styles: '',
 })
 export default class OrderListClientComponent implements OnInit {
-
   p: number = 1;
-  vehicles: OrdenTrabajoClienteDTOList[] = [];
+  orderListClient: OrdenTrabajoClienteDTOList[] = [];
   showModal = false;
   @ViewChild('placaInput') placaInput!: ElementRef;
 
-  constructor(private clientService: ClientService, private router: Router) { }
+  constructor(private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
-    this.getAllOrdersByCliente();
+    this.orderService.getAllOrderByCliente().subscribe(
+      (ordenes: OrdenTrabajoClienteDTOList[]) => {
+        if (ordenes.length == 0) {
+          console.log('No existen ordenes de trabajo.');
+        } else {
+          this.orderListClient = ordenes.map(
+            (orden: OrdenTrabajoClienteDTOList) => ({
+              ...orden,
+              status: this.mapEstado(orden.status),
+            })
+          );
+          console.log(ordenes);
+        }
+      },
+      (error) => {
+        console.error('Error al obtener las órdenes de trabajo:', error);
+      }
+    );
   }
 
   getColorClass(estado: string): string {
@@ -56,22 +68,6 @@ export default class OrderListClientComponent implements OnInit {
     }
   }
 
-  getAllOrdersByCliente(): void {
-    this.clientService.getAllOrderByCliente().subscribe(
-      (ordenes: OrdenTrabajoClienteDTOList[]) => {
-        this.vehicles = ordenes.map((orden: OrdenTrabajoClienteDTOList) => ({
-          ...orden,
-          estado: this.mapEstado(orden.estado)
-        }));
-      },
-      (error) => {
-        console.error('Error al obtener las órdenes de trabajo:', error);
-      }
-    );
-  }
-
-
-
   onInputChange(event: any): void {
     let value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''); // Elimina caracteres no deseados
     if (value.length > 3) {
@@ -80,9 +76,12 @@ export default class OrderListClientComponent implements OnInit {
     this.placaInput.nativeElement.value = value.substring(0, 7); // Limita la longitud a 7 caracteres
   }
 
-  detailOrder(orderId: number): void {
-    this.router.navigate(['/progress/client-progress/', orderId]);
+  detailOrder(id: string): void {
+    console.log('ID', id);
+    const url = this.router
+      .createUrlTree(['/progress/client-progress/', id])
+      .toString();
+    console.log('URL', url);
+    this.router.navigate(['/progress/client-progress/', id]);
   }
-
-
 }

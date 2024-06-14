@@ -17,6 +17,7 @@
       <thead>
       <tr>
         <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">NOMBRE</th>
+        <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">TELEFONÓ</th>
         <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">CORREO</th>
         <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">SERVICIOS</th>
         <th class="font-semibold border-b-2 border-gray-400 py-4" style="width: 20%;">ACCION</th>
@@ -25,8 +26,9 @@
       <tbody class="w-full">
 
       <tr *ngFor="let mechanic of mechanics  | paginate: { itemsPerPage: 6, currentPage: p }">
-        <td class="font-semibold border-gray-400 py-4" style="width: 20%;">{{ mechanic.nombre }}</td>
-        <td class="border-gray-400 py-4" style="width: 20%;">{{ mechanic.correoElectronico }}</td>
+        <td class="font-semibold border-gray-400 py-4" style="width: 20%;">{{ mechanic.name }}</td>
+        <td class="font-semibold border-gray-400 py-4" style="width: 20%;">{{ mechanic.phone }}</td>
+        <td class="border-gray-400 py-4" style="width: 20%;">{{ mechanic.email }}</td>
         <td class="border-gray-400 py-4" style="width: 20%;">
           <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F" (click)="toggleServicios2(mechanic)">mostrar</button>
           <!-- Aquí se muestra la lista de servicios del mecánico actual -->
@@ -37,7 +39,7 @@
             <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">
               <h3 class="text-2xl mb-8 font-semibold text-center text-black">Lista de servicios del mecánico seleccionado</h3>
               <ul>
-                <li *ngFor="let servicio of mechanic.servicios">- {{ servicio.nombre }}</li>
+                <li *ngFor="let servicio of mechanic.operations">- {{ servicio.name }}</li>
               </ul>
               <!-- Botón de aceptar -->
               <div class="flex items-center justify-center mt-6 mr-24 ml-24">
@@ -71,8 +73,8 @@
       </thead>
       <tbody class="w-full">
       <tr *ngFor="let mechanic of mechanics  | paginate: { itemsPerPage: 6, currentPage: p }">
-        <td class="text-xs font-semibold border-gray-400 py-4" style="width: 20%;">{{ mechanic.nombre }}</td>
-        <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ mechanic.correoElectronico }}</td>
+        <td class="text-xs font-semibold border-gray-400 py-4" style="width: 20%;">{{ mechanic.name }}</td>
+        <td class="text-xs border-gray-400 py-4" style="width: 20%;">{{ mechanic.email }}</td>
         <td class="text-xs border-gray-400 py-4" style="width: 20%;">
           <button class="text-white px-2 py-1 rounded-lg" style="background: #F7941F">☰</button>
         </td>
@@ -110,10 +112,10 @@
 
       <!-- Campos de registro -->
       <div class="mb-4">
-        <input type="text" placeholder="Nombre" maxlength="30" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-4 mt-4" name="nombre" [(ngModel)]="newMechanic.nombre">
-        <input type="email" placeholder="Correo Electrónico" maxlength="30" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-4" name="correoElectronico" [(ngModel)]="newMechanic.correoElectronico">
+        <input type="text" placeholder="Nombre" maxlength="30" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-4 mt-4" name="nombre" [(ngModel)]="newMechanic.name">
+        <input type="email" placeholder="Correo Electrónico" maxlength="30" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-4" name="correoElectronico" [(ngModel)]="newMechanic.email">
         <div class=" relative">
-          <input type="{{ showPassword ? 'text': 'password'}}" placeholder="Contraseña" maxlength="30" autocomplete="password" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="contrasenia" [(ngModel)]="newMechanic.contrasenia">
+          <input type="{{ showPassword ? 'text': 'password'}}" placeholder="Contraseña" maxlength="30" autocomplete="password" class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400" name="contrasenia" [(ngModel)]="newMechanic.password">
           <span class="absolute top-0 right-0 mr-3 mt-2 cursor-pointer" (click)="togglePassword()">
           @if (showPassword){
             <i class="fa fa-eye"></i>
@@ -123,7 +125,13 @@
           }
         </span>
         </div>
-
+        <div class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-4 mt-4">
+          <input type="text" placeholder="Número de contacto"
+                 name="phone" [(ngModel)]="newMechanic.phone"
+                 (keypress)="onKeyPress($event)"
+                 maxlength="9"
+                 required>
+        </div>
       </div>
 
       <p class="text-xl mb-6 font-semibold ">Servicios del Mecánico:</p>
@@ -137,7 +145,7 @@
             @for (servicio of servicios; track $index) {
               <label class="flex items-center text-sm">
                 <input type="checkbox" [value]="servicio.id" (change)="toggleServicio(servicio.id)" class="mr-2">
-                {{ servicio.nombre }}
+                {{ servicio.name }}
               </label>
             }
           </div>

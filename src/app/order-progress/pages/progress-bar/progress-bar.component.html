@@ -1,3 +1,12 @@
+<div class="items-start lg:ml-0 ml-5">
+  <p class="text-lg "><strong>Servicio: </strong>{{ datosOrden.operation.name }}</p>
+  <p class="text-lg "><strong>Mecánico: </strong>{{ datosOrden.mechanic.name }}</p>
+  <div class="flex">
+    <p class="text-lg"><strong>Estado:</strong>&nbsp;</p>
+    <p class="text-lg {{ getColorClass(datosOrden.statusOperation) }}">{{ mapEstado(datosOrden.statusOperation) }}</p>
+  </div>
+</div>
+
 @if(pasos.length>=8){
   <div class="main p-4 overflow-x-auto lg:ml-0 lg:mr-0 ml-5 mr-5">
     <ul>
@@ -9,7 +18,7 @@
               <p class="service-name text-white">.</p>
             }
             @if (i < pasos.length-1 && i > 0){
-              <p class="service-name text-black">{{service.nombre}}</p>
+              <p class="service-name text-black">{{service.name}}</p>
             }
           </div>
         </div>
@@ -18,26 +27,26 @@
         <div class="bloque2">
           @if (i === 0){
             <div class="progress-ball2" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completado"></i>
+              <i class="uil uil-check" *ngIf="service.complete"></i>
             </div>
           }
           @if(i > 0 && i < pasos.length - 1){
             <div class="progress" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completado"></i>
+              <i class="uil uil-check" *ngIf="service.complete"></i>
             </div>
           }
           @if(i === pasos.length - 1){
             <div  class="progress-ball" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completado"></i>
+              <i class="uil uil-check" *ngIf="service.complete"></i>
             </div>
           }
           @if(i < pasos.length){
             <div class="mt-2">
               @if (i === 0 ){
-                <p class="text-black ml-1.5">{{service.nombre}}</p>
+                <p class="text-black ml-1.5">{{service.name}}</p>
               }
               @if (i === pasos.length-1){
-                <p class="text-black ml-9">{{service.nombre}}</p>
+                <p class="text-black ml-9">{{service.name}}</p>
               }
             </div>
           }
@@ -58,7 +67,7 @@
               <p class="service-name text-white">.</p>
             }
             @if (i < pasos.length-1 && i > 0){
-              <p class="service-name text-black">{{service.nombre}}</p>
+              <p class="service-name text-black">{{service.name}}</p>
             }
           </div>
         </div>
@@ -67,26 +76,26 @@
         <div class="bloque2">
           @if (i === 0){
             <div class="progress-ball2" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completado"></i>
+              <i class="uil uil-check" *ngIf="service.complete"></i>
             </div>
           }
           @if(i > 0 && i < pasos.length - 1){
             <div class="progress" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completado"></i>
+              <i class="uil uil-check" *ngIf="service.complete"></i>
             </div>
           }
           @if(i === pasos.length - 1){
             <div  class="progress-ball" [class.active]="i < currentServiceIndex">
-              <i class="uil uil-check" *ngIf="service.completado"></i>
+              <i class="uil uil-check" *ngIf="service.complete"></i>
             </div>
           }
           @if(i < pasos.length){
             <div class="mt-2">
               @if (i === 0 ){
-                <p class="text-black mr-2">{{service.nombre}}</p>
+                <p class="text-black mr-2">{{service.name}}</p>
               }
               @if (i === pasos.length-1){
-                <p class="text-black ml-9">{{service.nombre}}</p>
+                <p class="text-black ml-9">{{service.name}}</p>
               }
             </div>
           }
@@ -100,25 +109,28 @@
 <div class="main items-center">
   <div class="flex lg:flex-row flex-col mt-10">
 
-    @if(showButtons && currentServiceIndex < pasos.length - 1){
-      <div class="boton flex justify-center mt-5">
-        <button type="submit" class="text-black font-semibold inline-block" (click)="nextStep()">Siguiente Paso</button>
-      </div>
+    @if (datosOrden.statusOperation === 'En Proceso' || datosOrden.statusOperation === 'EN_PROCESO' ){
+      @if (currentServiceIndex < pasos.length - 1){
+        <div class="boton flex justify-center mt-5">
+          <button type="submit" class="text-black font-semibold inline-block" (click)="nextStep()">Siguiente Paso</button>
+        </div>
+      }
     }
-    @if(showButtons && currentServiceIndex < pasos.length - 1 || showButtons && currentServiceIndex === pasos.length - 1 ){
+
+    @if (datosOrden.statusOperation === 'En Proceso' || datosOrden.statusOperation === 'EN_PROCESO'){
       <div class="botonfn flex justify-center mt-5">
         <button type="submit" class="text-black font-semibold inline-block" (click)="openModal()" >Finalizar Orden</button>
       </div>
     }
-    @if(!showButtons){
+
+    @if(datosOrden.statusOperation === 'En Espera'  || datosOrden.statusOperation === 'EN_ESPERA') {
       <div class="boton flex justify-center mt-5">
         <button type="submit" class="text-black font-semibold inline-block" (click)="startOrder()">Empezar Orden</button>
       </div>
     }
+
   </div>
 </div>
-
-
 
 @if (showModal){
 

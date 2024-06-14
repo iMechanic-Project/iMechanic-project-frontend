@@ -1,4 +1,4 @@
 export interface MecanicoDTOList {
     id: number;
-    nombre: string;
+    name: string;
 }

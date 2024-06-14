@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from "@angular/common";
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { TallerServiceService } from '../../../services/taller-service.service';
-import { ServicioDTO } from '../../../interfaces/ServicioDTO';
+import { OperationDTOResponse } from '../../../interfaces/ServicioDTO';
 
 
 @Component({
@@ -17,21 +17,31 @@ import { ServicioDTO } from '../../../interfaces/ServicioDTO';
 })
 export default class WorkshopServicesComponent implements OnInit {
 
-  accionesMantenimiento: ServicioDTO[] = [];
-  accionesReparacion: ServicioDTO[] = [];
+  accionesMantenimiento: OperationDTOResponse[] = [];
+  accionesReparacion: OperationDTOResponse[] = [];
   selectedServices: number[] = [];
   showModal = false;
 
   constructor(private tallerService: TallerServiceService) { }
 
   ngOnInit(): void {
-    this.tallerService.getAllServiceToMaintenance().subscribe(servicios => {
-      this.accionesMantenimiento = servicios;
-    });
+    this.tallerService.getAllServiceToMaintenance().subscribe(
+      servicios => {
+        this.accionesMantenimiento = servicios;
+      },
+      error => {
+        console.error('Error fetching services: ', error);
+      }
+    );
 
-    this.tallerService.getAllServiceToRepair().subscribe(servicios => {
-      this.accionesReparacion = servicios;
-    });
+    this.tallerService.getAllServiceToRepair().subscribe(
+      servicios => {
+        this.accionesReparacion = servicios;
+      },
+      error => {
+        console.error('Error fetching services: ', error);
+      }
+    );
   }
 
   toggleService(servicioId: number): void {

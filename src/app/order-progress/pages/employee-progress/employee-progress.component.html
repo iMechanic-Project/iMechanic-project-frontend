@@ -1,7 +1,7 @@
 <div class="flex justify-end items-start absolute right-0 mr-10 mt-5">
   <h1 class="text-xl font-bold mr-3 -mt-1">Regresar</h1>
   <button>
-    <img src="./assets/img/botonSalir.png" alt="Logo" class="h-6 mr-1" [routerLink]="['/employee/order-list-employee']" style="cursor: pointer;">
+    <img src="./assets/img/botonSalir.png" alt="Logo" class="h-6 mr-1" (click)="goBack()" style="cursor: pointer;">
   </button>
 </div>
 
@@ -13,9 +13,9 @@
     <div class="flex flex-col border border-gray-300 mt-5 p-8 mb-4 justify-center mr-7 ml-7 lg:w-1/2" style="background: #D9D9D9">
       <h2 class="font-bold text-2xl mb-2">Detalle de la Orden de Trabajo</h2>
       <p class="font-bold text-xl mb-2">Información del cliente</p>
-      <p class="text-lg mt-2">Nombre: {{ datosOrden.nombre }}</p>
-      <p class="text-lg mt-2">Direccion: {{ datosOrden.direccion}}</p>
-      <p class="text-lg mt-2">Teléfono/Celular: {{ datosOrden.telefono }}</p>
+      <p class="text-lg mt-2">Nombre: {{ datosOrden.name }}</p>
+      <p class="text-lg mt-2">Direccion: {{ datosOrden.address}}</p>
+      <p class="text-lg mt-2">Teléfono/Celular: {{ datosOrden.phoneWorkshop }}</p>
     </div>
 
     <div class="flex flex-col lg:mt-10 mr-7 ml-7 lg:w-1/2">
@@ -23,10 +23,11 @@
         <h2 class="font-bold text-lg">Bandeja de Chat</h2>
       </div>
       <div class="p-4 flex items-center justify-between" style="background: #D9D9D9;">
-        <p>{{ datosOrden.servicio.nombre }}</p>
-        <button (click)="openChat()">
-          <img src="./assets/img/iconoChat.png" alt="Logo" class="h-6 mr-1" style="cursor: pointer;">
-
+        <p>{{ datosOrden.operation.name }}</p>
+        <button>
+          <a [href]="'https://wa.me/51' + datosOrden.phoneMechanic" target="_blank">
+            <img src="./assets/img/iconoChat.png" alt="Logo" class="h-6 mr-1" style="cursor: pointer;">
+          </a>
         </button>
       </div>
     </div>
@@ -38,16 +39,9 @@
     <div class="items-center text-center">
       <h2 class="font-bold text-2xl lg:mr-10 mb-2 lg:mb-12">Monitoreo </h2>
     </div>
-    <div class="items-start lg:ml-0 ml-5">
-      <p class="text-lg "><strong>Servicio: </strong>{{ datosOrden.servicio.nombre }}</p>
-      <p class="text-lg "><strong>Mecánico: </strong>{{ datosOrden.mecanico.nombre }}</p>
-      <div class="flex">
-        <p class="text-lg"><strong>Estado:</strong>&nbsp;</p>
-        <p class="text-lg {{ getColorClass(datosOrden.estadoServicio) }}">{{ datosOrden.estadoServicio }}</p>
-      </div>
-    </div>
 
-    <app-progress-bar [mecanicoPaso]="mecanicoPaso" [pasos]="datosOrden.pasos" />
+
+    <app-progress-bar [mecanicoPaso]="mecanicoPaso" [pasos]="datosOrden.steps" />
 
   </div>
 
@@ -57,21 +51,21 @@
 
 
 
-@if (showChat){
+<!--@if (showChat){-->
 
-  <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">
+<!--  <div class="fixed flex top-0 right-0 w-full h-full bg-gray-900 bg-opacity-80 justify-center items-center">-->
 
 
-    <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">
+<!--    <div class="rounded-xs p-10 w-96" style="background: #B5B7B6">-->
 
-      <button class="top-2 ml-72 mb-5" (click)="closeChat()">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-black hover:text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+<!--      <button class="top-2 ml-72 mb-5" (click)="closeChat()">-->
+<!--        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-black hover:text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
+<!--          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />-->
+<!--        </svg>-->
+<!--      </button>-->
 
-      <h3 class="text-2xl mb-4 font-semibold text-center text-black">CHAT</h3>
-    </div>
-  </div>
-  
-}
+<!--      <h3 class="text-2xl mb-4 font-semibold text-center text-black">CHAT</h3>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--}-->

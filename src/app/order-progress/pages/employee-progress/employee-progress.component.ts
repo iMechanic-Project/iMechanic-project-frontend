@@ -1,115 +1,89 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForOf, NgIf } from "@angular/common";
-import { ActivatedRoute, RouterLink } from "@angular/router";
-import { ProgressBarComponent } from "../progress-bar/progress-bar.component";
+import { NgForOf, NgIf } from '@angular/common';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 import { OrderDetailMecanicoDTO } from '../../../interfaces/OrderDetailMecanicoDTO';
 import { MechanicService } from '../../../services/mechanic.service';
 import { MecanicoPasoDTO } from '../../../interfaces/MecanicoPasoDTO';
+import { OrderService } from '../../../services/order.service';
 
 @Component({
   selector: 'app-employee-progress',
   standalone: true,
-  imports: [
-    NgForOf,
-    NgIf,
-    RouterLink,
-    ProgressBarComponent,
-  ],
+  imports: [NgForOf, NgIf, RouterLink, ProgressBarComponent],
   templateUrl: './employee-progress.component.html',
-  styles: ''
+  styles: '',
 })
 export default class EmployeeProgressComponent implements OnInit {
-
-
   showChat = false;
 
   datosOrden: OrderDetailMecanicoDTO = {
-    id: 0,
-    nombre: '',
-    direccion: '',
-    telefono: '',
-    servicio: {
+    id: '',
+    name: '',
+    address: '',
+    phoneWorkshop: '',
+    operation: {
       id: 0,
-      nombre: ''
+      name: '',
     },
-    estadoServicio: '',
-    mecanico: {
+    statusOperation: '',
+    mechanic: {
       id: 0,
-      nombre: ''
+      name: '',
     },
-    pasos: []
+    phoneMechanic: '',
+    steps: [],
   };
 
   mecanicoPaso: MecanicoPasoDTO = {
-    ordenTrabajoId: 0,
-    mecanicoId: 0,
-    servicioId: 0,
-    servicioNombre: '',
-    pasoId: 0,
-    complete: false
-  }
+    workOrderId: '',
+    mechanicId: 0,
+    operationId: 0,
+    operationName: '',
+    stepId: 0,
+    complete: false,
+  };
 
-  constructor(private route: ActivatedRoute, private mecanicService: MechanicService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private orderService: OrderService
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const orderId = +params['id'];
-      if (!isNaN(orderId)) {
-        this.mecanicService.orderDetailByMecanic(orderId).subscribe(
-          (orderDetail) => {
-            this.datosOrden = {
-              ...orderDetail,
-              estadoServicio: this.mapEstado(orderDetail.estadoServicio)
-            };
-            console.log(orderDetail);
+    this.route.params.subscribe((params) => {
+      const orderId = params['id'];
+      this.orderService.orderDetailByMecanic(orderId).subscribe(
+        (orderDetail) => {
+          this.datosOrden = {
+            ...orderDetail,
+            statusOperation: this.mapEstado(orderDetail.statusOperation),
+          };
+          console.log(orderDetail);
 
-            this.mecanicoPaso.ordenTrabajoId = this.datosOrden.id;
-            this.mecanicoPaso.mecanicoId = this.datosOrden.mecanico.id;
-            this.mecanicoPaso.servicioId = this.datosOrden.servicio.id;
-            this.mecanicoPaso.servicioNombre = this.datosOrden.servicio.nombre;
+          this.mecanicoPaso.workOrderId = this.datosOrden.id;
+          this.mecanicoPaso.mechanicId = this.datosOrden.mechanic.id;
+          this.mecanicoPaso.operationId = this.datosOrden.operation.id;
+          this.mecanicoPaso.operationName = this.datosOrden.operation.name;
 
-            console.log('MecanicoPaso:', this.mecanicoPaso);
-          },
-          (error) => {
-            console.error('Error al obtener el detalle de la orden:', error);
-          }
-        );
-      }
+          console.log('MecanicoPaso:', this.mecanicoPaso);
+        },
+        (error) => {
+          console.error('Error al obtener el detalle de la orden:', error);
+        }
+      );
     });
-  }
-
-  getColorClass(estado: string): string {
-    switch (estado) {
-      case 'En Proceso':
-        return 'text-green-600';
-      case 'En Espera':
-        return 'text-red-600';
-      case 'Finalizado':
-        return 'text-black';
-      default:
-        return '';
-    }
   }
 
   mapEstado(estado: string): string {
     switch (estado) {
-      case 'EN_PROCESO':
-        return 'En Proceso';
-      case 'EN_ESPERA':
-        return 'En Espera';
-      case 'FINALIZADO':
-        return 'Finalizado';
       default:
         return estado;
     }
   }
 
-  openChat(): void {
-    this.showChat = true;
-  }
 
-  closeChat(): void {
-    this.showChat = false;
-  }
 
+  goBack(): void {
+    window.history.back();
+  }
 }

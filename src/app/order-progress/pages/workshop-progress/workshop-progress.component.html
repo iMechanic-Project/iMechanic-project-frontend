@@ -1,0 +1,36 @@
+<div class="flex justify-end items-start absolute right-0 mr-10 mt-5">
+  <h1 class="text-xl font-bold mr-3 -mt-1">Regresar</h1>
+  <button>
+    <img src="./assets/img/botonSalir.png" alt="Logo" class="h-6 mr-1" (click)="goBack()" style="cursor: pointer;">
+  </button>
+</div>
+
+<div class="flex lg:flex-row flex-col lg:mt-20 lg:mb-20 mb-14">
+
+
+
+  <!--- Primera columna --->
+  <div class="flex flex-col w-full lg:items-center lg:w-1/2 lg:ml-14 lg:-mr-32 mt-8">
+
+    <div class="flex flex-col border border-gray-300 mt-5 p-8 mb-4 justify-center mr-7 ml-7 lg:w-1/2" style="background: #D9D9D9">
+      <h2 class="font-bold text-2xl mb-2">Detalle de la Orden de Trabajo</h2>
+      <p class="font-bold text-xl mb-2">Información del cliente</p>
+      <p class="text-lg mt-2">Nombre: {{ orders.nameWorkshop }}</p>
+      <p class="text-lg mt-2">Dirección: {{ orders.addressWorkshop }}</p>
+      <p class="text-lg mt-2">Teléfono/Celular: {{ orders.phoneWorkShop }}</p>
+    </div>
+
+
+  </div>
+
+  <div class="flex flex-col w-full lg:w-1/2 lg:mr-48 lg:mt-0 mt-10">
+    <app-multi-progress-bar [mecanicoPaso]="mecanicoPaso" [orderServices]="orders"/>
+
+  </div>
+
+</div>
+
+
+
+
+

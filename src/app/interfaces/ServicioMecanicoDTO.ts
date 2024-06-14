@@ -1,4 +1,4 @@
 export interface ServicioMecanicoDTO {
-    servicioId: number;
-    mecanicoId: number;
+    operationId: number;
+    mechanicId: number;
 }

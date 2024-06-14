@@ -1,8 +1,8 @@
 export interface MecanicoPasoDTO {
-    ordenTrabajoId: number;
-    mecanicoId: number;
-    servicioId: number;
-    servicioNombre: string;
-    pasoId: number;
+    workOrderId: string;
+    mechanicId: number;
+    operationId: number;
+    operationName: string;
+    stepId: number;
     complete: boolean;
 }

@@ -1,10 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForOf, NgIf } from "@angular/common";
 import { NgxPaginationModule } from "ngx-pagination";
-import { OrdenTrabajoDTOList } from "../../../interfaces/OrdenTrabajoDTOList";
 import { OrderService } from "../../../services/order.service";
 import { Router, RouterLink } from "@angular/router";
-import { MechanicService } from '../../../services/mechanic.service';
 import { OrdenTrabajoMecanicoDTOList } from '../../../interfaces/OrdenTrabajoMecanicoDTOList';
 
 @Component({
@@ -53,14 +51,17 @@ export default class OrderListEmployeeComponent implements OnInit {
 
   @ViewChild('placaInput') placaInput!: ElementRef;
 
-  constructor(private mecanicService: MechanicService, private router: Router) { }
+  constructor(private orderService: OrderService, private router: Router) { }
 
   ngOnInit(): void {
-    this.mecanicService.getAllOrdersByMecanic().subscribe(ordenes => {
+    console.log('Fetching orders...');
+    this.orderService.getAllOrdersByMecanic().subscribe(ordenes => {
+      console.log('Orders received:', ordenes);
       this.orderList = ordenes.map((orden: OrdenTrabajoMecanicoDTOList) => ({
         ...orden,
-        estado: this.mapEstado(orden.estado)
+        status: this.mapEstado(orden.status)
       }));
+      console.log('Mapped orders:', this.orderList);
     })
   }
 
@@ -72,8 +73,8 @@ export default class OrderListEmployeeComponent implements OnInit {
     this.placaInput.nativeElement.value = value.substring(0, 7); // Limita la longitud a 7 caracteres
   }
 
-
-  detailOrder(orderId: number) {
+  detailOrder(orderId: string) {
+    console.log('Navigating to order details for orderId:', orderId);
     this.router.navigate(['/progress/employee-progress/', orderId]);
   }
 

@@ -32,13 +32,13 @@
 
         <input type="text" placeholder="Nombre"
           class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0"
-          [(ngModel)]="cliente.nombreCliente">
+          [(ngModel)]="cliente.nameCustomer" readonly>
         <input type="text" placeholder="Direccion"
           class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0"
-          [(ngModel)]="cliente.direccion">
+          [(ngModel)]="cliente.addressCustomer" readonly>
         <input type="text" placeholder="Número de contacto"
           class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mb-2 lg:mb-0"
-          [(ngModel)]="cliente.telefono">
+          [(ngModel)]="cliente.phoneCustomer" readonly>
       </div>
 
       <div class="flex">
@@ -49,16 +49,16 @@
       <div class="flex lg:flex-row flex-col">
         <input type="text" placeholder="Placa"
           class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0"
-          [(ngModel)]="vehiculo.placa">
+          [(ngModel)]="vehiculo.plate" readonly>
         <input type="text" placeholder="Modelo"
           class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0"
-          [(ngModel)]="vehiculo.marca">
+          [(ngModel)]="vehiculo.brand" readonly>
         <input type="text" placeholder="Marca"
           class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0"
-          [(ngModel)]="vehiculo.modelo">
+          [(ngModel)]="vehiculo.model" readonly>
         <input type="text" placeholder="Categoría"
           class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mb-2 lg:mb-0"
-          [(ngModel)]="vehiculo.categoria">
+          [(ngModel)]="vehiculo.category" readonly>
       </div>
 
       <div class="flex">
@@ -76,24 +76,24 @@
             <option *ngFor="let tipo of tipoServicio">{{ tipo }}</option>
           </select>
 
-          <select [(ngModel)]="item.servicioMecanico.servicioId"
+          <select [(ngModel)]="item.servicioMecanico.operationId"
             class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0">
             <option value="0" disabled selected>Servicio</option>
             <ng-container *ngIf="item.tipo_servicio === 'MANTENIMIENTO'; else reparacion">
-              <option *ngFor="let servicio of serviciosMantenimiento" [value]="servicio.id">{{ servicio.nombre }}
+              <option *ngFor="let servicio of serviciosMantenimiento" [value]="servicio.id">{{ servicio.name }}
               </option>
             </ng-container>
             <ng-template #reparacion>
-              <option *ngFor="let servicio of serviciosReparacion" [value]="servicio.id">{{ servicio.nombre }}</option>
+              <option *ngFor="let servicio of serviciosReparacion" [value]="servicio.id">{{ servicio.name }}</option>
             </ng-template>
           </select>
 
-          <select [(ngModel)]="item.servicioMecanico.mecanicoId"
+          <select [(ngModel)]="item.servicioMecanico.mechanicId"
             class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0">
             <option value="0" disabled selected>Mecanico</option>
-            <ng-container *ngIf="item.servicioMecanico.servicioId">
-              <option *ngFor="let mecanico of obtenerMecanicosPorServicio(item.servicioMecanico.servicioId)" [value]="mecanico.id">{{
-                mecanico.nombre }}</option>
+            <ng-container *ngIf="item.servicioMecanico.operationId">
+              <option *ngFor="let mecanico of obtenerMecanicosPorServicio(item.servicioMecanico.operationId)" [value]="mecanico.id">{{
+                mecanico.name }}</option>
             </ng-container>
           </select>
 
@@ -118,25 +118,25 @@
             <option *ngFor="let tipo of tipoServicio">{{ tipo }}</option>
           </select>
 
-          <select [(ngModel)]="item.servicioMecanico.servicioId"
+          <select [(ngModel)]="item.servicioMecanico.operationId"
             class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 mb-2 lg:mb-0">
             <option value="0" disabled selected>Servicio</option>
             <ng-container *ngIf="item.tipo_servicio === 'MANTENIMIENTO'; else reparacion">
-              <option *ngFor="let servicio of serviciosMantenimiento" [value]="servicio.id">{{ servicio.nombre }}
+              <option *ngFor="let servicio of serviciosMantenimiento" [value]="servicio.id">{{ servicio.name }}
               </option>
             </ng-container>
             <ng-template #reparacion>
-              <option *ngFor="let servicio of serviciosReparacion" [value]="servicio.id">{{ servicio.nombre }}</option>
+              <option *ngFor="let servicio of serviciosReparacion" [value]="servicio.id">{{ servicio.name }}</option>
             </ng-template>
           </select>
 
-          <select [(ngModel)]="item.servicioMecanico.mecanicoId"
+          <select [(ngModel)]="item.servicioMecanico.mechanicId"
             class="text-xl w-full bg-white border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:border-blue-400 flex-grow mr-4 lg:mb-0">
             <option value="0" disabled selected>Mecanico</option>
-            <ng-container *ngIf="item.servicioMecanico.servicioId">
-              <option *ngFor="let mecanico of obtenerMecanicosPorServicio(item.servicioMecanico.servicioId)"
+            <ng-container *ngIf="item.servicioMecanico.operationId">
+              <option *ngFor="let mecanico of obtenerMecanicosPorServicio(item.servicioMecanico.operationId)"
                 [value]="mecanico.id">{{
-                mecanico.nombre }}</option>
+                mecanico.name }}</option>
             </ng-container>
           </select>
 

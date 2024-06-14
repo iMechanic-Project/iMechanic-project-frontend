@@ -1,4 +1,4 @@
 export interface AuthenticationLoginDTORequest {
-    correoElectronico: string;
-    contrasenia: string;
+    email: string;
+    password: string;
 }

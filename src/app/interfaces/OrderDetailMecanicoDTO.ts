@@ -1,14 +1,15 @@
 import { MecanicoDTOList } from "./MecanicoDTOList";
-import { PasoDTO } from "./PasoDTO";
-import { ServicioDTO } from "./ServicioDTO";
+import { OperationDTOResponse } from "./ServicioDTO";
+import { StepOrderResponse } from "./StepOrderResponse";
 
 export interface OrderDetailMecanicoDTO {
-    id: number,
-    nombre: string;
-    direccion: string;
-    telefono: string;
-    servicio: ServicioDTO;
-    estadoServicio: string;
-    mecanico: MecanicoDTOList;
-    pasos: PasoDTO[];
+    id: string,
+    name: string;
+    address: string;
+    phoneWorkshop: string;
+    operation: OperationDTOResponse;
+    statusOperation: string;
+    mechanic: MecanicoDTOList;
+    phoneMechanic: string;
+    steps: StepOrderResponse[];
 }
