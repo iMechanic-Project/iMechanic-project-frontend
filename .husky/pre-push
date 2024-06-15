@@ -1,0 +1,11 @@
+#!/bin/sh
+
+cd "$(git rev-parse --show-toplevel)"
+
+if ! ng test --watch=false; then
+    echo "Ups... tests incorrectos. Corrigelo para pushear"
+    exit 1
+fi
+
+echo "Test ok. Push"
+exit 0

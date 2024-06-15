@@ -1,0 +1,10 @@
+#!/bin/sh
+
+commit_message=$(cat "$1")
+
+pattern="^SCRUM-[0-9]+ [a-zA-Z]+(-[a-zA-Z]+)+$"
+
+if ! echo "$commit_message" | grep -qE "$pattern"; then
+    echo "Error: El commit debe seguir la siguiente estructura 'SCRUM-XXX palabra1-palabra2'"
+    exit 1
+fi
