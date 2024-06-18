@@ -9,12 +9,12 @@ import { InformationResponseDTO } from '../interfaces/InformationResponseDTO';
 })
 export class UserService {
 
-  public baseUrl: string = environment.apiUrl;
+  public baseUrl: string = `${environment.apiUrlPrincipal}/api/users`;
 
   constructor(private http: HttpClient) { }
 
   getInformationByUser(): Observable<InformationResponseDTO> {
-    return this.http.get<InformationResponseDTO>(`${this.baseUrl}/api/users/info`);
+    return this.http.get<InformationResponseDTO>(`${this.baseUrl}/info`);
   }
 
 }

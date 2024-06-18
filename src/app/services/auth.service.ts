@@ -10,7 +10,7 @@ import { AuthenticationSignUpDTORequest } from '../interfaces/AuthenticationSign
 })
 export class AuthService {
 
-  public baseUrl: string = environment.apiUrl;
+  public baseUrl: string = `${environment.apiUrlPrincipal}/api/auth`;
 
  constructor(private http: HttpClient) { }
 
@@ -31,14 +31,14 @@ export class AuthService {
   }
 
   signUp(signUpDTORequest: AuthenticationSignUpDTORequest): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/auth/signup`, signUpDTORequest);
+    return this.http.post(`${this.baseUrl}/signup`, signUpDTORequest);
   }
 
   login(loginDtoRequest: AuthenticationLoginDTORequest): Observable<any> {
-    return this.http.post(`${this.baseUrl}/api/auth/login`, loginDtoRequest);
+    return this.http.post(`${this.baseUrl}/login`, loginDtoRequest);
   }
 
   confirmation(token: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/api/auth/confirmation/${token}`);
+    return this.http.get(`${this.baseUrl}/confirmation/${token}`);
   }
 }

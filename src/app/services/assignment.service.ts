@@ -9,12 +9,12 @@ import { Observable } from 'rxjs';
 })
 export class AssignmentService {
 
-  public baseUrl: string = environment.apiUrl;
+  public baseUrl: string = `${environment.apiUrlPrincipal}/api/assignments`;
 
   constructor(private http: HttpClient) { }
 
   getAllWorkshopAssignments(): Observable<ServicioMecanicoDTO[]> {
-    return this.http.get<ServicioMecanicoDTO[]>(`${this.baseUrl}/api/assignments/todas`)
+    return this.http.get<ServicioMecanicoDTO[]>(`${this.baseUrl}/todas`)
   }
 
 }

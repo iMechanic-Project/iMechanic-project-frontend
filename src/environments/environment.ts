@@ -1,4 +1,5 @@
 export const environment = {
     production: true,
-    apiUrl: "https://imechanic-project-backend.onrender.com"
+    apiUrlPrincipal: "http://localhost:8081",
+    apiUrlOrder: "http://localhost:8082",
 };

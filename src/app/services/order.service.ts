@@ -12,18 +12,16 @@ import { OrderDetailMecanicoDTO } from '../interfaces/OrderDetailMecanicoDTO';
 import { MecanicoPasoDTO } from '../interfaces/MecanicoPasoDTO';
 import { StepOrderResponse } from '../interfaces/StepOrderResponse';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
-  public baseUrl: string = `${environment.apiUrl}/api/orders`;
+  public baseUrl: string = `${environment.apiUrlOrder}/api/orders`;
   private _refresh$ = new Subject<void>();
   private _refresh2$ = new Subject<void>();
   private _refreshNextStep$ = new Subject<void>();
 
   private _stepCompletedSubject = new Subject<string>(); // Subject para paso completado
-
 
   constructor(private http: HttpClient) {}
 
@@ -101,43 +99,41 @@ export class OrderService {
 
   // inicia la orden mechanic-view
   initService(orderId: string, serviceId: number): Observable<string> {
-    return this.http.put<string>(
-      `${this.baseUrl}/iniciar/${orderId}/servicio/${serviceId}`,
-      {}
-    )
+    return this.http
+      .put<string>(
+        `${this.baseUrl}/iniciar/${orderId}/servicio/${serviceId}`,
+        {}
+      )
       .pipe(
-      tap(() => {
-        this._refreshNextStep$.next();
-        this._refresh2$.next();
-        this._stepCompletedSubject.next(orderId); // Notifica que se completó un paso
-        console.log("iniciandooo")
-        console.log("id:", orderId)
-      })
-    );
-
+        tap(() => {
+          this._refreshNextStep$.next();
+          this._refresh2$.next();
+          this._stepCompletedSubject.next(orderId); // Notifica que se completó un paso
+          console.log('iniciandooo');
+          console.log('id:', orderId);
+        })
+      );
   }
 
   completeStep(
     ordenId: string,
     servicioId: number,
     pasoId: number
-
   ): Observable<MecanicoPasoDTO> {
-    return this.http.put<MecanicoPasoDTO>(
-      `${this.baseUrl}/${ordenId}/service/${servicioId}/paso/${pasoId}/complete`,
-      {}
-    )
+    return this.http
+      .put<MecanicoPasoDTO>(
+        `${this.baseUrl}/${ordenId}/service/${servicioId}/paso/${pasoId}/complete`,
+        {}
+      )
       .pipe(
-      tap(() => {
-        this._stepCompletedSubject.next(ordenId); // Notifica que se completó un paso
-        this._refreshNextStep$.next();
-        console.log("siguienteeee")
-        console.log("id:", ordenId)
-      })
-    );
-
+        tap(() => {
+          this._stepCompletedSubject.next(ordenId); // Notifica que se completó un paso
+          this._refreshNextStep$.next();
+          console.log('siguienteeee');
+          console.log('id:', ordenId);
+        })
+      );
   }
-
 
   getStepComplete(
     ordenId: string,

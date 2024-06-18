@@ -98,7 +98,7 @@ export default class ClientProgressComponent implements OnInit, OnDestroy {
   }
 
   fetchOrderDetails(orderId: string): void {
-    this.orderService.orderDetailByTaller(orderId).subscribe(
+    this.orderService.orderDetailByClient(orderId).subscribe(
       (orderDetail) => {
         this.orders = orderDetail;
         console.log(orderDetail);
