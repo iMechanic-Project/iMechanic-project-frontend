@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { InformationResponseDTO } from '../interfaces/InformationResponseDTO';
@@ -9,7 +9,7 @@ import { InformationResponseDTO } from '../interfaces/InformationResponseDTO';
 })
 export class UserService {
 
-  public baseUrl: string = `${environment.apiUrlPrincipal}/api/users`;
+  public baseUrl: string = `${environment.apiUrl}/api/users`;
 
   constructor(private http: HttpClient) { }
 

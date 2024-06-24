@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { MechanicDTORequest } from '../interfaces/MechanicDTORequest';
@@ -12,7 +12,7 @@ import { MechanicDetailsDTOResponse } from '../interfaces/MechanicDetailsDTOResp
   providedIn: 'root',
 })
 export class MechanicService {
-  public baseUrl: string = `${environment.apiUrlPrincipal}/api/mechanics`;
+  public baseUrl: string = `${environment.apiUrl}/api/mechanics`;
   private _refresh$ = new Subject<void>();
 
   constructor(private http: HttpClient) {}

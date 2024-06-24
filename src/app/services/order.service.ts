@@ -16,7 +16,7 @@ import { StepOrderResponse } from '../interfaces/StepOrderResponse';
   providedIn: 'root',
 })
 export class OrderService {
-  public baseUrl: string = `${environment.apiUrlOrder}/api/orders`;
+  public baseUrl: string = `${environment.apiUrl}/api/orders`;
   private _refresh$ = new Subject<void>();
   private _refresh2$ = new Subject<void>();
   private _refreshNextStep$ = new Subject<void>();

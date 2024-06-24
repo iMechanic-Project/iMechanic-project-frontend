@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { VehiculoDTOResponse } from '../interfaces/VehiculoDTOResponse';
@@ -13,7 +13,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class VehicleService {
-  public baseUrl: string = `${environment.apiUrlPrincipal}/api/vehicles`;
+  public baseUrl: string = `${environment.apiUrl}/api/vehicles`;
   private _refresh$ = new Subject<void>();
 
   constructor(private http: HttpClient) {}

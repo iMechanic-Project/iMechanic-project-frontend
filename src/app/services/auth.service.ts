@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthenticationLoginDTORequest } from '../interfaces/AuthenticationLoginDTORequest ';
@@ -10,7 +10,7 @@ import { AuthenticationSignUpDTORequest } from '../interfaces/AuthenticationSign
 })
 export class AuthService {
 
-  public baseUrl: string = `${environment.apiUrlPrincipal}/api/auth`;
+  public baseUrl: string = `${environment.apiUrl}/api/auth`;
 
  constructor(private http: HttpClient) { }
 

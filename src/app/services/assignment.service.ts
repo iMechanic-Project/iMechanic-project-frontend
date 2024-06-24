@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class AssignmentService {
 
-  public baseUrl: string = `${environment.apiUrlPrincipal}/api/assignments`;
+  public baseUrl: string = `${environment.apiUrl}/api/assignments`;
 
   constructor(private http: HttpClient) { }
 

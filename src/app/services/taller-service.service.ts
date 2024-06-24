@@ -9,7 +9,7 @@ import { OperationDTOResponse } from '../interfaces/ServicioDTO';
 })
 export class TallerServiceService {
 
-  public baseUrl: string = `${environment.apiUrlPrincipal}/api/operations`;
+  public baseUrl: string = `${environment.apiUrl}/api/operations`;
 
   constructor(private http: HttpClient) { }
 
